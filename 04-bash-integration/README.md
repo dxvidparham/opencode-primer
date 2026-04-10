@@ -1,3 +1,62 @@
+<div align="center">
+
+# 💻 04. Bash Integration
+
+**Execute shell commands and integrate with terminal workflows**
+
+[![Module Level](https://img.shields.io/badge/Level-Intermediate-orange)]()
+[![Time Required](https://img.shields.io/badge/Time-60_min-yellow)]()
+[![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_03-blue)]()
+[![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
+
+[⬅️ Previous Module](../03-search-tools/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../05-question-todo/)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+<details>
+<summary>Click to expand/collapse</summary>
+
+- [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
+- [⚡ Quick Start](#-quick-start)
+- [📚 Core Concepts](#-core-concepts)
+- [🔧 Examples & Patterns](#-examples--patterns)
+- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🧪 Practice Exercises](#-practice-exercises)
+- [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📈 What You've Learned](#-what-youve-learned)
+- [🚶 Next Steps](#-next-steps)
+
+</details>
+
+---
+
+---
+
+
+<details>
+<summary>Click to expand/collapse</summary>
+
+- [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
+- [⚡ Quick Start](#-quick-start)
+- [📚 Core Concepts](#-core-concepts)
+- [🔧 Examples & Patterns](#-examples--patterns)
+- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🧪 Practice Exercises](#-practice-exercises)
+- [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📈 What You've Learned](#-what-youve-learned)
+- [🚶 Next Steps](#-next-steps)
+
+</details>
+
+---
 # 04. Bash Integration
 
 **Location**: `04-bash-integration/`  
@@ -373,3 +432,20 @@ Once you're comfortable with bash integration, proceed to:
 **Ready for more?** Practice by creating automation scripts that combine bash commands with opencode's other tools.
 
 [← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Previous: Search Tools ←](03-search-tools/README.md) | [Next: Question & Todo Tools →](05-question-todo/README.md)
+
+---
+
+
+---
+
+## 📄 License & Attribution
+
+This module is part of the [OpenCode Primer](../README.md).
+
+**License:** MIT - See [LICENSE](../LICENSE) for details.
+
+**Last Updated:** April 2026  
+**OpenCode Version:** 1.0+ compatible
+
+---
+

@@ -1,18 +1,107 @@
-# 03. Search Tools
+<div align="center">
 
-**Location**: `03-search-tools/`  
-**Level**: Intermediate  
-**Time**: 45 minutes  
-**Focus**: Finding files and content in codebases using opencode's search tools
+# 🔍 03. Search Tools
 
-## 📚 Overview
+**Find files and content in codebases with OpenCode's search tools**
 
-This module covers opencode's search tools: `glob`, `grep`, and `list`. You'll learn how to efficiently navigate codebases, find files by pattern, search file contents, and combine search operations for complex queries.
+[![Module Level](https://img.shields.io/badge/Level-Intermediate-orange)]()
+[![Time Required](https://img.shields.io/badge/Time-45_min-yellow)]()
+[![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_02-blue)]()
+[![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-## 🎯 What You'll Learn
+[⬅️ Previous Module](../02-file-operations/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../04-bash-integration/)
 
-- Find files by pattern with `glob`
-- Search file contents with `grep` using regex
+</div>
+
+---
+
+## 📋 Table of Contents
+
+<details>
+<summary>Click to expand/collapse</summary>
+
+- [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
+- [⚡ Quick Start](#-quick-start)
+- [📚 Core Concepts](#-core-concepts)
+- [🔧 Examples & Patterns](#-examples--patterns)
+- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🧪 Practice Exercises](#-practice-exercises)
+- [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📈 What You've Learned](#-what-youve-learned)
+- [🚶 Next Steps](#-next-steps)
+
+</details>
+
+---
+
+---
+
+
+<details>
+<summary>Click to expand/collapse</summary>
+
+- [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
+- [⚡ Quick Start](#-quick-start)
+- [📚 Core Concepts](#-core-concepts)
+- [🔧 Examples & Patterns](#-examples--patterns)
+- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🧪 Practice Exercises](#-practice-exercises)
+- [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📈 What You've Learned](#-what-youve-learned)
+- [🚶 Next Steps](#-next-steps)
+
+</details>
+
+---
+
+---
+
+
+<details>
+<summary>Click to expand/collapse</summary>
+
+- [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
+- [⚡ Quick Start](#-quick-start)
+- [📚 Core Concepts](#-core-concepts)
+- [🔧 Examples & Patterns](#-examples--patterns)
+- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🧪 Practice Exercises](#-practice-exercises)
+- [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📈 What You've Learned](#-what-youve-learned)
+- [🚶 Next Steps](#-next-steps)
+
+</details>
+
+---
+
+## 🎯 Overview
+
+
+### 📝 What This Module Covers
+
+| Topic | Description | Why It Matters |
+|-------|-------------|----------------|
+| **glob** | Find files by pattern | Navigate large codebases efficiently |
+| **grep** | Search file contents | Find specific code, functions, patterns |
+| **list** | Directory listing | Understand project structure |
+| **Combined Searches** | Chain search operations | Complex queries across files and content |
+| **Search Patterns** | Regex and wildcards | Flexible, powerful searching |
+
+### 🎓 Learning Objectives
+
+By the end of this module, you'll be able to:
+
+- ✅ **Find files efficiently** using `glob` patterns
+- ✅ **Search file contents** with `grep` and regex
+- ✅ **Navigate directories** using `list` tool
+- ✅ **Combine search operations** for complex queries
+- ✅ **Apply search patterns** to real development tasks
 - List directory contents with `list`
 - Combine search operations for complex queries
 - Use include/exclude patterns and filtering options
@@ -477,3 +566,19 @@ Once you're comfortable with search tools, proceed to:
 **Ready for more?** Practice by creating search scripts for your specific project needs and coding standards.
 
 [← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Previous: File Operations ←](02-file-operations/README.md) | [Next: Bash Integration →](04-bash-integration/README.md)
+---
+
+
+---
+
+## 📄 License & Attribution
+
+This module is part of the [OpenCode Primer](../README.md).
+
+**License:** MIT - See [LICENSE](../LICENSE) for details.
+
+**Last Updated:** April 2026  
+**OpenCode Version:** 1.0+ compatible
+
+---
+

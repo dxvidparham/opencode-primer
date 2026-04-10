@@ -55,6 +55,7 @@ OpenCode provides these core tools that AI agents can use:
 ### Extensibility
 - **`skill`**: Load SKILL.md files for specialized knowledge
 - **MCP Servers**: Connect to external tools and services
+- **Plugins**: JavaScript/TypeScript modules for event-driven automation (hooks system)
 
 ### Experimental Features
 - **`lsp`**: LSP server integration (experimental)
