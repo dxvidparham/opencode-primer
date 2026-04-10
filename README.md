@@ -1,8 +1,6 @@
-# 🚀 OpenCode & OpenWork Mastery Guide
+# 🚀 OpenCode Primer
 
-![OpenCode Guide Logo](resources/logos/opencode-guide-logo.svg)
-
-**Master the opencode CLI and openwork platform with structured learning paths, real-world examples, and production-ready templates.**
+**Master the opencode AI coding agent with structured learning paths, real-world examples, and production-ready workflows.**
 
 **[Get Started in 15 Minutes](#get-started-in-15-minutes)** | **[Find Your Level](#-find-your-level)** | **[Browse the Feature Catalog](CATALOG.md)**
 
@@ -49,11 +47,11 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 
 ### What you get:
 
-- **10 tutorial modules** covering every opencode feature — from basic commands to advanced automation
-- **Copy-paste workflows** — bash scripts, file operations, search patterns, and automation templates
-- **Real-world examples** showing how each feature works in practice
+- **10 tutorial modules** covering opencode's built-in tools — from basic file operations to MCP server integration
+- **Copy-paste workflows** — bash scripts, file editing, search patterns, and automation templates
+- **Real-world examples** showing how to use opencode effectively in development workflows
 - **A guided learning path** that takes you from beginner to power user
-- **Built-in self-assessment** — take quizzes to identify gaps
+- **OpenWork integration** guidance for team collaboration workflows
 
 **[Start the Learning Path ->](LEARNING-ROADMAP.md)**
 
@@ -95,16 +93,16 @@ Take the self-assessment or pick your level:
 
 | Order | Module | Level | Time |
 |-------|--------|-------|------|
-| 1 | [Basic Commands](01-basic-commands) | Beginner | 30 min |
-| 2 | [File Reading](02-file-reading) | Beginner+ | 45 min |
-| 3 | [File Operations](03-file-operations) | Intermediate | 45 min |
-| 4 | [Search Tools](04-search-tools) | Beginner+ | 30 min |
-| 5 | [Bash Integration](05-bash-integration) | Intermediate | 1 hour |
-| 6 | [Task Automation](06-task-automation) | Intermediate | 1 hour |
-| 7 | [Automation](07-automation) | Intermediate+ | 1 hour |
-| 8 | [Advanced Features](08-advanced-features) | Intermediate+ | 1.5 hours |
-| 9 | [Workflows](09-workflows) | Advanced | 2-3 hours |
-| 10 | [OpenWork Integration](10-openwork) | Advanced | 2 hours |
+| 1 | [Basic Commands & TUI](01-basic-commands) | Beginner | 30 min |
+| 2 | [File Operations](02-file-operations) | Beginner+ | 45 min |
+| 3 | [Search Tools](03-search-tools) | Beginner+ | 45 min |
+| 4 | [Bash Integration](04-bash-integration) | Intermediate | 1 hour |
+| 5 | [Question & Todo Tools](05-question-todo) | Intermediate | 45 min |
+| 6 | [Web Tools](06-web-tools) | Intermediate | 45 min |
+| 7 | [Skills & Agents](07-skills-agents) | Intermediate+ | 1 hour |
+| 8 | [MCP Servers](08-mcp-servers) | Intermediate+ | 1 hour |
+| 9 | [Advanced Features](09-advanced-features) | Advanced | 1.5 hours |
+| 10 | [OpenWork Integration](10-openwork) | Advanced | 1 hour |
 
 **[Complete Learning Roadmap ->](LEARNING-ROADMAP.md)**
 

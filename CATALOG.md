@@ -1,448 +1,452 @@
-# 📚 OpenCode How-To Guide Feature Catalog
+# 📚 OpenCode Primer Feature Catalog
 
-Complete reference of all features, modules, and installation commands available in this guide.
+Complete reference of opencode's built-in tools, modules, and learning resources.
 
 ## 📋 Table of Contents
 
 - [Module Overview](#module-overview)
-- [Quick Installation Reference](#quick-installation-reference)
-- [Complete Feature Reference](#complete-feature-reference)
+- [OpenCode Built-in Tools](#opencode-built-in-tools)
+- [Quick Start Reference](#quick-start-reference)
+- [Complete Module Reference](#complete-module-reference)
 - [Use Case Matrix](#use-case-matrix)
 - [Troubleshooting](#troubleshooting)
 - [Additional Resources](#additional-resources)
 
 ## 📊 Module Overview
 
-| Module | Level | Time | Focus | Key Features |
-|--------|-------|------|-------|--------------|
-| **[01. Basic Commands](01-basic-commands)** | Beginner | 30 min | Core operations | Command structure, help system, tool overview |
-| **[02. File Reading](02-file-reading)** | Beginner+ | 45 min | Codebase examination | File/directory reading, offset/limit, navigation |
-| **[03. File Operations](03-file-operations)** | Beginner+ | 45 min | File modification | Editing, writing, replaceAll, template creation |
-| **[04. Search Tools](04-search-tools)** | Intermediate | 30 min | Content discovery | Glob patterns, grep searches, combined operations |
-| **[05. Bash Integration](05-bash-integration)** | Intermediate | 1 hour | System operations | Shell commands, workdir, chaining, automation |
-| **[06. Task Automation](06-task-automation)** | Intermediate | 1 hour | Workflow basics | Script creation, error handling, common patterns |
-| **[07. Automation](07-automation)** | Intermediate+ | 1 hour | Advanced workflows | Complex scripts, integration, error recovery |
-| **[08. Advanced Features](08-advanced-features)** | Intermediate+ | 1.5 hours | Power user tools | Optimization, patterns, expert techniques |
-| **[09. Workflows](09-workflows)** | Advanced | 2-3 hours | Complete solutions | Real-world examples, templates, best practices |
-| **[10. OpenWork Integration](10-openwork)** | Advanced | 2 hours | Platform features | Team collaboration, CI/CD, production workflows |
+| Module | Level | Time | Focus | Key Tools Covered |
+|--------|-------|------|-------|-------------------|
+| **[01. Basic Commands & TUI](01-basic-commands)** | Beginner | 30 min | Interface fundamentals | TUI, slash commands, file references |
+| **[02. File Operations](02-file-operations)** | Beginner+ | 45 min | File manipulation | `read`, `edit`, `write` |
+| **[03. Search Tools](03-search-tools)** | Intermediate | 45 min | Codebase navigation | `glob`, `grep`, `list` |
+| **[04. Bash Integration](04-bash-integration)** | Intermediate | 1 hour | System operations | `bash` |
+| **[05. Question & Todo Tools](05-question-todo)** | Intermediate | 45 min | Interactive workflows | `question`, `todowrite` |
+| **[06. Web Tools](06-web-tools)** | Intermediate | 45 min | Research capabilities | `webfetch`, `websearch` |
+| **[07. Skills & Agents](07-skills-agents)** | Intermediate+ | 1 hour | Custom capabilities | `skill`, agent configuration |
+| **[08. MCP Servers](08-mcp-servers)** | Intermediate+ | 1 hour | External integration | MCP server management |
+| **[09. Advanced Features](09-advanced-features)** | Advanced | 1.5 hours | Configuration | Permissions, formatters, LSP |
+| **[10. OpenWork Integration](10-openwork)** | Advanced | 1 hour | Team collaboration | OpenWork platform setup |
 
-## 🚀 Quick Installation Reference
+## 🛠️ OpenCode Built-in Tools
+
+OpenCode provides these core tools that AI agents can use:
+
+### File Operations
+- **`read`**: Read file contents and directories
+- **`edit`**: Modify existing files with exact string replacement
+- **`write`**: Create new files or overwrite existing ones
+
+### Search & Navigation
+- **`glob`**: Find files by pattern (e.g., `**/*.js`)
+- **`grep`**: Search file contents using regex
+- **`list`**: List directory contents with filtering
+
+### System Integration
+- **`bash`**: Execute shell commands in project environment
+
+### Interactive Workflows
+- **`question`**: Ask users questions during execution
+- **`todowrite`**: Manage todo lists for task tracking
+
+### Web & Research
+- **`webfetch`**: Fetch web content (requires permissions)
+- **`websearch`**: Search the web using Exa AI
+
+### Extensibility
+- **`skill`**: Load SKILL.md files for specialized knowledge
+- **MCP Servers**: Connect to external tools and services
+
+### Experimental Features
+- **`lsp`**: LSP server integration (experimental)
+- **`apply_patch`**: Apply patch files to codebase
+
+## 🚀 Quick Start Reference
 
 ### Basic Setup (15 minutes)
 
 ```bash
-# 1. Clone the guide
-git clone https://github.com/your-username/opencode-howto-guide.git
-cd opencode-howto-guide
+# 1. Install opencode
+curl -fsSL https://opencode.ai/install | bash
 
-# 2. Explore basic commands
-cat 01-basic-commands/README.md
+# 2. Start opencode in your project
+cd /path/to/your-project
+opencode
 
-# 3. Try file operations
-cp 03-file-operations/examples/*.sh .
-
-# 4. Learn search patterns
-cat 04-search-tools/patterns.md
+# 3. Try basic commands in TUI
+/help          # See available commands
+@src/file.js   # Reference a file in conversation
+/undo          # Undo last change
 ```
 
-### Full Setup (1 hour)
+### Essential Workflow (1 hour)
 
 ```bash
-# Basic commands foundation
-cp 01-basic-commands/examples/*.md .
+# 1. Explore project structure
+# In opencode TUI: "Show me the project structure"
 
-# File operations mastery
-cp 03-file-operations/patterns.md .
+# 2. Read and understand code
+# "Explain the authentication code in @src/auth.js"
 
-# Search expertise
-cp 04-search-tools/patterns.md .
+# 3. Make simple changes
+# "Update the port in @config.json from 3000 to 8080"
 
-# Automation scripts
-cp 06-task-automation/scripts/*.sh .
-chmod +x *.sh
+# 4. Search for patterns
+# "Find all TODO comments in the codebase"
 
-# Weekend project: Complete all modules
-# Follow the learning path for guided setup
+# 5. Execute commands
+# "Run the tests to make sure everything works"
 ```
 
-### Development Environment
+### Development Practice
 
 ```bash
-# Create practice directory
+# Create practice environment
 mkdir -p ~/opencode-practice
 cd ~/opencode-practice
 
-# Copy templates
-cp -r /path/to/opencode-howto-guide/templates/* .
+# Initialize a sample project
+git init
+echo '# My Practice Project' > README.md
+mkdir -p src tests
 
-# Set up test files
-./setup-test-environment.sh
-
-# Begin learning
-./start-learning-path.sh
+# Start learning with opencode
+opencode
 ```
 
-## 📖 Complete Feature Reference
+## 📖 Complete Module Reference
 
-### 01. Basic Commands
+### 01. Basic Commands & TUI
 
 **Location**: [01-basic-commands/](01-basic-commands)
 
-**What**: Core opencode operations and command structure
+**What**: OpenCode's terminal user interface and core interaction patterns
 
 **Key Concepts**:
-- Command syntax and structure
-- Tool overview and selection
-- Help system usage
-- Common options and flags
+- Starting and navigating the TUI
+- Using slash commands (`/help`, `/undo`, `/redo`, `/share`)
+- File references with `@` symbol
+- Plan mode vs Build mode (Tab key toggle)
+- Conversation flow and context management
 
 **Examples**:
 ```bash
-# Check version
-opencode --version
+# Start opencode
+opencode
 
 # Get help
-opencode --help
-opencode read --help
+/help
 
-# List available tools
-opencode --list-tools
+# Reference files
+Look at the configuration in @config.json
+
+# Share conversation
+/share
 ```
 
-**Installation**: No installation needed - study the examples
+### 02. File Operations
 
-### 02. File Reading
+**Location**: [02-file-operations/](02-file-operations)
 
-**Location**: [02-file-reading/](02-file-reading)
-
-**What**: Read files and directories to understand codebase structure
+**What**: Reading, editing, and creating files
 
 **Key Concepts**:
-- File and directory reading
-- Offset and limit parameters
-- Path navigation
-- Large file handling
+- `read` tool for examining files and directories
+- `edit` tool for exact string replacements
+- `write` tool for creating new files
+- Using `--replaceAll` for batch operations
+- File path navigation and permissions
 
 **Examples**:
 ```bash
-# Read file
-opencode read file.txt
+# Read files
+opencode read .
+opencode read package.json --limit=10
 
-# Read directory
-opencode read src/
+# Edit files
+opencode edit config.json --old='"port": 3000' --new='"port": 8080'
 
-# Read with limits
-opencode read large.log --offset=100 --limit=50
+# Create files
+opencode write new-file.js --content='console.log("Hello");'
 ```
 
-**Installation**: Study patterns and apply to your projects
+### 03. Search Tools
 
-### 03. File Operations
+**Location**: [03-search-tools/](03-search-tools)
 
-**Location**: [03-file-operations/](03-file-operations)
-
-**What**: Edit existing files and create new files
+**What**: Finding files and content in codebases
 
 **Key Concepts**:
-- String replacement editing
-- replaceAll for batch operations
-- File creation with content
-- Template generation
-
-**Examples**:
-```bash
-# Edit file
-opencode edit config.json --old="3000" --new="8080"
-
-# Batch replace
-opencode edit src/*.js --old="var " --new="const " --replaceAll
-
-# Create file
-opencode write notes.md --content="# Notes\n\nContent here"
-```
-
-**Installation**: Copy templates and modify for your use cases
-
-### 04. Search Tools
-
-**Location**: [04-search-tools/](04-search-tools)
-
-**What**: Find files by pattern and search file contents
-
-**Key Concepts**:
-- Glob patterns for file finding
-- Grep for content searching
-- Combined search operations
-- Pattern matching techniques
+- `glob` for file pattern matching
+- `grep` for content search with regex
+- `list` for directory listing
+- Combining search operations
+- Ignore patterns and filtering
 
 **Examples**:
 ```bash
 # Find files
 opencode glob "**/*.js"
-opencode glob "src/**/*.{js,ts}"
+opencode glob "src/**/*.{ts,tsx}"
 
 # Search content
 opencode grep "TODO|FIXME"
 opencode grep "function " --include="*.js"
 
-# Combined
-files=$(opencode glob "**/*.py")
-for f in $files; do opencode grep "import " --path="$f"; done
+# List directories
+opencode list "src/" --include="*.js"
 ```
 
-**Installation**: Study patterns and create custom search scripts
+### 04. Bash Integration
 
-### 05. Bash Integration
+**Location**: [04-bash-integration/](04-bash-integration)
 
-**Location**: [05-bash-integration/](05-bash-integration)
-
-**What**: Execute shell commands and combine with opencode operations
+**What**: Executing shell commands through opencode
 
 **Key Concepts**:
-- Shell command execution
-- Workdir parameter usage
-- Command chaining
-- System integration
+- `bash` tool for system operations
+- Command chaining and error handling
+- Working directory management
+- Permission considerations for dangerous commands
 
 **Examples**:
 ```bash
-# Basic commands
-opencode bash "ls -la"
+# Run commands
+opencode bash "npm install"
 opencode bash "git status"
+opencode bash "docker-compose up -d"
 
-# With workdir
-opencode bash "pwd" --workdir="/tmp"
-
-# Chained commands
+# Chained operations
 opencode bash "cd /tmp && pwd"
 ```
 
-**Installation**: Create automation scripts for your workflow
+### 05. Question & Todo Tools
 
-### 06. Task Automation
+**Location**: [05-question-todo/](05-question-todo)
 
-**Location**: [06-task-automation/](06-task-automation)
-
-**What**: Automate repetitive tasks with scripts
+**What**: Interactive workflows and task management
 
 **Key Concepts**:
-- Script creation
-- Error handling
-- User input processing
-- Common automation patterns
+- `question` tool for gathering user input
+- `todowrite` tool for tracking tasks
+- Creating interactive automation
+- Managing multi-step workflows
 
 **Examples**:
 ```bash
-#!/bin/bash
-# automate-code-review.sh
-echo "Starting code review..."
-opencode grep "TODO|FIXME" --include="*.{js,ts,py}"
-opencode bash "npm test"
-echo "Review complete!"
+# opencode will use question to ask:
+# "Which database should we use: PostgreSQL or MySQL?"
+
+# opencode will use todowrite to track:
+# - [ ] Set up database schema
+# - [ ] Implement API endpoints
+# - [ ] Write integration tests
 ```
 
-**Installation**: Copy scripts and customize for your projects
+### 06. Web Tools
 
-### 07. Automation
+**Location**: [06-web-tools/](06-web-tools)
 
-**Location**: [07-automation/](07-automation)
-
-**What**: Advanced automation workflows and integration
+**What**: Web research and content fetching
 
 **Key Concepts**:
-- Complex script design
-- Multiple tool integration
-- Error recovery
-- Production-ready automation
+- `webfetch` for retrieving web pages
+- `websearch` for searching the web
+- Permission requirements for web access
+- Research workflows for development
 
 **Examples**:
 ```bash
-#!/bin/bash
-# deploy-workflow.sh
-ENV=$1
-echo "Deploying to $ENV..."
-opencode bash "npm run build"
-opencode bash "npm test"
-opencode bash "npm run deploy:$ENV"
-opencode bash "curl -s https://app.com/health"
+# opencode can fetch documentation
+# (uses webfetch tool internally)
+
+# opencode can search for solutions
+# (uses websearch tool internally)
 ```
 
-**Installation**: Use as templates for your deployment and CI/CD workflows
+### 07. Skills & Agents
 
-### 08. Advanced Features
+**Location**: [07-skills-agents/](07-skills-agents)
 
-**Location**: [08-advanced-features/](08-advanced-features)
-
-**What**: Power user techniques and optimization
+**What**: Custom capabilities and agent configuration
 
 **Key Concepts**:
-- Performance optimization
-- Advanced patterns
-- Expert techniques
-- Best practices
+- `skill` tool for loading SKILL.md files
+- Creating custom agents in AGENTS.md
+- Agent permissions and capabilities
+- Specialized workflows for different tasks
 
 **Examples**:
 ```bash
-# Parallel processing
-for file in $(opencode glob "**/*.js"); do
-  (opencode edit "$file" --old="old" --new="new" --replaceAll) &
-done
-wait
+# Skill file example (SKILL.md)
+# Provides specialized knowledge for code reviews
 
-# Complex transformations
-opencode read data.json | jq '.items[] | select(.active)' | opencode write active-items.json --content=-
+# Agent configuration (AGENTS.md)
+# Defines agents with specific tool permissions
 ```
 
-**Installation**: Study and apply advanced patterns to your workflow
+### 08. MCP Servers
 
-### 09. Workflows
+**Location**: [08-mcp-servers/](08-mcp-servers)
 
-**Location**: [09-workflows/](09-workflows)
-
-**What**: Complete workflow examples for real-world scenarios
+**What**: Model Context Protocol server integration
 
 **Key Concepts**:
-- End-to-end workflows
-- Production templates
-- Team collaboration
-- Best practice integration
+- Adding MCP servers with `opencode mcp add`
+- Connecting to external tools and APIs
+- GitHub, database, and filesystem MCP servers
+- Authentication and configuration
 
 **Examples**:
-- Code review workflow
-- Deployment pipeline
-- Documentation generation
-- Testing automation
-- Security scanning
+```bash
+# Add MCP servers
+opencode mcp add  # Interactive setup
 
-**Installation**: Use as starting points for your team's workflows
+# List configured servers
+opencode mcp list
+```
+
+### 09. Advanced Features
+
+**Location**: [09-advanced-features/](09-advanced-features)
+
+**What**: Advanced configuration and experimental features
+
+**Key Concepts**:
+- Permission configuration in opencode.json
+- Code formatters (Prettier, Black, etc.)
+- Experimental LSP tool integration
+- Environment variables and settings
+
+**Examples**:
+```json
+// opencode.json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "edit": "ask",
+    "bash": "allow",
+    "webfetch": "deny"
+  }
+}
+```
 
 ### 10. OpenWork Integration
 
 **Location**: [10-openwork/](10-openwork)
 
-**What**: OpenWork platform features and team collaboration
+**What**: OpenWork platform for team collaboration
 
 **Key Concepts**:
-- Team workflow integration
-- CI/CD pipeline setup
-- Production deployment
-- Collaboration tools
+- Setting up remote workspaces
+- Team collaboration features
+- Shared agents and skills
+- Production workflow integration
 
 **Examples**:
 ```bash
-#!/bin/bash
-# team-deployment.sh
-PR=$1
-echo "Processing PR $PR..."
-# Integration with OpenWork APIs
-# Team notification
-# Automated testing
-# Deployment coordination
-```
+# Start OpenWork server
+openwork start --workspace /path/to/project --approval auto
 
-**Installation**: Integrate with your team's OpenWork setup
+# Connect from desktop app
+# (Use provided URL and token)
+```
 
 ## 🎯 Use Case Matrix
 
-| Use Case | Recommended Modules | Example Workflow |
+| Use Case | Recommended Tools | Example Workflow |
 |----------|-------------------|------------------|
-| **Code Review** | 04, 06, 09 | Search → Analysis → Report |
-| **Refactoring** | 03, 04, 07 | Find → Replace → Verify |
-| **CI/CD** | 05, 07, 10 | Build → Test → Deploy → Verify |
-| **Documentation** | 02, 03, 06 | Read → Generate → Format |
-| **Debugging** | 02, 04, 05 | Examine → Search → Test |
-| **Migration** | 03, 04, 07 | Find patterns → Update → Validate |
-| **Team Onboarding** | 01, 02, 09 | Basics → Examples → Workflows |
+| **Code Understanding** | `read`, `grep`, `list` | Read files → Search patterns → Understand structure |
+| **Code Modification** | `edit`, `write` | Find code → Plan changes → Edit files |
+| **Refactoring** | `grep`, `edit` --replaceAll | Search patterns → Batch replace → Verify |
+| **Debugging** | `bash`, `grep`, `read` | Run tests → Search errors → Examine code |
+| **Research** | `webfetch`, `websearch` | Search docs → Fetch content → Apply knowledge |
+| **Team Collaboration** | OpenWork, `/share` | Share conversations → Remote workspaces → Team review |
+| **CI/CD Integration** | `bash`, agents | Build → Test → Deploy → Verify |
 
 ## 🔧 Troubleshooting
 
-### Common Issues and Solutions
+### Common Issues
 
-**Issue**: Command not found  
-**Solution**: Check installation and PATH
+**Issue**: OpenCode won't start  
+**Solution**: Check installation and dependencies
 ```bash
-which opencode
-echo $PATH
+# Verify installation
+opencode --version
+
+# Check Node.js version
+node --version
+
+# Reinstall if needed
+npm install -g opencode-ai
 ```
 
-**Issue**: Permission denied  
-**Solution**: Check file permissions
-```bash
-opencode bash "ls -la /path/to/file"
-opencode bash "test -w /path/to/file && echo 'Writable'"
+**Issue**: Permission denied for tools  
+**Solution**: Configure permissions in opencode.json
+```json
+{
+  "permission": {
+    "edit": "ask",
+    "bash": "allow"
+  }
+}
 ```
 
-**Issue**: String not found in edit  
-**Solution**: Verify exact string
+**Issue**: MCP servers not connecting  
+**Solution**: Check server configuration and authentication
 ```bash
-opencode grep "exact text" --path="file.txt"
-opencode read file.txt | cat -A  # Show invisible characters
+# List MCP servers
+opencode mcp list
+
+# Debug connection
+opencode mcp debug <server-name>
 ```
 
-**Issue**: Large file handling  
-**Solution**: Use limits and offsets
+**Issue**: Web tools not working  
+**Solution**: Enable websearch and check permissions
 ```bash
-opencode read huge.log --limit=100
-opencode bash "head -100 huge.log"
+# Enable Exa search
+OPENCODE_ENABLE_EXA=1 opencode
+
+# Or configure in opencode.json
+{
+  "permission": {
+    "websearch": "allow"
+  }
+}
 ```
 
-**Issue**: Search not finding files  
-**Solution**: Check patterns and paths
-```bash
-opencode glob "*"  # Test basic pattern
-opencode bash "find . -name \"*.js\""  # Compare with find
-```
+### Getting Help
+
+- Use `/help` in the TUI
+- Check [OpenCode documentation](https://opencode.ai/docs)
+- Join the [OpenCode Discord](https://opencode.ai/discord)
+- Search [GitHub issues](https://github.com/anomalyco/opencode/issues)
 
 ## 📚 Additional Resources
 
 ### Official Documentation
 
 - [OpenCode Documentation](https://opencode.ai/docs)
-- [OpenWork Platform](https://openwork.ai/docs)
-- [Command Line Basics](https://opencode.ai/docs/basics)
+- [OpenWork Documentation](https://openworklabs.com/docs)
+- [MCP Protocol](https://modelcontextprotocol.io)
 
 ### Learning Resources
 
-- [Interactive Tutorials](https://opencode.ai/learn)
-- [Video Guides](https://opencode.ai/videos)
-- [Community Examples](https://github.com/anomalyco/opencode-examples)
+- [OpenCode Tutorials](https://opencode.ai/learn)
+- [GitHub Repository](https://github.com/anomalyco/opencode)
+- [Example Projects](https://github.com/anomalyco/opencode-examples)
 
-### Community
+### Community & Support
 
+- [Discord Community](https://opencode.ai/discord)
 - [GitHub Discussions](https://github.com/anomalyco/opencode/discussions)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/opencode)
-- [Community Forum](https://community.openwork.ai)
 
 ### Related Projects
 
 - [OpenCode Examples](https://github.com/anomalyco/opencode-examples)
-- [OpenWork Integrations](https://github.com/anomalyco/openwork-integrations)
-- [Automation Templates](https://github.com/anomalyco/automation-templates)
-
-## 🎓 Learning Path Recommendations
-
-### Quick Start (1 hour)
-
-1. **01-basic-commands** (15 min) - Core concepts
-2. **02-file-reading** (15 min) - File examination
-3. **03-file-operations** (15 min) - Basic editing
-4. **04-search-tools** (15 min) - Finding content
-
-### Intermediate (3 hours)
-
-1. **05-bash-integration** (45 min) - Shell commands
-2. **06-task-automation** (45 min) - Script basics
-3. **07-automation** (45 min) - Workflow creation
-4. **08-advanced-features** (45 min) - Optimization
-
-### Advanced (4 hours)
-
-1. **09-workflows** (2 hours) - Real-world examples
-2. **10-openwork** (2 hours) - Platform integration
-
-### Complete Mastery (10-12 hours)
-
-Follow the [Learning Roadmap](LEARNING-ROADMAP.md) for the complete guided path from beginner to expert.
+- [MCP Servers Registry](https://github.com/modelcontextprotocol/servers)
+- [OpenWork Orchestrator](https://github.com/different-ai/openwork-orchestrator)
 
 ---
 

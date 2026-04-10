@@ -1,257 +1,334 @@
-# 01. Basic Commands
+# 01. Basic Commands & TUI
 
 **Location**: `01-basic-commands/`  
 **Level**: Beginner  
 **Time**: 30 minutes  
-**Focus**: Core opencode operations and fundamentals
+**Focus**: OpenCode's terminal user interface and core interaction patterns
 
 ## 📚 Overview
 
-This module covers the fundamental commands and concepts you need to start using opencode effectively. You'll learn how to interact with the opencode CLI, understand basic syntax, and perform essential operations.
+This module introduces you to opencode's primary interface: the Terminal User Interface (TUI). You'll learn how to start opencode, navigate the conversation interface, use slash commands, and understand the basic workflow for AI-assisted coding.
 
 ## 🎯 What You'll Learn
 
-- Core opencode command structure
-- Basic tool usage patterns
-- Common flags and options
-- Getting help and documentation
-- Essential workflows for beginners
+- Starting and navigating the opencode TUI
+- Using slash commands (`/help`, `/undo`, `/redo`, `/share`)
+- File references with `@` symbol
+- Plan mode vs Build mode (Tab key toggle)
+- Basic conversation flow and context management
 
 ## 🚀 Quick Start
 
-### Basic Command Structure
+### Starting OpenCode
 
 ```bash
-# General format
-opencode <tool> [options] [arguments]
+# Start opencode in your project directory
+cd /path/to/your-project
+opencode
 
-# Examples
-opencode read /path/to/file
-opencode edit file.txt --old="text" --new="replacement"
-opencode bash "ls -la"
+# Start with a specific prompt
+opencode "Explain this project's structure"
 ```
 
-### Getting Help
+### Basic TUI Navigation
+
+Once opencode starts, you'll see:
+- **Prompt input** at the bottom for typing requests
+- **Conversation history** showing your dialogue with the AI
+- **Status indicators** showing mode and context
+
+### Essential Slash Commands
 
 ```bash
-# View available tools
-opencode --help
+# Get help
+/help
 
-# Get help for specific tool
-opencode read --help
-opencode edit --help
-opencode bash --help
+# Undo last change
+/undo
+
+# Redo undone change
+/redo
+
+# Share conversation (creates shareable link)
+/share
+
+# Initialize project analysis
+/init
 ```
 
-### Common Operations
+### File References
 
-```bash
-# Check opencode version
-opencode --version
+Reference files in your conversation using `@`:
 
-# List available tools
-opencode --list-tools
-
-# View configuration
-opencode --config
+```
+Look at the authentication code in @src/auth.js
+Explain how this function works in @utils/helpers.ts
 ```
 
 ## 📖 Detailed Topics
 
-### 1. Command Syntax
+### 1. The TUI Interface
 
-OpenCode follows a consistent command structure:
+OpenCode's TUI provides a conversational interface where you work with an AI coding agent:
 
+- **Conversation Flow**: Natural language prompts and responses
+- **Context Awareness**: opencode understands your project structure
+- **Multi-turn Dialogues**: Continue conversations across multiple exchanges
+- **Visual Feedback**: See when opencode is thinking or using tools
+
+### 2. Slash Commands
+
+Slash commands provide quick access to common functions:
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `/help` | Show help and available commands | `/help` |
+| `/undo` | Undo the last change opencode made | `/undo` |
+| `/redo` | Redo a previously undone change | `/redo` |
+| `/share` | Create shareable link to conversation | `/share` |
+| `/init` | Analyze project and create AGENTS.md | `/init` |
+| `/connect` | Configure LLM providers | `/connect` |
+| `/compact` | Reduce context size for long conversations | `/compact` |
+
+### 3. File References with `@`
+
+The `@` symbol lets you reference files in your prompts:
+
+```bash
+# Basic file reference
+@src/index.js
+
+# Multiple files
+@src/utils.js @src/helpers.js
+
+# File with line numbers
+@src/file.js:10-20  # Lines 10-20
 ```
-opencode <tool> [--option=value] [arguments]
-```
 
-**Key Components:**
-- `tool`: The operation to perform (read, edit, write, glob, grep, bash)
-- `options`: Modify tool behavior (--offset, --limit, --include, etc.)
-- `arguments`: Inputs specific to the tool (file paths, patterns, commands)
+**Examples in conversation:**
+- "Explain the authentication logic in `@src/auth.js`"
+- "Compare `@config/dev.json` and `@config/prod.json`"
+- "Fix the bug in `@src/components/Button.js:45`"
 
-### 2. Tool Overview
+### 4. Plan Mode vs Build Mode
 
-| Tool | Purpose | Basic Example |
-|------|---------|---------------|
-| `read` | Read files/directories | `opencode read file.txt` |
-| `edit` | Edit existing files | `opencode edit file.txt --old="a" --new="b"` |
-| `write` | Write new files | `opencode write new.txt --content="text"` |
-| `glob` | Find files by pattern | `opencode glob "**/*.js"` |
-| `grep` | Search file contents | `opencode grep "TODO"` |
-| `bash` | Execute shell commands | `opencode bash "ls -la"` |
+Toggle between modes with the **Tab** key:
 
-### 3. Common Options
+- **Plan Mode** (indicator shows "Plan"): opencode suggests implementation plans without making changes
+- **Build Mode** (indicator shows "Build"): opencode can execute tools and modify files
 
-**Global Options (work with most tools):**
-- `--help`: Show help for the tool
-- `--version`: Show opencode version
-- `--verbose` or `-v`: Show detailed output
-- `--quiet` or `-q`: Reduce output noise
+**Workflow:**
+1. Start in Plan mode (default for complex requests)
+2. Review the implementation plan
+3. Switch to Build mode with Tab
+4. Ask opencode to execute the plan
 
-**Tool-Specific Options:**
-- `read`: `--offset`, `--limit`
-- `edit`: `--replaceAll`
-- `grep`: `--include`, `--path`
-- `bash`: `--workdir`, `--timeout`
+### 5. Conversation Management
+
+- **Context Window**: opencode maintains conversation history
+- **Auto-compact**: Long conversations are automatically summarized
+- **Manual compact**: Use `/compact` to reduce context size
+- **Session persistence**: Conversations are saved and can be resumed
 
 ## 🧪 Hands-on Exercises
 
-### Exercise 1: Explore Basic Commands
+### Exercise 1: Explore the Interface
 
 ```bash
-# 1. Check your opencode version
-opencode --version
+# 1. Start opencode
+cd /path/to/your-project
+opencode
 
-# 2. List available tools
-opencode --list-tools
+# 2. Get help
+/help
 
-# 3. Get help for the read tool
-opencode read --help
+# 3. Ask about project structure
+"What's the overall structure of this project?"
 
-# 4. Try reading the current directory
-opencode read .
+# 4. Try file references
+"Show me the main entry point @src/index.js"
+
+# 5. Exit opencode
+Press Ctrl+C or type /exit
 ```
 
-### Exercise 2: Understand Tool Syntax
+### Exercise 2: Use Basic Commands
 
 ```bash
-# 1. Read a file with options
-opencode read README.md --limit=10
+# 1. Start opencode
+opencode
 
-# 2. Search for patterns
-opencode grep "function" --include="*.js"
+# 2. Make a simple request
+"Create a simple hello world function in a new file"
 
-# 3. Execute a simple bash command
-opencode bash "pwd"
+# 3. If you don't like the change, undo it
+/undo
 
-# 4. Find files by pattern
-opencode glob "*.md"
+# 4. Redo if you change your mind
+/redo
+
+# 5. Share the conversation
+/share
+# Copy the link to share with others
 ```
 
-### Exercise 3: Combine Commands
+### Exercise 3: Plan and Build Workflow
 
 ```bash
-# 1. Chain commands with &&
-opencode bash "cd /tmp && pwd"
+# 1. Start in Plan mode (default for complex requests)
+opencode
 
-# 2. Use command substitution
-FILES=$(opencode glob "**/*.js")
-echo "Found $(echo "$FILES" | wc -l) JavaScript files"
+# 2. Ask for a complex feature
+"Add user authentication with JWT tokens"
 
-# 3. Pipe output between commands
-opencode read large-file.txt --limit=50 | head -20
+# 3. Review the plan opencode creates
+# (It will list files to create/modify without making changes)
+
+# 4. Switch to Build mode
+Press Tab (see indicator change from "Plan" to "Build")
+
+# 5. Execute the plan
+"Go ahead and implement the authentication system"
+```
+
+### Exercise 4: File References Practice
+
+```bash
+# 1. Start in a project with existing code
+opencode
+
+# 2. Reference specific files
+"Explain how error handling works in @src/utils/error.js"
+
+# 3. Compare files
+"Compare the configuration in @config/dev.json and @config/prod.json"
+
+# 4. Reference with line numbers
+"Look at the function starting at @src/components/Modal.js:25"
+
+# 5. Multiple file analysis
+"Check for consistency between @src/api/users.js and @src/api/posts.js"
 ```
 
 ## 📋 Best Practices
 
 ### ✅ Do
 
-- **Start with `--help`** when learning a new tool
-- **Use descriptive arguments** that make commands self-documenting
-- **Test commands in safe environment** before running on important files
-- **Chain commands logically** using `&&` for dependent operations
-- **Use command substitution** to capture output for further processing
+- **Start with `/init`** to let opencode analyze your project
+- **Use Plan mode** for complex features before implementation
+- **Reference files with `@`** for precise context
+- **Use `/undo` frequently** to explore different approaches
+- **Share conversations** with team members for collaboration
+- **Be specific in prompts** for better results
 
 ### ❌ Don't
 
-- **Don't run destructive commands** without backups
-- **Don't ignore error messages** - they provide valuable information
-- **Don't use complex one-liners** when separate commands are clearer
-- **Don't hardcode sensitive information** in commands
-- **Don't skip testing** on non-critical files first
+- **Don't assume opencode knows** about files you haven't referenced
+- **Don't skip Plan mode** for major changes
+- **Don't ignore `/undo`** - it's your safety net
+- **Don't use vague prompts** - be as specific as possible
+- **Don't forget to configure providers** with `/connect` if needed
 
 ## 🔧 Common Use Cases
 
-### 1. Project Exploration
+### 1. Project Onboarding
 
 ```bash
-# Explore a new codebase
-opencode read .  # Root directory
-opencode read src/  # Source code
-opencode glob "**/*.js"  # Find JavaScript files
-opencode grep "TODO\|FIXME"  # Find todos
+# New to a codebase? Let opencode explain it
+opencode
+"What's the overall architecture of this project?"
+"Show me the main components in @src/components/"
+"Explain the build process in @package.json"
 ```
 
-### 2. Quick File Operations
+### 2. Code Understanding
 
 ```bash
-# View file contents
-opencode read config.json
-
-# Make simple edits
-opencode edit script.sh --old="localhost" --new="production-server"
-
-# Create new files
-opencode write notes.md --content="# Meeting Notes\n\n## Agenda\n1. Item one"
+# Understand complex code
+"Explain the data flow in @src/redux/store.js"
+"How does the caching work in @src/utils/cache.js?"
+"What design pattern is used in @src/components/Factory.js?"
 ```
 
-### 3. System Information
+### 3. Debugging Assistance
 
 ```bash
-# Check system status
-opencode bash "uname -a"
-opencode bash "df -h"
-opencode bash "free -h"
+# Get help with debugging
+"I'm getting an error in @src/api/server.js:132, can you help?"
+"The test @tests/user.test.js is failing, suggest fixes"
+"Performance is slow in @src/components/DataGrid.js, optimize it"
+```
 
-# Process information
-opencode bash "ps aux | grep node"
-opencode bash "top -b -n 1 | head -20"
+### 4. Learning and Exploration
+
+```bash
+# Learn from existing code
+"Show me examples of error handling patterns in this codebase"
+"What testing strategies are used in @tests/"
+"How is dependency injection implemented here?"
 ```
 
 ## 🚨 Troubleshooting
 
-### Command Not Found
+### OpenCode Won't Start
 
 ```bash
-# Check if opencode is installed
-which opencode
-
 # Check installation
 opencode --version
 
-# Verify PATH includes opencode
-echo $PATH | grep opencode
+# Verify in project directory
+pwd
+ls -la
+
+# Check for configuration issues
+/connect  # Ensure providers are configured
 ```
 
-### Permission Issues
+### No Response or Freezing
 
 ```bash
+# Check network connectivity
+# Verify API keys are valid
+# Try simpler prompts first
+# Use /compact if conversation is very long
+```
+
+### File References Not Working
+
+```bash
+# Ensure file exists
+ls -la @src/file.js
+
 # Check file permissions
-opencode bash "ls -la /path/to/file"
-
-# Run with appropriate permissions
-sudo opencode read /protected/file  # If needed
+# Use relative paths from project root
+# Try without line numbers first
 ```
 
-### Syntax Errors
+### Slash Commands Not Recognized
 
 ```bash
-# Check command syntax
-opencode --help
-
-# Simplify complex commands
-# Instead of: opencode read file | grep pattern | head -10
-# Try: opencode grep "pattern" --path="file" | head -10
+# Check you're in the TUI (not CLI mode)
+# Type slowly to avoid typos
+# Use /help to see available commands
 ```
 
 ## 📚 Additional Resources
 
-- [OpenCode Official Documentation](https://opencode.ai/docs)
-- [Command Line Basics](https://opencode.ai/docs/basics)
-- [Tool Reference](https://opencode.ai/docs/tools)
+- [OpenCode TUI Documentation](https://opencode.ai/docs/tui)
+- [Getting Started Guide](https://opencode.ai/docs/)
+- [Slash Commands Reference](https://opencode.ai/docs/commands)
+- [File Reference Syntax](https://opencode.ai/docs/tui#file-references)
 
 ## 🎓 Next Steps
 
-Once you're comfortable with basic commands, proceed to:
+Once you're comfortable with the TUI interface, proceed to:
 
-1. **[02-file-reading](02-file-reading)**: Learn to read files and directories effectively
-2. **[03-file-operations](03-file-operations)**: Master file editing and creation
-3. **[04-search-tools](04-search-tools)**: Find files and content efficiently
+1. **[02-file-operations](02-file-operations)**: Learn how opencode reads, edits, and writes files
+2. **[03-search-tools](03-search-tools)**: Master codebase navigation with search tools
+3. **[04-bash-integration](04-bash-integration)**: Learn how opencode executes shell commands
 
 ---
 
-**Ready for more?** Take the Basic Commands Quiz to test your understanding before moving on to the next module.
+**Ready for more?** Practice by exploring different projects and getting comfortable with the conversational workflow.
 
-[← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Next: File Reading →](02-file-reading/README.md)
+[← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Next: File Operations →](02-file-operations/README.md)
