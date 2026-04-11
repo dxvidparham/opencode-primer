@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -28,9 +29,21 @@
 - [🔧 Integration Patterns](#-integration-patterns)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Understand how the `question` tool pauses the LLM to ask for clarification
+- Use the `todowrite` tool to create and track task lists within sessions
+- Recognize when the LLM uses these tools automatically
+- Integrate question and todo patterns into planning workflows
 
 ---
 
@@ -478,6 +491,52 @@ Say: "Make reasonable assumptions for the details" or provide more specifics in 
 
 **Q: Are these CLI commands?**
 No. `question` and `todowrite` are internal LLM tools used automatically.
+
+---
+
+## 🎓 Knowledge Check
+
+**1. When does the LLM use the `question` tool?**
+
+- A) When it can’t find a file
+- B) When it needs clarification before proceeding
+- C) When you type `/question`
+- D) At the start of every session
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — The LLM uses `question` when it encounters ambiguity and needs your input to proceed correctly.
+
+</details>
+
+**2. What does the `todowrite` tool produce?**
+
+- A) A text file in your project
+- B) A visible task list inside the session that tracks progress
+- C) A GitHub issue
+- D) A shell script
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — `todowrite` creates a task list within the session UI that the LLM updates as it completes work.
+
+</details>
+
+**3. Can you directly invoke `question` or `todowrite`?**
+
+- A) Yes, they are slash commands
+- B) Yes, they are CLI commands
+- C) No, they are internal LLM tools used automatically
+- D) Only `todowrite` can be invoked manually
+
+<details>
+<summary>Show answer</summary>
+
+**C)** — Both are LLM-internal tools. You guide their use through natural language (e.g., “Break this into tasks”).
+
+</details>
 
 ---
 

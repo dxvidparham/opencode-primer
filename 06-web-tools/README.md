@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -30,9 +31,22 @@
 - [💻 IDE Integration](#-ide-integration)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Fetch web content using the `webfetch` tool and its permission settings
+- Search the web via Exa AI using the `websearch` tool
+- Share OpenCode sessions via the web interface
+- Understand IDE integration options (VS Code, Cursor, Windsurf)
+- Configure the `webfetch` permission in `opencode.json`
 
 ---
 
@@ -479,6 +493,52 @@ No — anyone with the URL can view them. Don't share sessions containing secret
 
 **Q: Can I use the web UI remotely?**
 Yes. Run `opencode web --hostname 0.0.0.0` and set `OPENCODE_SERVER_PASSWORD` for auth. Access from any browser on the network.
+
+---
+
+## 🎓 Knowledge Check
+
+**1. What permission must be set to enable the `webfetch` tool?**
+
+- A) `"web": "allow"`
+- B) `"webfetch": true`
+- C) `"webfetch"` in the `permission` section of `opencode.json`
+- D) No permission needed — it’s always available
+
+<details>
+<summary>Show answer</summary>
+
+**C)** — The `webfetch` permission must be configured in `opencode.json`. Set it to `"allow"` or `"ask"`.
+
+</details>
+
+**2. What does the `websearch` tool require to function?**
+
+- A) A Google API key
+- B) The `OPENCODE_ENABLE_EXA=1` environment variable
+- C) A paid OpenWork subscription
+- D) Chrome browser installed
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — `websearch` uses Exa AI and requires the `OPENCODE_ENABLE_EXA=1` environment variable to be set.
+
+</details>
+
+**3. How can you share an OpenCode session with a colleague?**
+
+- A) Export as PDF
+- B) Copy-paste the terminal output
+- C) Use `/share` to generate a shareable web link
+- D) Email the `.opencode/sessions/` directory
+
+<details>
+<summary>Show answer</summary>
+
+**C)** — The `/share` slash command generates a web link that others can view.
+
+</details>
 
 ---
 

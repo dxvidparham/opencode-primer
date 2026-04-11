@@ -80,7 +80,7 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 | **💡 Examples**     | Basic snippets             | Production-ready workflows         |
 | **🗺️ Organization** | Feature-organized          | Progressive learning path          |
 | **🧭 Guidance**     | Self-directed              | Guided roadmap with time estimates |
-| **📝 Assessment**   | None                       | Interactive quizzes to find gaps   |
+| **📝 Assessment**   | None                       | Knowledge checks & skills checklist |
 | **🖼️ Visuals**      | Minimal                    | Diagrams, flowcharts, screenshots  |
 | **🔧 Templates**    | None                       | Copy-paste workflows               |
 
@@ -97,8 +97,8 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 - **🗺️ Guided learning path** from beginner to power user with time estimates
 - **🤝 OpenWork integration** guidance for team collaboration workflows
 - **🛡️ Troubleshooting guides** for common issues in each module
-- **🧪 Knowledge checks & quizzes** to validate understanding
-- **📊 Progress tracking** to monitor your learning journey
+- **🧪 Knowledge checks** in every module to validate understanding
+- **📊 [Skills checklist](SKILLS-CHECKLIST.md)** to track hands-on proficiency
 
 </details>
 
@@ -146,7 +146,7 @@ The real power is in **combining features**. Learn to wire bash + file operation
 
 ### 🧪 5. Test Your Understanding
 
-Take **quizzes after each module** to pinpoint what you missed and fill gaps fast.
+Complete the **Knowledge Check at the end of each module** to pinpoint what you missed, then track your progress on the **[Skills Checklist](SKILLS-CHECKLIST.md)**.
 
 ### 🏆 6. Master OpenCode
 
@@ -552,7 +552,7 @@ MIT License — see [LICENSE](LICENSE). Free to use, modify, and distribute.
 
 <div align="center">
 
-**[Start Learning](LEARNING-ROADMAP.md)** • **[Quick Reference](QUICK-REFERENCE.md)** • **[Troubleshooting](TROUBLESHOOTING.md)** • **[Catalog](CATALOG.md)**
+**[Start Learning](LEARNING-ROADMAP.md)** • **[Quick Reference](QUICK-REFERENCE.md)** • **[Skills Checklist](SKILLS-CHECKLIST.md)** • **[Troubleshooting](TROUBLESHOOTING.md)** • **[Catalog](CATALOG.md)**
 
 **Last Updated:** April 2026 • **OpenCode Version:** 1.0+
 

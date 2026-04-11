@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -32,6 +33,19 @@
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Find files by name or pattern using the `glob` tool
+- Search file contents with regex using the `grep` tool
+- Perform semantic code search across a codebase with `codesearch`
+- List directory contents with the `list` tool
+- Choose the right search tool for different scenarios
+- Chain search results into editing workflows
 
 ---
 
@@ -506,6 +520,50 @@ OpenCode's grep tool may filter differently than shell grep (e.g., respecting .g
 - ✅ Trigger them via **natural language prompts** in the TUI
 - ✅ Use **shell equivalents** (`find`, `grep`, `ls`) for direct command-line searches
 - ✅ Combine search operations for powerful code analysis
+
+### 🎓 Knowledge Check
+
+**1. Which tool should you use to find all TypeScript files in a project?**
+
+- A) `grep`
+- B) `codesearch`
+- C) `glob`
+- D) `list`
+
+<details>
+<summary>Show answer</summary>
+
+**C) `glob`** — `glob` finds files by name/path pattern (e.g., `**/*.ts`). `grep` searches inside file contents.
+
+</details>
+
+**2. What’s the difference between `grep` and `codesearch`?**
+
+- A) `grep` is faster, `codesearch` is slower
+- B) `grep` matches exact regex patterns, `codesearch` matches semantic meaning
+- C) `grep` searches filenames, `codesearch` searches contents
+- D) They are the same tool
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — `grep` finds exact regex matches in file contents. `codesearch` uses semantic indexing to find code by meaning, even if the exact words differ.
+
+</details>
+
+**3. You want to find everywhere a function called `processOrder` is used. Which tool is best?**
+
+- A) `glob`
+- B) `grep`
+- C) `list`
+- D) `read`
+
+<details>
+<summary>Show answer</summary>
+
+**B) `grep`** — `grep` searches file contents for a specific string or regex pattern, ideal for finding function references.
+
+</details>
 
 ---
 

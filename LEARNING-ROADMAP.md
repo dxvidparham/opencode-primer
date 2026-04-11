@@ -504,20 +504,28 @@ opencode web  # Start web interface for browser access
 
 ## 🧪 Test Your Knowledge
 
-This repository includes quizzes you can use to evaluate your understanding:
+Every module includes a **Knowledge Check** section with multiple-choice questions and hidden solutions. Use these to validate your understanding before moving on:
 
-| Quiz                     | Purpose                                             |
-| ------------------------ | --------------------------------------------------- |
-| **Basic Commands Quiz**  | Test your understanding of core opencode operations |
-| **File Operations Quiz** | Evaluate your file editing and writing skills       |
-| **Search Tools Quiz**    | Test your ability to find files and content         |
-| **Automation Quiz**      | Evaluate your workflow creation skills              |
+| Module | Knowledge Check | Tests |
+| ------ | --------------- | ----- |
+| **[01. Basic Commands](01-basic-commands/#-what-youve-learned)** | Agent switching, file references, slash commands, undo | Beginner |
+| **[02. File Operations](02-file-operations/#-what-youve-learned)** | Edit vs write tools, file context, undo workflow | Beginner |
+| **[03. Search Tools](03-search-tools/#-what-youve-learned)** | glob vs grep vs codesearch, tool selection | Intermediate |
+| **[04. Bash Integration](04-bash-integration/#-what-youve-learned)** | Permissions, allowlists, execution context | Intermediate |
+| **[05. Question & Todo](05-question-todo/#-knowledge-check)** | Tool triggers, todowrite output, invocation | Intermediate |
+| **[06. Web Tools](06-web-tools/#-knowledge-check)** | Permissions, Exa setup, session sharing | Intermediate |
+| **[07. Skills & Agents](07-skills-agents/#-knowledge-check)** | Agent roles, skill files, tool restrictions | Advanced |
+| **[08. MCP Servers](08-mcp-servers/#-knowledge-check)** | Transport protocols, config location, per-agent control | Advanced |
+| **[09. Advanced Features](09-advanced-features/#-knowledge-check)** | Checkpoints, plugins, formatters | Advanced |
+| **[10. OpenWork](10-openwork/#-knowledge-check)** | OpenCode vs OpenWork, messaging, self-hosted setup | Advanced |
 
-**Examples:**
+For a complete skills checklist, see [SKILLS-CHECKLIST.md](SKILLS-CHECKLIST.md).
 
-- Take the Basic Commands Quiz after completing Level 1
-- Take the Automation Quiz after completing Level 3
-- Use quizzes to identify gaps in your knowledge
+**Recommended approach:**
+
+- Complete the Knowledge Check after each module before proceeding
+- If you score below 2/3, review the module's Core Concepts section
+- Use the [Skills Checklist](SKILLS-CHECKLIST.md) to track hands-on proficiency
 
 ---
 

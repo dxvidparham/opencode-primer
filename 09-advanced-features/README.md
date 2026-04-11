@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [🔌 Plugin System](#-plugin-system)
@@ -32,9 +33,22 @@
 - [🌐 Environment Variables](#-environment-variables)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Write and register custom tool plugins in TypeScript or Python
+- Configure granular permissions for built-in and custom tools
+- Set up code formatters and LSP integration for automated quality checks
+- Use checkpoints and undo/redo to navigate session history
+- Customize OpenCode's behavior through advanced configuration and environment variables
 
 ---
 
@@ -851,6 +865,52 @@ Yes. OpenCode reads `CLAUDE.md` and `~/.claude/CLAUDE.md` as fallbacks if no `AG
 
 **Q: What's the difference between plugins and custom tools?**
 Plugins hook into events and modify OpenCode's behavior. Custom tools define new functions the LLM can call during conversations.
+
+---
+
+## 🎓 Knowledge Check
+
+**1. What does the `/undo` command actually do under the hood?**
+
+- A) Sends `Ctrl+Z` to the terminal
+- B) Reverts OpenCode’s last file change using Git checkpoints
+- C) Clears the chat history
+- D) Resets the session
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — OpenCode creates Git-like checkpoints after each change. `/undo` rolls back to the previous checkpoint.
+
+</details>
+
+**2. How does a custom tool plugin get registered with OpenCode?**
+
+- A) Copy it to `/usr/local/lib/opencode/plugins/`
+- B) Add it to the `"plugins"` section in `opencode.json` with a command to run
+- C) Install it with `opencode plugin install`
+- D) Import it in a `.opencode/init.ts` file
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — Plugins are registered in the `"plugins"` section of `opencode.json`, specifying the command that starts the plugin process.
+
+</details>
+
+**3. What is the purpose of the `"formatter"` configuration?**
+
+- A) It formats LLM responses for display
+- B) It runs a code formatter on files after the LLM edits them
+- C) It formats the chat log for export
+- D) It applies syntax highlighting
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — The `"formatter"` config specifies commands (like `prettier`, `biome`) that run automatically on files after the LLM modifies them, keeping code style consistent.
+
+</details>
 
 ---
 

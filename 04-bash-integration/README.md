@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -32,6 +33,18 @@
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Understand how the `bash` tool lets the LLM execute shell commands
+- Configure `bash` permissions (`allow`, `ask`, `deny`) in `opencode.json`
+- Use command allowlists to restrict which commands the LLM can run
+- Combine bash execution with file and search tools in multi-step workflows
+- Run build, test, and deployment commands through the LLM
 
 ---
 
@@ -513,6 +526,50 @@ opencode
 - ✅ Use the **`!` prefix** in the TUI for direct command execution
 - ✅ Configure **permissions** in `opencode.json` for safety
 - ✅ The LLM can **chain commands** and interpret results
+
+### 🎓 Knowledge Check
+
+**1. What does the `"ask"` permission for the `bash` tool do?**
+
+- A) The LLM never runs commands
+- B) The LLM runs commands without confirmation
+- C) The LLM asks you to approve each command before running it
+- D) The LLM only runs allowed commands
+
+<details>
+<summary>Show answer</summary>
+
+**C)** — With `"ask"`, the LLM presents the command and waits for your approval before executing it.
+
+</details>
+
+**2. How do you restrict the LLM to only run `npm test` and `npm run build`?**
+
+- A) Set `bash` permission to `"deny"`
+- B) Use an allowlist: `"bash": ["npm test", "npm run build"]`
+- C) There’s no way to restrict specific commands
+- D) Set `bash` to `"allow"` and hope for the best
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — Providing an array of commands as the `bash` permission value creates an allowlist. Only those exact commands (or prefix matches) are permitted.
+
+</details>
+
+**3. Where does a `bash` command execute relative to your project?**
+
+- A) Your home directory
+- B) The system root
+- C) The project root (where you ran `opencode`)
+- D) A temporary directory
+
+<details>
+<summary>Show answer</summary>
+
+**C)** — Bash commands execute in the project root directory, which is where you launched OpenCode.
+
+</details>
 
 ---
 

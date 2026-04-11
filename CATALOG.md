@@ -27,6 +27,47 @@ Complete reference of opencode's built-in tools, modules, and learning resources
 | **[09. Advanced Features](09-advanced-features)** | Advanced      | 1.5 hours | Plugins & config       | Plugins, custom tools, permissions     |
 | **[10. OpenWork Integration](10-openwork)**       | Advanced      | 1 hour    | Team collaboration     | Desktop app, Slack, automations, Cloud |
 
+### How It All Fits Together
+
+```mermaid
+flowchart TD
+  subgraph "Your Prompt"
+    P["Natural Language Input"]
+  end
+
+  subgraph "Agents (M07)"
+    A1["Plan Agent\n(read-only analysis)"]
+    A2["Build Agent\n(full tool access)"]
+    A3["Explore Agent\n(read-only research)"]
+  end
+
+  subgraph "Built-in Tools"
+    direction LR
+    F["File Tools (M02)\nread · edit · write\nmultiedit · apply_patch"]
+    S["Search Tools (M03)\nglob · grep\ncodesearch · list"]
+    B["Bash (M04)\nshell commands"]
+    I["Interactive (M05)\nquestion · todowrite"]
+    W["Web (M06)\nwebfetch · websearch"]
+  end
+
+  subgraph "Extensions"
+    SK["Skills (M07)\nSKILL.md files"]
+    MCP["MCP Servers (M08)\nGitHub · Sentry · DBs"]
+    PL["Plugins (M09)\ncustom tools"]
+  end
+
+  subgraph "OpenWork (M10)"
+    OW["Desktop App · Messaging\nBrowser · Cloud · Teams"]
+  end
+
+  P --> A1 & A2 & A3
+  A2 --> F & S & B & I & W
+  A1 --> S
+  A3 --> S & F
+  A2 --> SK & MCP & PL
+  A2 --> OW
+```
+
 ## 🛠️ OpenCode Built-in Tools
 
 OpenCode provides these core tools that AI agents can use:

@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -33,6 +34,19 @@
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Use the `read` tool to view files and directory listings
+- Apply the `edit` and `multiedit` tools to modify existing code
+- Create new files with the `write` tool
+- Apply unified diffs with `apply_patch` for complex multi-hunk edits
+- Use `@file` references to feed specific files into the LLM context
+- Combine file tools in multi-step refactoring workflows
 
 ---
 
@@ -511,6 +525,49 @@ Check your `opencode.json` permission settings:
 - ✅ Use **`/undo`** to revert any change
 - ✅ Use **`opencode run`** for non-interactive file operations
 
+### 🎓 Knowledge Check
+
+**1. Which tool should the LLM use to make a small, targeted change to an existing file?**
+
+- A) `write`
+- B) `edit`
+- C) `read`
+- D) `bash`
+
+<details>
+<summary>Show answer</summary>
+
+**B) `edit`** — The `edit` tool modifies specific sections of an existing file. `write` creates or overwrites an entire file.
+
+</details>
+
+**2. What happens if you ask the LLM to edit a file without providing file context?**
+
+- A) It fails immediately
+- B) It uses `read` or `glob` first to find the file
+- C) It creates a new file
+- D) It asks you to provide the file path
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — The LLM reads the file first (using `read` or search tools) to understand its contents, then applies the edit.
+
+</details>
+
+**3. How do you undo a file change made by OpenCode?**
+
+- A) `Ctrl+Z`
+- B) `/undo`
+- C) `git checkout`
+- D) You can’t
+
+<details>
+<summary>Show answer</summary>
+
+**B) `/undo`** — The `/undo` slash command reverts OpenCode’s last file modification.
+
+</details>
 ---
 
 ## 🚶 Next Steps

@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -33,9 +34,23 @@
 - [☁️ OpenWork Cloud](#️-openwork-cloud)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Install and connect the OpenWork desktop app with your LLM provider
+- Deploy a self-hosted OpenWork instance using `openwork-orchestrator`
+- Import and share skills, templates, and configurations via share links
+- Set up Slack and Telegram messaging bots via `opencode-router`
+- Configure browser automation through Chrome DevTools MCP
+- Understand OpenWork Cloud features (teams, RBAC, shared workspaces)
 
 ---
 
@@ -761,6 +776,52 @@ Browser automation via Chrome DevTools MCP. It can perform browser actions and t
 
 **Q: Where are the docs?**
 [openworklabs.com/docs](https://openworklabs.com/docs)
+
+---
+
+## 🎓 Knowledge Check
+
+**1. What is the relationship between OpenCode and OpenWork?**
+
+- A) They are competing products
+- B) OpenWork is a desktop app and team layer built on top of OpenCode
+- C) OpenCode is a plugin for OpenWork
+- D) They are the same product with different names
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — OpenCode is the CLI/TUI coding agent. OpenWork adds a desktop GUI, multi-LLM support, team collaboration, and messaging on top of it.
+
+</details>
+
+**2. What tool bridges Slack and Telegram messages into OpenCode sessions?**
+
+- A) `openwork-orchestrator`
+- B) `opencode-router`
+- C) `openwork-server`
+- D) The desktop app
+
+<details>
+<summary>Show answer</summary>
+
+**B) `opencode-router`** — It’s a standalone messaging bridge that routes Slack and Telegram messages into OpenCode sessions.
+
+</details>
+
+**3. How do you connect the desktop app to a remote self-hosted instance?**
+
+- A) SSH into the server
+- B) Click **Add a worker > Connect remote** and enter the URL + owner token
+- C) Import a `.openwork` config file
+- D) Sync via Git
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — After running `openwork start` on the server, click **Add a worker > Connect remote** in the desktop app and paste the URL and owner token.
+
+</details>
 
 ---
 

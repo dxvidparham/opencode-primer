@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -33,9 +34,23 @@
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Explain what MCP (Model Context Protocol) is and why it matters
+- Configure local MCP servers (stdio) in `opencode.json`
+- Connect remote MCP servers using SSE transport with OAuth
+- Restrict which MCP servers are available to specific agents
+- Set tool-level permissions for MCP tools
+- Work with common MCP servers (GitHub, Sentry, databases)
 
 ---
 
@@ -766,6 +781,52 @@ export GITHUB_TOKEN='your_token'
 - Check that the server package is up to date
 - Verify environment variables are correctly set
 - Check server logs via `opencode mcp debug`
+
+---
+
+## 🎓 Knowledge Check
+
+**1. What transport protocol do local MCP servers typically use?**
+
+- A) HTTP
+- B) WebSocket
+- C) stdio (standard input/output)
+- D) gRPC
+
+<details>
+<summary>Show answer</summary>
+
+**C) stdio** — Local MCP servers communicate via stdin/stdout. Remote servers use SSE (Server-Sent Events) over HTTP.
+
+</details>
+
+**2. Where do you configure MCP servers for a project?**
+
+- A) `~/.opencode/mcp.json`
+- B) The `"mcp"` section in `opencode.json`
+- C) `.mcp/config.yaml`
+- D) Environment variables only
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — MCP servers are configured in the `"mcp"` section of your project’s `opencode.json` (or `opencode.jsonc`).
+
+</details>
+
+**3. How do you restrict an MCP server so only the Build agent can use it?**
+
+- A) Set `"permission": "build-only"` on the MCP server
+- B) Configure the agent’s `"tools"` map to disable MCP tools for other agents
+- C) Use the `"agent"` field in the MCP server config
+- D) You can’t — all agents share all MCP servers
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — Use the `"tools"` boolean map in each agent’s definition to control which MCP tools are available per agent.
+
+</details>
 
 ---
 

@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -33,6 +34,19 @@
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Launch OpenCode in both TUI (interactive) and CLI (one-shot) modes
+- Navigate the TUI interface and understand its key areas (input, chat, status bar)
+- Write effective prompts that guide the LLM to produce useful results
+- Use slash commands (`/clear`, `/compact`, `/model`) to control sessions
+- Reference files with `@file` syntax to give the LLM targeted context
+- Create and apply a basic `opencode.json` configuration to a project
 
 ---
 
@@ -187,6 +201,30 @@ opencode
 ```
 
 **Expected:** `/help` shows a popup or list with commands like `/undo`, `/redo`, `/share`, `/compact`, etc.
+
+---
+
+## 🏗️ Recommended Workspace Layout
+
+As you work through the primer, keep your learning organized with this folder structure:
+
+```
+opencode-learning/              # your top-level folder
+├── opencode-primer/            # this repository (git clone)
+│   ├── 01-basic-commands/
+│   ├── 02-file-operations/
+│   └── ...
+├── opencode-practice/          # your hands-on practice project
+│   ├── .opencode/              # skills, agents, commands (M07+)
+│   │   ├── skills/
+│   │   ├── agents/
+│   │   └── commands/
+│   ├── opencode.json           # project config (M01+)
+│   └── src/                    # sample code to work with
+└── notes/                      # your personal notes (optional)
+```
+
+The key principle: keep the primer repo (reference) separate from your practice project (hands-on). This mirrors how you'll use OpenCode in real projects — one workspace per project, each with its own `opencode.json`.
 
 ---
 

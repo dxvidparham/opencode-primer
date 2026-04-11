@@ -20,6 +20,7 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
+- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -29,9 +30,22 @@
 - [📝 Custom Commands](#-custom-commands)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
+
+---
+
+## 📖 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Describe OpenCode's three built-in agents (Plan, Build, Explore) and their roles
+- Create workspace-level skills using Markdown files with YAML frontmatter
+- Define custom agents with tool restrictions and custom system prompts
+- Create custom slash commands that invoke specific agent+prompt combinations
+- Organize skills and agents in the `.opencode/` directory structure
 
 ---
 
@@ -643,6 +657,52 @@ Both work. Markdown files (`.opencode/agents/`) use YAML frontmatter for options
 
 **Q: Can custom commands override built-in ones?**
 Yes. If you create a command with the same name as a built-in slash command, yours takes precedence.
+
+---
+
+## 🎓 Knowledge Check
+
+**1. What are OpenCode’s three built-in agents?**
+
+- A) Read, Write, Execute
+- B) Plan, Build, Explore
+- C) Search, Edit, Deploy
+- D) Ask, Code, Test
+
+<details>
+<summary>Show answer</summary>
+
+**B) Plan, Build, Explore** — Plan analyzes without editing, Build has full tool access, and Explore is a read-only research agent.
+
+</details>
+
+**2. Where should you place a workspace-level skill file?**
+
+- A) `~/.config/opencode/skills/`
+- B) `.opencode/skills/<skill-name>/SKILL.md`
+- C) `opencode.json`
+- D) `.opencode/agents/`
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — Skills are Markdown files with YAML frontmatter placed at `.opencode/skills/<skill-name>/SKILL.md`.
+
+</details>
+
+**3. What is the purpose of the `tools` field in a custom agent definition?**
+
+- A) It lists tools the agent must always use
+- B) It restricts which tools the agent is allowed to access
+- C) It installs new tools
+- D) It defines keyboard shortcuts
+
+<details>
+<summary>Show answer</summary>
+
+**B)** — The `tools` field in an agent definition is a boolean map that restricts which tools are available. Setting a tool to `false` denies that agent access to it.
+
+</details>
 
 ---
 
