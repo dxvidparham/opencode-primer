@@ -27,7 +27,7 @@
 - [🌐 Self-Hosted Setup](#-self-hosted-setup)
 - [📦 Importing & Sharing Skills](#-importing--sharing-skills)
 - [🌍 Browser Automation (Computer Use)](#-browser-automation-computer-use)
-- [💬 Slack Integration](#-slack-integration)
+- [💬 Messaging Integration (Slack & Telegram)](#-messaging-integration-slack--telegram)
 - [⏰ Task Automation](#-task-automation)
 - [🔌 MCP Servers in OpenWork](#-mcp-servers-in-openwork)
 - [☁️ OpenWork Cloud](#️-openwork-cloud)
@@ -56,8 +56,8 @@ flowchart TD
     E["Desktop GUI"] --> A
     F["Multi-LLM Support\n(50+ models)"]
     G["Browser Automation\n(Chrome DevTools)"]
-    H["Slack Integration"]
-    I["Task Scheduling\n(cron-like)"]
+    H["Messaging\n(Slack & Telegram)"]
+    I["Task Automation"]
     J["Skill Sharing\n(share links)"]
     K["Cloud: Teams, RBAC\nShared Workspaces"]
   end
@@ -65,16 +65,17 @@ flowchart TD
   style E fill:#6cf,stroke:#333
 ```
 
-| Feature                 | Description                                                 |
-| ----------------------- | ----------------------------------------------------------- |
-| **Desktop App**         | GUI for OpenCode with multi-LLM support                     |
-| **Bring Your Own Keys** | Use API keys from any provider (Anthropic, OpenAI, etc.)    |
-| **Skill Sharing**       | Share and import skills, MCPs, and configs via links        |
-| **Browser Automation**  | Chrome browser control via natural language                 |
-| **Slack Integration**   | Connect a Slack bot to your workspace                       |
-| **Task Automation**     | Schedule prompts to run on a cron                           |
-| **Self-Hosted**         | Run on your own infrastructure with `openwork-orchestrator` |
-| **Cloud (Teams)**       | Shared workspaces, skill hubs, RBAC, team templates         |
+| Feature                 | Description                                                         |
+| ----------------------- | ------------------------------------------------------------------- |
+| **Desktop App**         | GUI for OpenCode with multi-LLM support (Tauri 2.x + SolidJS)      |
+| **Bring Your Own Keys** | Use API keys from any provider (Anthropic, OpenAI, etc.)            |
+| **Skill Sharing**       | Share and import skills, MCPs, and configs via links                |
+| **Browser Automation**  | Chrome browser control via Chrome DevTools MCP                      |
+| **Messaging**           | Connect Slack and Telegram bots via `opencode-router`               |
+| **Task Automation**     | Schedule prompts to run on a schedule                               |
+| **Self-Hosted**         | Run on your own infrastructure with `openwork-orchestrator`         |
+| **Sandbox Mode**        | Run inside Docker or Apple container boundaries                     |
+| **Cloud (Teams)**       | Shared workspaces, skill hubs, RBAC, managed LLM providers         |
 
 OpenWork is powered by [OpenCode](https://opencode.ai/) — everything you've learned in Modules 01–09 applies.
 
@@ -98,10 +99,12 @@ opencode             # Start the TUI
 
 Most users start with the free desktop app:
 
-1. Download from [openworklabs.com](https://openworklabs.com/)
+1. Download from [openworklabs.com](https://openworklabs.com/) (macOS and Linux)
 2. Install and launch
 3. Open **Settings > Connect Provider** and connect your LLM (Anthropic, OpenAI, etc.)
 4. Start chatting — all OpenCode features work through the GUI
+
+> **Windows**: Windows access currently requires a paid support plan. See [openworklabs.com/pricing#windows-support](https://openworklabs.com/pricing#windows-support).
 
 ### Option 2: Self-Hosted CLI
 
@@ -174,6 +177,25 @@ Pull the model first with `ollama pull qwen3:8b` and make sure the Ollama server
 
 Enable web search via **Settings > Advanced > Enable Exa**.
 
+### Templates
+
+Save and re-run common workflows (stored locally):
+
+1. After a successful conversation, click **Save as Template**
+2. Name the template and add a description
+3. Re-run from **Templates** in the sidebar
+
+### Plugin Management
+
+OpenWork manages OpenCode plugins from the **Skills** tab in the desktop app. Adding or removing a plugin reads and writes the workspace `opencode.json` file, so changes are reflected in both the desktop app and the CLI.
+
+### Debug Exports
+
+If something goes wrong, export diagnostic info from **Settings > Debug**:
+
+- **Runtime debug report** — snapshot of current config, loaded plugins, and provider state
+- **Developer log stream** — live logs for troubleshooting
+
 ---
 
 ## 🌐 Self-Hosted Setup
@@ -219,15 +241,63 @@ This outputs:
 ### Step 3: Connect the Desktop App
 
 1. Open the OpenWork desktop app
-2. Click **+ Add workspace** (bottom left)
-3. Click **+ Connect Remote workspace**
-4. Enter the URL and Owner Token from Step 2
+2. Click **Add a worker** (bottom left)
+3. Click **Connect remote**
+4. Enter the URL and token from Step 2
 
 ### What This Gives You
 
 - Code and services stay on the remote machine
 - Your local machine stays lightweight
 - Hardware isolation between the AI workspace and your local machine
+
+### Headless Mode
+
+Run without a TUI (useful for CI or remote servers):
+
+```bash
+openwork serve --workspace /path/to/project --approval auto
+```
+
+This starts in log-only mode — no interactive interface, just stdout logs.
+
+### Sandbox Mode
+
+Run inside an isolated container for untrusted code:
+
+```bash
+# Docker sandbox (Linux / macOS)
+openwork start --workspace /path/to/project --sandbox docker
+
+# Apple container (arm64 Mac only)
+openwork start --workspace /path/to/project --sandbox container
+
+# Auto-detect best available backend
+openwork start --workspace /path/to/project --sandbox auto
+```
+
+Mount additional paths into the sandbox with `--sandbox-mount`:
+
+```bash
+openwork start --workspace /path/to/project --sandbox docker \
+  --sandbox-mount /path/to/shared-data
+```
+
+### Multi-Workspace Daemon
+
+Manage multiple workspaces from a single long-running process:
+
+```bash
+# Start the daemon
+openwork daemon start
+
+# Add workspaces
+openwork workspace add /path/to/project-a
+openwork workspace add /path/to/project-b
+
+# List managed workspaces
+openwork workspace list
+```
 
 ---
 
@@ -316,18 +386,35 @@ The agent navigates the browser, performs actions, takes screenshots as proof, a
 
 ---
 
-## 💬 Slack Integration
+## 💬 Messaging Integration (Slack & Telegram)
 
-Connect a Slack bot to your OpenWork workspace so your team can interact with the agent directly from Slack.
+OpenWork can connect to Slack and Telegram through **`opencode-router`** — a standalone messaging bridge that routes chat messages into OpenCode sessions.
 
-> **Recommendation**: Set up the Slack bot with a remote workspace (not your local machine) for hardware isolation. For team use, host the runtime in an OpenWork Cloud [shared workspace](https://openworklabs.com/docs/cloud-shared-workspaces).
+```mermaid
+flowchart LR
+  S["Slack"] --> R["opencode-router"]
+  T["Telegram"] --> R
+  R -->|"(channel, identity, peer)\n→ directory"| OC["OpenCode"]
+  OC --> R
+  R --> S
+  R --> T
+```
 
-### Prerequisites
+> **Recommendation**: Host the runtime on a remote server (not your local machine) for hardware isolation. For team use, host in an OpenWork Cloud shared workspace.
 
-- Slack owner, admin, or sufficient permission to add apps
-- A running OpenWork workspace (local or remote)
+### Installing opencode-router
 
-### Setup
+```bash
+# npm global install
+npm install -g opencode-router
+
+# Or one-command install script
+curl -fsSL https://raw.githubusercontent.com/different-ai/openwork/dev/apps/opencode-router/install.sh | bash
+```
+
+### Slack Setup (Socket Mode)
+
+**Prerequisites**: Slack owner/admin permissions, a running OpenWork workspace.
 
 1. **Create a Slack app** at [api.slack.com/apps](https://api.slack.com/apps?new_app=1) → **Create New App** → **From a manifest** → pick your workspace
 2. **Install to Workspace**: Sidebar → **Install App** → **Install to Workspace** → authorize
@@ -335,13 +422,16 @@ Connect a Slack bot to your OpenWork workspace so your team can interact with th
 4. **Generate an App-Level Token**: Sidebar → **Basic Information** → **App-Level Tokens** → add scope `connections:write` → generate. Copy the `xapp-` token.
 5. **In OpenWork**: Paste both tokens into **Settings > Messaging**
 
-### Testing
+Or configure via CLI:
 
-Send a message to the bot using `@bot-name`. It creates a new session and responds.
+```bash
+opencode-router slack add <xoxb-token> <xapp-token> --id default
+```
 
-### Manifest Template
+**Testing:** Send a message to the bot using `@bot-name`. It creates a new session and responds in a thread.
 
-Use this as your Slack app manifest:
+<details>
+<summary><strong>Slack App Manifest Template</strong></summary>
 
 ```yaml
 display_information:
@@ -378,6 +468,40 @@ settings:
   org_deploy_enabled: false
   socket_mode_enabled: true
   token_rotation_enabled: false
+```
+
+</details>
+
+### Telegram Setup
+
+1. Create a bot via [@BotFather](https://t.me/BotFather) on Telegram
+2. Copy the bot token
+3. Configure via CLI or in the desktop app:
+
+```bash
+# Via CLI
+opencode-router telegram add <bot-token> --id default
+
+# Or via environment variable
+export TELEGRAM_BOT_TOKEN=<bot-token>
+```
+
+1. In OpenWork: Paste the token into **Settings > Messaging > Telegram**
+
+**Testing:** Send a message to your bot. It creates a session and responds.
+
+> **Note**: Telegram targets use numeric `chat_id` values (not `@username`). Private bots may require first-chat pairing with `/pair <code>` before accepting commands.
+
+### Identity-Scoped Routing
+
+The router maps messages to workspaces based on `(channel, identityId, peerId)` bindings. This lets different chats route to different projects:
+
+```bash
+# Bind a Telegram chat to a specific workspace
+opencode-router bindings set --channel telegram --identity default --peer <chatId> --dir /path/to/workspace
+
+# List all bindings
+opencode-router bindings list
 ```
 
 ---
@@ -551,7 +675,7 @@ openwork start --workspace ~/my-project --approval auto
 # Copy URL and token, connect from the desktop app
 ```
 
-**Expected:** Terminal outputs an OpenWork URL (`https://...`) and an Owner Token. In the desktop app, **Add workspace > Connect Remote workspace** and paste both values. You should see your remote project's files.
+**Expected:** Terminal outputs an OpenWork URL (`https://...`) and an Owner Token. In the desktop app, **Add a worker > Connect remote** and paste both values. You should see your remote project's files.
 
 ### Exercise 3: Import a Skill
 
@@ -607,7 +731,7 @@ flowchart TD
   A["Create a skill\n(commit-helper)"] --> B["Share it via link"]
   B --> C["Teammate imports it"]
   C --> D["Both use /commit\nwith consistent messages"]
-  D --> E["Set up Slack bot"]
+  D --> E["Set up Slack/Telegram bot"]
   E --> F["Team members @bot\nfor code questions"]
 ```
 
@@ -621,7 +745,7 @@ flowchart TD
 ## ❓ Common Questions
 
 **Q: What's the relationship between OpenCode and OpenWork?**
-OpenCode is the CLI/TUI coding agent. OpenWork is a desktop app built on OpenCode that adds a GUI, multi-LLM support, team collaboration, Slack integration, browser automation, and task scheduling.
+OpenCode is the CLI/TUI coding agent. OpenWork is a desktop app built on OpenCode that adds a GUI, multi-LLM support, team collaboration, Slack and Telegram messaging, browser automation, and task scheduling.
 
 **Q: Is OpenWork free?**
 The desktop app is free (Solo plan). Team features via OpenWork Cloud require a subscription at [app.openworklabs.com](https://app.openworklabs.com/).
@@ -629,8 +753,8 @@ The desktop app is free (Solo plan). Team features via OpenWork Cloud require a 
 **Q: Do I need OpenWork to use OpenCode?**
 No. OpenCode works independently as a CLI/TUI tool. OpenWork adds a GUI layer and team features on top.
 
-**Q: Can I connect Slack to OpenWork?**
-Yes. Create a Slack app with the right scopes, get the `xoxb-` and `xapp-` tokens, and paste them into **Settings > Messaging**. See the [Slack Integration](#-slack-integration) section.
+**Q: Can I connect Slack or Telegram to OpenWork?**
+Yes. OpenWork supports both Slack and Telegram via `opencode-router`. For Slack, create a Slack app with the right scopes and paste the tokens into **Settings > Messaging**. For Telegram, create a bot via @BotFather and add the token. See the [Messaging Integration](#-messaging-integration-slack--telegram) section.
 
 **Q: What is Computer Use?**
 Browser automation via Chrome DevTools MCP. It can perform browser actions and take screenshots, but does not control the full desktop OS.
