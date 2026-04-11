@@ -36,62 +36,24 @@
 
 ---
 
----
-
-
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
-
----
-
----
-
-
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
-
----
-
 ## 🎯 Overview
 
+> **Key Terms You'll See Throughout This Guide:**
+>
+> - **LLM** (Large Language Model) — The AI that powers OpenCode. When we say "the LLM does X," we mean OpenCode's AI agent.
+> - **TUI** (Terminal User Interface) — The interactive chat-like screen you see when you run `opencode`.
+> - **CLI** (Command Line Interface) — Running one-off commands like `opencode run "do something"`.
+> - **`opencode.json`** — The configuration file for your project (like `package.json` for Node.js).
 
 ### 📝 What This Module Covers
 
-| Topic | Description | Why It Matters |
-|-------|-------------|----------------|
-| **TUI Navigation** | Terminal User Interface basics | Foundation for all opencode interactions |
-| **Slash Commands** | `/help`, `/undo`, `/redo`, `/share` | Essential productivity shortcuts |
-| **File References** | `@filename` syntax | Context management for AI assistance |
-| **Plan/Build Modes** | Tab key toggle | Different thinking vs execution modes |
-| **Conversation Flow** | Effective AI dialogue patterns | Maximize coding assistance value |
+| Topic                 | Description                         | Why It Matters                           |
+| --------------------- | ----------------------------------- | ---------------------------------------- |
+| **TUI Navigation**    | Terminal User Interface basics      | Foundation for all opencode interactions |
+| **Slash Commands**    | `/help`, `/undo`, `/redo`, `/share` | Essential productivity shortcuts         |
+| **File References**   | `@filename` syntax                  | Context management for AI assistance     |
+| **Plan/Build Modes**  | Tab key toggle                      | Different thinking vs execution modes    |
+| **Conversation Flow** | Effective AI dialogue patterns      | Maximize coding assistance value         |
 
 ### 🎓 Learning Objectives
 
@@ -117,15 +79,15 @@ opencode --version
 # Should output: opencode 1.0+
 
 # Test basic functionality
-echo "Hello, OpenCode!" > test.txt
-opencode read test.txt
+echo 'Hello, OpenCode!' > test.txt
+cat test.txt
 rm test.txt
 ```
 
 ### 📚 Required Knowledge
 
-- [ ] Basic terminal/command line familiarity
-- [ ] Understanding of file system navigation
+- [ ] Basic terminal/command line familiarity (`cd`, `ls`, `mkdir` — if unfamiliar, see [Terminal Basics for Beginners](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Command_line))
+- [ ] Understanding of file system navigation (folders/directories, paths like `~/Documents`)
 - [ ] No previous opencode experience required
 
 ### 🛠️ Required Tools
@@ -139,68 +101,101 @@ rm test.txt
 
 ## ⚡ Quick Start
 
+### 🚀 Set Up a Practice Project
+
+Before starting, create a small project to practice with:
+
+```bash
+mkdir -p ~/opencode-practice/src
+cd ~/opencode-practice
+
+# Create sample files to work with
+echo '{"name": "practice-app", "version": "1.0.0"}' > package.json
+echo 'console.log("Hello from OpenCode!");' > src/index.js
+echo '# Practice App' > README.md
+echo 'export function add(a, b) { return a + b; }' > src/utils.js
+```
 
 ### 🚀 Your First OpenCode Session
 
-```bash tab="Start OpenCode"
-# Navigate to a project directory
-cd ~/your-project
+```bash
+# Navigate to your practice project
+cd ~/opencode-practice
 
-# Start opencode
+# Start the TUI (interactive mode)
 opencode
 ```
 
-```bash tab="Start with Prompt"
-# Start with a specific request
-opencode "Explain this project's structure"
+Or use CLI mode for one-off prompts:
+
+```bash
+# Ask a question without entering the TUI
+opencode run "Explain this project's structure"
 ```
 
 ### 🖥️ TUI Interface Overview
 
-Once opencode starts, you'll see:
+Once opencode starts, you'll see a full-screen terminal interface (built with Bubble Tea). The exact appearance depends on your terminal and theme, but the key areas are:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  💬 Conversation History                                    │
-│  You: Explain this project                                  │
-│  OpenCode: This project contains...                        │
-│                                                             │
-│  ────────────────────────────────────────────────────────  │
-│                                                             │
-│  📍 Status: [Plan] Mode • Context: 3 files                 │
-│                                                             │
-│  > Type your request...                                     │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+- **Conversation area** (top) — Shows your messages and the AI's responses
+- **Status bar** (middle) — Shows the current agent (Build/Plan), model name, and session info
+- **Input area** (bottom) — Where you type prompts, slash commands, or `@` file references
 
-**Key Areas:**
-- **💬 Conversation History** - Your dialogue with AI
-- **📍 Status Bar** - Current mode and context
-- **> Prompt Input** - Where you type commands
+> **What you'll actually see:** The TUI fills your entire terminal window. It's not a simple text box — it's a full interactive interface with scrolling, syntax highlighting, and live tool execution output. The layout may differ slightly between versions.
 
 ### ✅ Verification
 
+Test that everything works with your practice project:
+
 ```bash
-# Start opencode and test basic functionality
-opencode "Say hello"
-
-# You should see:
-# OpenCode: Hello! How can I help you today?
-
-# Test slash command
-# Type: /help
-# Should show help menu
+# 1. Non-interactive test
+cd ~/opencode-practice
+opencode run "What files are in this project?"
 ```
 
+**Expected:** You should see a response listing `package.json`, `README.md`, `src/index.js`, and `src/utils.js`.
+
+```bash
+# 2. Interactive test
+opencode
+# Type: /help
+# You should see a list of available slash commands
+# Type: /exit to quit
+```
+
+**Expected:** `/help` shows a popup or list with commands like `/undo`, `/redo`, `/share`, `/compact`, etc.
+
 ---
+
+### Slash Commands
+
+Common slash commands (type these in the TUI prompt):
+
+```
+# Show available commands and help
+/help
+
+# Undo/redo last change (uses Git internally)
+/undo
+/redo
 
 # Share conversation (creates shareable link)
 /share
 
-# Initialize project analysis
+# Initialize project analysis (creates AGENTS.md)
 /init
+
+# Compact conversation context
+/compact
+
+# Start new session
+/new
+
+# List/switch sessions
+/sessions
+
+# Exit OpenCode
+/exit
 ```
 
 ### File References
@@ -220,25 +215,26 @@ Explain how this function works in @utils/helpers.ts
 OpenCode's Terminal User Interface (TUI) provides a conversational interface for working with an AI coding agent in your terminal.
 
 **How it works:**
+
 ```bash
 # Start the TUI
 opencode
 
-# You'll see:
-# ┌─────────────────────────────────────────────────────────────┐
-# │ 💬 Conversation History                                     │
-# │ 📍 Status: [Plan] Mode • Context: 0 files                   │
-# │ > Type your request...                                      │
-# └─────────────────────────────────────────────────────────────┘
+# The TUI fills your terminal window with:
+# - Conversation area (top): shows messages and AI responses
+# - Status bar (middle): current agent, model, session
+# - Input prompt (bottom): where you type
 ```
 
 **Key Features:**
+
 - **Natural Language Prompts** - Type requests in plain English
 - **Context Awareness** - OpenCode understands your project structure
 - **Visual Feedback** - See when OpenCode is thinking or using tools
 - **Multi-turn Dialogues** - Continue conversations across multiple exchanges
 
 **When to use it:**
+
 - Starting any OpenCode session
 - Complex tasks requiring back-and-forth discussion
 - When you need to review plans before execution
@@ -249,6 +245,7 @@ opencode
 Quick keyboard shortcuts for common functions, starting with `/`.
 
 **How they work:**
+
 ```bash
 # Type in the TUI prompt:
 /help    # Shows available commands
@@ -259,17 +256,27 @@ Quick keyboard shortcuts for common functions, starting with `/`.
 
 **Complete Slash Command Reference:**
 
-| Command | Purpose | When to Use |
-|---------|---------|-------------|
-| `/help` | Show help menu | When learning or forgetting commands |
-| `/undo` | Undo last change | Made a mistake or want to revert |
-| `/redo` | Redo undone change | Changed your mind about undo |
-| `/share` | Create shareable link | Sharing work with team or community |
-| `/init` | Analyze project | Starting work on a new project |
-| `/connect` | Configure LLM | Setting up different AI providers |
-| `/compact` | Reduce context | Long conversations getting slow |
+| Command     | Purpose                         | Keybind    | When to Use                           |
+| ----------- | ------------------------------- | ---------- | ------------------------------------- |
+| `/help`     | Show help dialog                | `ctrl+x h` | When learning or forgetting commands  |
+| `/undo`     | Undo last change (uses Git)     | `ctrl+x u` | Made a mistake or want to revert      |
+| `/redo`     | Redo undone change              | `ctrl+x r` | Changed your mind about undo          |
+| `/share`    | Create shareable link           | `ctrl+x s` | Sharing work with team or community   |
+| `/init`     | Create/update AGENTS.md         | `ctrl+x i` | Starting work on a new project        |
+| `/connect`  | Configure LLM provider          | —          | Setting up different AI providers     |
+| `/compact`  | Reduce context                  | `ctrl+x c` | Long conversations getting slow       |
+| `/new`      | Start new session               | `ctrl+x n` | Starting a fresh conversation         |
+| `/sessions` | List/switch sessions            | `ctrl+x l` | Resuming previous work                |
+| `/exit`     | Exit OpenCode                   | `ctrl+x q` | Done working (aliases: `/quit`, `/q`) |
+| `/themes`   | Change color theme              | `ctrl+x t` | Customizing appearance                |
+| `/models`   | List available models           | `ctrl+x m` | Switching AI models                   |
+| `/editor`   | Open external editor            | `ctrl+x e` | Composing long prompts                |
+| `/export`   | Export conversation to Markdown | `ctrl+x x` | Saving conversation to file           |
+| `/details`  | Toggle tool execution details   | `ctrl+x d` | Debugging tool calls                  |
+| `/thinking` | Toggle reasoning visibility     | —          | Seeing model's thought process        |
 
 **When to use them:**
+
 - Quick actions without typing full prompts
 - Navigation and control within the TUI
 - Session management and sharing
@@ -280,32 +287,28 @@ Quick keyboard shortcuts for common functions, starting with `/`.
 The `@` symbol allows you to reference specific files or code sections in your prompts.
 
 **How it works:**
+
 ```bash
-# Single file reference
+# Single file reference (fuzzy search in project)
 @package.json
 
 # Multiple files
 @src/index.js @src/utils.js
-
-# Specific lines
-@src/components/Button.js:10-25
-
-# Line range
-@file.py:45      # Line 45 only
-@file.py:10-30   # Lines 10 through 30
-@file.py:30-     # From line 30 to end
-@file.py:-20     # First 20 lines
 ```
 
 **Examples in Practice:**
+
 ```bash
 # In TUI prompt:
 "Explain the main function in @src/main.js"
 "Compare @config/dev.env and @config/prod.env"
-"Fix the bug at @src/auth.js:127"
 ```
 
+> **Note:** The `@` symbol triggers a fuzzy file search within your project directory.
+> File content is automatically included in the conversation context.
+
 **When to use it:**
+
 - Providing context about specific code
 - Asking about particular files or sections
 - Directing OpenCode's attention precisely
@@ -316,34 +319,37 @@ The `@` symbol allows you to reference specific files or code sections in your p
 Two different interaction modes toggleable with the **Tab** key.
 
 **How it works:**
-```bash
-# Default mode for complex requests
-[Plan] Mode: OpenCode suggests plans without making changes
 
-# Press Tab to switch
+```bash
+# Build mode is the DEFAULT — full tool access
 [Build] Mode: OpenCode can execute tools and modify files
 
+# Press Tab to switch to Plan mode
+[Plan] Mode: OpenCode suggests plans without making changes
+
 # Press Tab again to switch back
-[Plan] Mode
+[Build] Mode
 ```
 
 **Mode Comparison:**
 
-| Aspect | Plan Mode | Build Mode |
-|--------|-----------|------------|
-| **Purpose** | Strategy & planning | Execution & implementation |
-| **File Changes** | No modifications allowed | Can read/write/edit files |
-| **Tool Usage** | Limited to analysis | Full tool access |
-| **When to Use** | Brainstorming, planning | Implementing, testing |
+| Aspect           | Build Mode (Default)       | Plan Mode                        |
+| ---------------- | -------------------------- | -------------------------------- |
+| **Purpose**      | Execution & implementation | Strategy & planning              |
+| **File Changes** | Can read/write/edit files  | Requires approval (ask)          |
+| **Tool Usage**   | Full tool access           | Limited — bash/edit set to "ask" |
+| **When to Use**  | Implementing, testing      | Brainstorming, planning          |
 
 **Recommended Workflow:**
-1. **Start in Plan Mode** (default for complex requests)
+
+1. **Switch to Plan Mode** (press Tab) for complex requests
 2. **Review the plan** - OpenCode outlines approach
-3. **Switch to Build Mode** (press Tab)
+3. **Switch to Build Mode** (press Tab again)
 4. **Execute the plan** - OpenCode implements changes
 5. **Review results** - Verify implementation matches plan
 
 **When to use each:**
+
 - **Plan Mode**: Brainstorming, architectural decisions, complex refactors
 - **Build Mode**: Implementation, testing, file operations, automation
 
@@ -353,6 +359,7 @@ Two different interaction modes toggleable with the **Tab** key.
 How OpenCode maintains and manages conversation context over time.
 
 **How it works:**
+
 ```bash
 # Conversation continues naturally
 You: "Create a function to calculate factorial"
@@ -367,12 +374,14 @@ OpenCode: "Based on the factorial function, we could..."
 ```
 
 **Key Features:**
+
 - **Context Window** - Remembers previous exchanges (limited by token count)
 - **Auto-compaction** - Long conversations automatically summarized
 - **Manual Control** - Use `/compact` to reduce context size manually
 - **Session Persistence** - Conversations saved between sessions
 
 **Best Practices:**
+
 1. **Be specific early** - Provide context in initial request
 2. **Reference previous points** - "Based on what you said about X..."
 3. **Use @ references** - Keep context focused on relevant files
@@ -380,6 +389,7 @@ OpenCode: "Based on the factorial function, we could..."
 5. **Start fresh if stuck** - Sometimes new session is better than long one
 
 **When to manage context:**
+
 - Long, complex conversations slowing down
 - Changing topics significantly
 - Wanting to focus on specific aspect
@@ -389,277 +399,126 @@ OpenCode: "Based on the factorial function, we could..."
 
 ## 🔧 Examples & Patterns
 
-### 📖 Example 1: Basic TUI Navigation
+### 📖 Example 1: Project Exploration
 
-<details>
-<summary><strong>View full example with explanation</strong></summary>
+In the TUI, type these prompts and observe what happens:
 
-**Goal:** Master basic TUI navigation and commands
-**Time:** ~10 minutes
-**Tools:** OpenCode TUI
+```
+You: What's the overall structure of this project?
+→ OpenCode uses glob and list tools to scan directories, then summarizes.
 
-```bash
-#!/bin/bash
-# Basic TUI Navigation Example
+You: Show me @src/index.js
+→ OpenCode reads the file and displays its contents.
 
-echo "🚀 Starting OpenCode TUI navigation exercise..."
-
-# Create a test project directory
-mkdir -p ~/opencode-test
-cd ~/opencode-test
-
-# Create sample files
-echo '{"name": "test-project", "version": "1.0.0"}' > package.json
-mkdir -p src
-echo 'console.log("Hello, OpenCode!");' > src/index.js
-
-echo "📁 Test project created at: $(pwd)"
-echo ""
-echo "📋 Exercise Steps:"
-echo "1. Start OpenCode: opencode"
-echo "2. Type: /help"
-echo "3. Ask: 'What is in this project?'"
-echo "4. Reference file: 'Show me @package.json'"
-echo "5. Exit: Press Ctrl+C"
-echo ""
-echo "✅ Ready to begin? Start OpenCode now!"
+You: What dependencies are in @package.json?
+→ OpenCode reads package.json and lists each dependency.
 ```
 
-**Key Takeaways:**
-- ✅ How to start and navigate the TUI
-- ✅ Using `/help` to discover commands
-- ✅ Basic file references with `@`
-- ✅ Safe project exploration
+### 📖 Example 2: Plan → Build Workflow
 
-</details>
-
-### 📖 Example 2: Plan & Build Workflow
-
-<details>
-<summary><strong>View full example with explanation</strong></summary>
-
-**Goal:** Practice the Plan → Build workflow pattern
-**Time:** ~15 minutes
-**Tools:** OpenCode TUI, Tab key
-
-```bash
-#!/bin/bash
-# Plan & Build Workflow Example
-
-echo "🔄 Starting Plan & Build workflow exercise..."
-
-cd ~/opencode-test
-
-echo "📋 Exercise Steps:"
-echo ""
-echo "1. START: OpenCode in Plan Mode (default)"
-echo "   Command: opencode"
-echo ""
-echo "2. PLAN: Ask for a new feature"
-echo "   Prompt: 'Create a utility function to format dates'"
-echo "   - OpenCode will create a PLAN without making changes"
-echo "   - Review the suggested approach"
-echo ""
-echo "3. SWITCH: Press Tab key"
-echo "   - Watch status change from [Plan] to [Build]"
-echo ""
-echo "4. BUILD: Execute the plan"
-echo "   Prompt: 'Go ahead and implement the date utility'"
-echo "   - OpenCode will create the files"
-echo ""
-echo "5. VERIFY: Check results"
-echo "   Prompt: 'Show me what you created @src/utils/date.js'"
-echo ""
-echo "🎯 Learning Points:"
-echo "- Plan Mode: Safe brainstorming and design"
-echo "- Build Mode: Actual implementation"
-echo "- Tab Key: Quick mode switching"
-echo "- File Review: Verify created work"
 ```
-
-**Workflow Visualization:**
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant O as OpenCode
-    
-    U->>O: Start OpenCode (Plan Mode)
-    U->>O: "Create date utility function"
-    O->>U: Presents implementation plan
-    U->>O: Press Tab (switch to Build)
-    O->>U: [Build] Mode active
-    U->>O: "Implement the plan"
-    O->>U: Creates files & code
-    U->>O: "Show me @src/utils/date.js"
-    O->>U: Displays created code
+1. Start in Build mode (default)
+2. Press Tab to switch to Plan mode
+3. Type: "Create a utility function to calculate factorial"
+   → OpenCode outlines an approach WITHOUT creating any files
+4. Press Tab to switch back to Build mode
+5. Type: "Go ahead and implement it"
+   → OpenCode creates the file
+6. Type: "Show me what you created @src/factorial.js"
+   → OpenCode displays the code
 ```
-
-</details>
 
 ---
 
 ## 🏗️ Real-World Workflows
 
-### 🔄 Workflow 1: Code Exploration Session
+### 🔄 Workflow 1: Exploring an Unfamiliar Codebase
 
-<details>
-<summary><strong>View complete workflow</strong></summary>
-
-```mermaid
-graph TD
-    A[Start OpenCode] --> B[Explore Project Structure]
-    B --> C[Analyze Key Files]
-    C --> D[Understand Dependencies]
-    D --> E[Identify Improvement Areas]
-    E --> F[Create Action Plan]
+```
+1. "What's the overall architecture of this project?"
+2. "Show me the main entry point @src/index.js"
+3. "What are the key dependencies in @package.json?"
+4. "How is error handling done? Look in @src/"
+5. "Create a summary of the project architecture"
 ```
 
-**Implementation:**
-```bash
-#!/bin/bash
-# Code Exploration Workflow
+**When to use:** Starting on a new codebase, onboarding, code review.
 
-echo "🔍 Starting code exploration session..."
+### 🔄 Workflow 2: Planning a Feature
 
-# Typical exploration prompts:
-echo ""
-echo "📝 Exploration Prompts:"
-echo "1. 'What's the overall architecture of this project?'"
-echo "2. 'Show me the main entry point @src/index.js'"
-echo "3. 'What dependencies are in @package.json?'"
-echo "4. 'How is error handling implemented? Look at @src/utils/'"
-echo "5. 'What tests exist? Show me @test/ or @__tests__/'"
-echo "6. 'Create a summary of key components'"
-echo ""
-echo "🎯 Benefits:"
-echo "- Quickly understand unfamiliar codebases"
-echo "- Identify architectural patterns"
-echo "- Discover potential issues"
-echo "- Create documentation on the fly"
+```
+1. Press Tab to switch to Plan mode
+2. "I want to add user authentication to this project"
+   → OpenCode outlines the approach without changing files
+3. "What about security considerations?"
+4. "Create an implementation checklist"
+5. Press Tab to switch to Build mode
+6. "Implement step 1 from the checklist"
 ```
 
-**When to use this workflow:**
-- 🔄 Starting work on a new codebase
-- 🔄 Reviewing legacy systems
-- 🔄 Onboarding new team members
-- 🔄 Preparing for refactoring
-
-</details>
-
-### 🔄 Workflow 2: Feature Planning Session
-
-<details>
-<summary><strong>View complete workflow</strong></summary>
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant O as OpenCode
-    
-    U->>O: Start in Plan Mode
-    U->>O: "I want to add user authentication"
-    O->>U: Lists required components
-    O->>U: Suggests implementation approach
-    O->>U: Estimates complexity
-    U->>O: "What about security considerations?"
-    O->>U: Adds security recommendations
-    U->>O: "Create implementation checklist"
-    O->>U: Provides step-by-step plan
-```
-
-**Implementation Steps:**
-1. **Start in Plan Mode** - `opencode` (default for complex requests)
-2. **Describe Feature** - "Add user authentication with email/password"
-3. **Review Components** - OpenCode lists: auth routes, middleware, models, tests
-4. **Discuss Alternatives** - "What about OAuth options?"
-5. **Security Review** - "What security considerations are needed?"
-6. **Create Checklist** - "Give me an implementation checklist"
-7. **Switch to Build** - Press Tab when ready to implement
-
-**Key Questions to Ask:**
-- "What files need to be created/modified?"
-- "What dependencies will we need?"
-- "How should we structure this?"
-- "What testing approach is recommended?"
-- "What are potential pitfalls?"
-
-</details>
+**When to use:** Complex features, architectural decisions, refactoring.
 
 ---
 
 ## 🧪 Practice Exercises
 
-### 🎯 Exercise 1: TUI Navigation Challenge
+> **All exercises use the practice project.** If you haven't set it up, scroll up to [Set Up a Practice Project](#-set-up-a-practice-project).
 
-**Challenge:** Navigate a codebase and create a project map
+### 🎯 Exercise 1: Explore Your Project
 
-**Requirements:**
-- Use at least 3 different slash commands
-- Reference 5 different files with `@`
-- Create a summary document of findings
+**Task:** Use the TUI to explore the practice project.
 
-**Starter Template:**
-```bash
-#!/bin/bash
-# Project Exploration Challenge
-
-echo "Starting project exploration..."
-
-# Your exploration commands:
-# 1. Start OpenCode
-# 2. Use /help to see commands
-# 3. Explore the project structure
-# 4. Create a summary
-
-echo "Challenge complete!"
+```
+1. cd ~/opencode-practice && opencode
+2. Type: What files are in this project?
+3. Type: Show me @package.json
+4. Type: /help
+5. Type: /exit
 ```
 
-### 🎯 Exercise 2: Plan/Build Mode Mastery
+**Expected results:**
 
-**Challenge:** Plan and implement a small feature using both modes
+- Step 2: Lists `package.json`, `README.md`, and files in `src/`
+- Step 3: Shows the JSON contents of package.json
+- Step 4: Shows available slash commands
 
-**Requirements:**
-- Start in Plan mode for design
-- Switch to Build mode for implementation
-- Use file references for context
-- Implement and test the feature
+### 🎯 Exercise 2: Plan vs Build Mode
 
-**Feature Ideas:**
-- Add a configuration manager
-- Create a logging utility
-- Implement data validation functions
-- Build a simple API endpoint
+**Task:** Experience the difference between Plan and Build modes.
 
-<details>
-<summary><strong>Solution Template</strong> (Try yourself first!)</summary>
-
-```bash
-#!/bin/bash
-# Plan/Build Challenge Solution
-
-echo "1. STARTING PLAN MODE"
-echo "Prompt: 'Design a configuration manager for environment variables'"
-echo ""
-echo "2. REVIEW PLAN"
-echo "- OpenCode suggests: config.js, .env.example, documentation"
-echo "- Discuss approach: 'What about validation?'"
-echo "- Refine: 'Add type checking for numeric values'"
-echo ""
-echo "3. SWITCH TO BUILD"
-echo "Press Tab key"
-echo ""
-echo "4. IMPLEMENT"
-echo "Prompt: 'Implement the configuration manager as planned'"
-echo ""
-echo "5. VERIFY"
-echo "Prompt: 'Show me what you created @src/config.js'"
-echo "Prompt: 'Test the implementation: how do I use it?'"
+```
+1. cd ~/opencode-practice && opencode
+2. Type: Add a function called multiply to @src/utils.js
+   (Build mode — OpenCode edits the file directly)
+3. Type: /undo
+   (Reverts the change)
+4. Press Tab to switch to Plan mode
+5. Type: Add a function called divide to @src/utils.js
+   (Plan mode — OpenCode shows you what it would do)
+6. Press Tab to switch back to Build mode
 ```
 
-**Explanation:**
-This demonstrates the full Plan → Build workflow for safe, thoughtful implementation of features.
+**Expected results:**
 
-</details>
+- Step 2: OpenCode adds the `multiply` function to `src/utils.js` and shows you the change
+- Step 3: The change is reverted (file goes back to original)
+- Step 5: OpenCode describes the plan but asks for approval before editing
+
+### 🎯 Exercise 3: File References
+
+**Task:** Practice `@` file references.
+
+```
+1. Type: Explain what @src/index.js does
+2. Type: Compare @src/index.js and @src/utils.js
+3. Type: What dependencies are in @package.json?
+```
+
+**Expected results:**
+
+- Step 1: OpenCode reads and explains the console.log statement
+- Step 2: OpenCode compares the two files side by side
+- Step 3: OpenCode reads package.json and lists dependencies (none in our simple project)
 
 ---
 
@@ -669,29 +528,35 @@ This demonstrates the full Plan → Build workflow for safe, thoughtful implemen
 <summary><strong>FAQ for Basic Commands & TUI</strong></summary>
 
 ### 🤔 What's the difference between CLI and TUI?
-**CLI (Command Line Interface):** You run commands like `opencode read file.js` directly in terminal.  
+
+**CLI (Command Line Interface):** You run non-interactive prompts like `opencode run "Explain this code"` directly in terminal.  
 **TUI (Terminal User Interface):** Interactive session started with just `opencode`, allowing conversational interaction.  
-**Use CLI for:** Quick one-off commands, scripts, automation.  
-**Use TUI for:** Complex tasks, planning, multi-step workflows.
+**Use CLI for:** Quick one-off prompts, scripting, automation (via `opencode run`).  
+**Use TUI for:** Complex tasks, planning, multi-step workflows, using slash commands.
 
 ### 🤔 When should I use Plan mode vs Build mode?
+
 **Plan Mode:** For brainstorming, design discussions, complex planning. OpenCode won't make changes.  
 **Build Mode:** For implementation, testing, file operations. OpenCode can execute tools.  
 **Rule of thumb:** Start in Plan for anything complex, switch to Build when ready to implement.
 
 ### 🤔 How do file references with @ actually work?
+
 OpenCode reads the referenced files and includes them in the context for the AI. This helps it understand specific code you're asking about. The AI can see the file contents but won't modify them unless you're in Build mode and explicitly ask for changes.
 
 ### 🤔 Can I use OpenCode without internet?
+
 **Partial functionality:** Basic file operations and already-downloaded models work offline.  
 **Full AI features:** Require internet connection for cloud-based AI models.  
 **Check:** `opencode --version` shows if you're using local or cloud models.
 
 ### 🤔 How do I exit OpenCode TUI?
-- **Ctrl+C** - Most common method
-- **/exit** or **/quit** - If supported by your version
+
+- **Ctrl+C** - Clears input or interrupts response
+- **Ctrl+X then Q** - Exit via keybind (leader key + q)
+- **/exit** or **/quit** or **/q** - Slash command to exit
 - **Close terminal** - Last resort
-Your conversation is automatically saved and can be resumed.
+Your conversation is automatically saved and can be resumed with `/sessions`.
 
 </details>
 
@@ -703,8 +568,10 @@ Your conversation is automatically saved and can be resumed.
 <summary><strong>Common issues and solutions</strong></summary>
 
 ### 🚫 Error: "OpenCode not found" or "command not found"
+
 **Cause:** OpenCode not in PATH or not installed properly.
 **Solution:**
+
 ```bash
 # Check installation
 which opencode
@@ -718,8 +585,10 @@ source ~/.bashrc
 ```
 
 ### 🚫 Error: TUI won't start or freezes
+
 **Cause:** Terminal compatibility issues, network problems, or configuration errors.
 **Solution:**
+
 ```bash
 # 1. Check terminal compatibility
 echo $TERM  # Should be xterm-256color or similar
@@ -735,8 +604,10 @@ rm -rf ~/.config/opencode/sessions
 ```
 
 ### 🚫 Error: "@file.js not found" or file references not working
+
 **Cause:** Wrong file path, permissions, or relative path confusion.
 **Solution:**
+
 ```bash
 # 1. Verify file exists
 ls -la @src/file.js
@@ -745,24 +616,27 @@ ls -la @src/file.js
 pwd  # Should be project root
 
 # 3. Use absolute path for testing
-opencode "Show me @$(pwd)/src/file.js"
+opencode run "Show me @src/file.js"
 
 # 4. Check permissions
 ls -la src/file.js
 ```
 
 ### 🚫 Error: Slash commands not working
+
 **Cause:** Typing too fast, not in TUI mode, or version mismatch.
 **Solution:**
+
 - **Slow down typing** - Some terminals buffer input
 - **Verify TUI mode** - You should see `>` prompt
 - **Check version** - `opencode --version`
 - **Use /help** - To see available commands
 
 ### 🔧 General Debugging Tips
-1. **Start simple** - Test with `opencode "Say hello"` first
+
+1. **Start simple** - Test with `opencode run "Say hello"` first
 2. **Check logs** - Look for error messages in terminal
-3. **Update regularly** - `opencode --update` if available
+3. **Update regularly** - `opencode upgrade`
 4. **Clear cache** - `rm -rf ~/.cache/opencode`
 5. **Try fresh session** - New terminal, new OpenCode session
 
@@ -802,13 +676,13 @@ Test your understanding:
 
 ### ✅ Skills Acquired
 
-| Skill | Proficiency | Evidence |
-|-------|-------------|----------|
-| **TUI Navigation** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can start, navigate, and exit TUI |
-| **Slash Commands** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can use /help, /undo, /redo effectively |
-| **File References** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can reference files with @ symbol |
-| **Mode Management** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can toggle between Plan and Build modes |
-| **Conversation Flow** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can maintain effective AI dialogue |
+| Skill                 | Proficiency                                | Evidence                                |
+| --------------------- | ------------------------------------------ | --------------------------------------- |
+| **TUI Navigation**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can start, navigate, and exit TUI       |
+| **Slash Commands**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can use /help, /undo, /redo effectively |
+| **File References**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can reference files with @ symbol       |
+| **Mode Management**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can toggle between Plan and Build modes |
+| **Conversation Flow** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can maintain effective AI dialogue      |
 
 ### 🏆 Module Completion
 
@@ -821,6 +695,7 @@ echo "📚 Next: Module 02 - File Operations"
 ```
 
 Or use this badge in your README:
+
 ```markdown
 ```
 
@@ -858,6 +733,7 @@ Or use this badge in your README:
 
 ---
 
+[⬆ Back to top](#-01-basic-commands--tui)
 
 ---
 
@@ -869,6 +745,3 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **Last Updated:** April 2026  
 **OpenCode Version:** 1.0+ compatible
-
----
-

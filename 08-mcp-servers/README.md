@@ -9,7 +9,7 @@
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_07-blue)]()
 [![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-[⬅️ Previous Module](../07-skills-agents/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../09-advanced-features/)
+[⬅️ Previous Module](../07-skills-agents/) • [🏠 Main Menu](../README.md) • [Next Module ➡️](../09-advanced-features/)
 
 </div>
 
@@ -21,512 +21,744 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🔧 Local MCP Servers](#-local-mcp-servers)
+- [🌐 Remote MCP Servers](#-remote-mcp-servers)
+- [🔑 OAuth & Authentication](#-oauth--authentication)
+- [🎛️ Per-Agent MCP Management](#️-per-agent-mcp-management)
+- [🛠️ Common MCP Servers](#️-common-mcp-servers)
+- [🔒 MCP Tool Permissions](#-mcp-tool-permissions)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
 
 ---
 
----
+## 🎯 Overview
 
-
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
-
----
-# 08 MCP Servers
-
-The Model Context Protocol (MCP) enables opencode to connect to external services and tools, extending its capabilities through server integrations.
-
-## What is MCP?
-
-MCP (Model Context Protocol) is an open protocol that allows AI applications like opencode to connect to external data sources and tools. MCP servers provide:
+MCP (Model Context Protocol) is an open protocol that lets OpenCode connect to external data sources and tools. MCP servers extend OpenCode's capabilities with:
 
 - **External data access** (databases, APIs, filesystems)
-- **Tool integration** (compilers, linters, deployment tools)
-- **Enhanced capabilities** beyond built-in tools
-- **Standardized interfaces** for consistent interaction
+- **Tool integration** (GitHub, Sentry, cloud services)
+- **Local and remote servers** with OAuth support
+- **Per-agent control** over which servers are available
 
-## MCP Server Types
+---
 
-### 1. File System Servers
-```bash
-# Access local or remote filesystems
-MCP server: "filesystem" - Browse and manipulate files
-MCP server: "github" - Access GitHub repositories
-MCP server: "s3" - AWS S3 bucket access
-```
+## ⚡ Quick Start
 
-### 2. Database Servers
-```bash
-# Connect to databases
-MCP server: "postgres" - PostgreSQL database
-MCP server: "mysql" - MySQL database  
-MCP server: "mongodb" - MongoDB database
-MCP server: "redis" - Redis key-value store
-```
+### End-to-End Walkthrough: Your First MCP Server
 
-### 3. Development Tool Servers
-```bash
-# Integrate development tools
-MCP server: "docker" - Container management
-MCP server: "kubernetes" - K8s cluster management
-MCP server: "terraform" - Infrastructure as code
-MCP server: "ansible" - Configuration management
-```
+Let's connect to the **Grep by Vercel** MCP server (free, no API key needed) to see MCP in action:
 
-### 4. API Integration Servers
-```bash
-# Connect to external APIs
-MCP server: "slack" - Slack workspace
-MCP server: "jira" - Jira project management
-MCP server: "github-actions" - CI/CD workflows
-MCP server: "openai" - AI model APIs
-```
-
-## Configuring MCP Servers
-
-### Server Configuration Files
-
-MCP servers are configured in `~/.config/opencode/mcp/servers.json`:
+**Step 1: Add the config** — Edit or create `opencode.json` in your project root:
 
 ```json
 {
-  "servers": [
-    {
-      "name": "filesystem",
-      "type": "stdio",
-      "command": "npx",
-      "args": ["@modelcontextprotocol/server-filesystem", "/home/user/projects"]
-    },
-    {
-      "name": "postgres",
-      "type": "stdio", 
-      "command": "npx",
-      "args": ["@modelcontextprotocol/server-postgres"],
-      "env": {
-        "PGHOST": "localhost",
-        "PGPORT": "5432",
-        "PGDATABASE": "mydb",
-        "PGUSER": "myuser",
-        "PGPASSWORD": "mypassword"
-      }
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app/sse"
     }
-  ]
-}
-```
-
-### Environment Configuration
-
-Some servers require environment variables:
-
-```bash
-# Set environment variables for servers
-export GITHUB_TOKEN="your_github_token"
-export OPENAI_API_KEY="your_openai_key"
-export AWS_ACCESS_KEY_ID="your_aws_key"
-export AWS_SECRET_ACCESS_KEY="your_aws_secret"
-```
-
-## Using MCP Servers
-
-### Basic Server Interaction
-
-```bash
-# List available servers
-List MCP servers
-
-# Connect to a server
-Connect to MCP server: "filesystem"
-
-# Use server capabilities
-List files in directory: "/home/user/projects"
-Read file: "/home/user/projects/README.md"
-```
-
-### File System Operations
-
-```bash
-# Browse files
-Navigate to: "/src/components"
-List files with pattern: "*.tsx"
-
-# File operations
-Read file: "Button.tsx"
-Edit file: "Button.tsx" with new content
-Create file: "NewComponent.tsx"
-Delete file: "OldComponent.tsx"
-
-# Search operations
-Find files containing: "useState"
-Find files modified in last: "7 days"
-```
-
-### Database Operations
-
-```bash
-# Connect to database
-Connect to MCP server: "postgres"
-
-# Query operations
-Execute SQL: "SELECT * FROM users WHERE active = true"
-Execute SQL: "INSERT INTO users (name, email) VALUES ('John', 'john@example.com')"
-Execute SQL: "UPDATE users SET active = false WHERE last_login < NOW() - INTERVAL '90 days'"
-
-# Schema operations
-List tables in database
-Describe table: "users"
-Create table: "products" with schema
-```
-
-### Development Tool Operations
-
-```bash
-# Docker operations
-Connect to MCP server: "docker"
-List containers
-Build image: "./Dockerfile"
-Run container: "myapp:latest"
-
-# Kubernetes operations  
-Connect to MCP server: "kubernetes"
-List pods
-Deploy application: "./k8s/manifest.yaml"
-Get logs: "pod/myapp-12345"
-
-# Terraform operations
-Connect to MCP server: "terraform"
-Initialize: "./terraform"
-Plan changes
-Apply configuration
-```
-
-## Common MCP Server Patterns
-
-### Pattern 1: Database-Driven Development
-
-```bash
-# Develop with live database access
-1. Connect to MCP server: "postgres"
-2. Query: "SELECT schema_version FROM migrations"
-3. Based on schema, generate appropriate models
-4. Create API endpoints matching database structure
-5. Test endpoints with live data
-```
-
-### Pattern 2: File System Automation
-
-```bash
-# Automated file operations
-1. Connect to MCP server: "filesystem"
-2. Search: "Find all .js files using deprecated APIs"
-3. Batch update: "Replace deprecated API calls"
-4. Verify: "Check no files still use deprecated APIs"
-5. Commit: "Update deprecated API usage"
-```
-
-### Pattern 3: CI/CD Integration
-
-```bash
-# Continuous deployment workflow
-1. Connect to MCP server: "github-actions"
-2. Trigger workflow: "build-and-deploy"
-3. Connect to MCP server: "docker"
-4. Monitor build: "Watch container build logs"
-5. Connect to MCP server: "kubernetes"
-6. Deploy: "Update deployment to new image"
-```
-
-### Pattern 4: Monitoring and Debugging
-
-```bash
-# Production debugging
-1. Connect to MCP server: "kubernetes"
-2. Get logs: "pod/production-app-*" with tail: 100
-3. Connect to MCP server: "postgres"
-4. Query: "SELECT * FROM error_logs ORDER BY timestamp DESC LIMIT 10"
-5. Analyze errors and propose fixes
-```
-
-## Popular MCP Servers
-
-### Official MCP Servers
-
-1. **Filesystem Server**
-   ```bash
-   # Installation
-   npm install -g @modelcontextprotocol/server-filesystem
-   
-   # Usage
-   Browse: "/path/to/project"
-   Search: "*.ts" in "/src"
-   ```
-
-2. **PostgreSQL Server**
-   ```bash
-   # Installation
-   npm install -g @modelcontextprotocol/server-postgres
-   
-   # Usage
-   Query: "SELECT * FROM table"
-   Execute: "INSERT INTO table VALUES (...)"
-   ```
-
-3. **GitHub Server**
-   ```bash
-   # Installation
-   npm install -g @modelcontextprotocol/server-github
-   
-   # Usage
-   List repositories
-   Read issues
-   Create pull requests
-   ```
-
-### Community MCP Servers
-
-1. **SQLite Server** - Lightweight database
-2. **Redis Server** - Key-value store
-3. **MySQL Server** - Popular database
-4. **MongoDB Server** - Document database
-5. **Docker Server** - Container management
-6. **AWS Server** - AWS service integration
-7. **Slack Server** - Team communication
-8. **Jira Server** - Project management
-
-## Creating Custom MCP Servers
-
-### Basic Server Structure
-
-```javascript
-// server.js - Example custom MCP server
-const { Server } = require('@modelcontextprotocol/sdk/server');
-const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio');
-
-class MyCustomServer {
-  constructor() {
-    this.server = new Server(
-      {
-        name: 'my-custom-server',
-        version: '1.0.0',
-      },
-      {
-        capabilities: {
-          resources: {},
-          tools: {
-            greet: {
-              description: 'Greet a user by name',
-              inputSchema: {
-                type: 'object',
-                properties: {
-                  name: {
-                    type: 'string',
-                    description: 'Name to greet'
-                  }
-                },
-                required: ['name']
-              }
-            }
-          }
-        }
-      }
-    );
-
-    // Register tool handlers
-    this.server.setRequestHandler('tools/call', async (request) => {
-      if (request.params.name === 'greet') {
-        const name = request.params.arguments?.name || 'World';
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `Hello, ${name}!`
-            }
-          ]
-        };
-      }
-    });
-  }
-
-  async run() {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
   }
 }
-
-// Start the server
-const server = new MyCustomServer();
-server.run().catch(console.error);
 ```
 
-### Server Implementation Steps
-
-1. **Define capabilities** - What your server can do
-2. **Implement handlers** - Code to execute operations
-3. **Handle requests** - Process incoming MCP requests
-4. **Return responses** - Format responses according to protocol
-5. **Test thoroughly** - Ensure reliability and error handling
-
-## Security Considerations
-
-### Access Control
+**Step 2: Restart OpenCode** — Exit and re-enter the TUI:
 
 ```bash
-# Limit server access
-- Use read-only mode for production databases
-- Restrict file system access to specific directories
-- Use API keys with minimal required permissions
-- Implement rate limiting for external APIs
+# Exit if running
+/exit
+
+# Start again (picks up new config)
+opencode
 ```
 
-### Data Protection
+**Step 3: Verify the connection:**
+
+```
+List all available MCP tools
+```
+
+**Expected:** You should see tools from the Grep server listed (e.g., search capabilities).
+
+**Step 4: Use the MCP tool:**
+
+```
+Use the grep MCP tool to search for "useState" in popular React repos
+```
+
+**Expected:** The LLM calls the Grep MCP server and returns code search results from public repositories.
+
+If the connection fails, run `opencode mcp debug` to diagnose.
+
+### Adding an MCP Server via CLI
 
 ```bash
-# Protect sensitive data
-- Never hardcode credentials in configuration
-- Use environment variables or secret managers
-- Encrypt sensitive data in transit and at rest
-- Implement audit logging for sensitive operations
+# Interactive setup — walks you through configuration
+opencode mcp add
+
+# List configured MCP servers
+opencode mcp list
 ```
 
-### Network Security
+### Configuration in opencode.json
 
-```bash
-# Secure network communications
-- Use TLS/SSL for all network connections
-- Implement firewall rules to restrict access
-- Use VPNs for accessing private resources
-- Monitor for unusual access patterns
+MCP servers are configured in `opencode.json` under the `"mcp"` key. The `command` field is an **array** containing the executable and all its arguments:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/path/to/dir"]
+    }
+  }
+}
 ```
-
-## Performance Optimization
-
-### Connection Pooling
-
-```bash
-# Reuse connections
-- Maintain persistent connections to databases
-- Implement connection pooling for frequent operations
-- Cache frequently accessed data
-- Batch operations when possible
-```
-
-### Resource Management
-
-```bash
-# Monitor resource usage
-- Limit concurrent server connections
-- Implement timeout for long-running operations
-- Use pagination for large result sets
-- Clean up temporary resources
-```
-
-### Caching Strategies
-
-```bash
-# Improve performance with caching
-- Cache static configuration data
-- Implement query result caching
-- Use CDN for file access
-- Cache API responses when appropriate
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Connection Failures**
-   ```bash
-   # Check server configuration
-   Verify MCP server configuration file
-   Check network connectivity
-   Validate credentials and permissions
-   Test server command manually
-   ```
-
-2. **Permission Errors**
-   ```bash
-   # Verify access rights
-   Check file system permissions
-   Validate database user privileges
-   Verify API token scopes
-   Test with minimal required permissions
-   ```
-
-3. **Performance Problems**
-   ```bash
-   # Optimize operations
-   Check network latency
-   Monitor server resource usage
-   Implement query optimization
-   Use appropriate indexing
-   ```
-
-4. **Protocol Errors**
-   ```bash
-   # Debug MCP protocol issues
-   Check server version compatibility
-   Verify request/response formatting
-   Enable debug logging
-   Test with simple operations first
-   ```
-
-### Debug Commands
-
-```bash
-# Test MCP server connectivity
-List available MCP servers
-Test connection to server: "filesystem"
-
-# Verify server capabilities
-List tools provided by server: "postgres"
-Test tool: "execute_sql" with simple query
-
-# Monitor server performance
-Time operation: "List files in large directory"
-Check memory usage during operations
-```
-
-## Examples Directory
-
-See `/examples/` for practical implementations:
-- Database migration automation
-- File system cleanup scripts
-- Deployment automation workflows
-- Monitoring and alerting systems
-- Custom MCP server implementations
-
-## Next Steps
-
-After mastering MCP servers, proceed to:
-- **Module 09**: Advanced features including the plugin system for extending opencode itself
-- **Module 10**: OpenWork collaboration platform for team-based development workflows
 
 ---
 
+## 📚 Core Concepts
+
+### What is MCP?
+
+MCP (Model Context Protocol) is an open standard that allows AI tools to connect to external services through a unified interface. Each MCP server provides:
+
+- **Tools**: Functions the LLM can call (e.g., query a database, create a GitHub issue)
+- **Resources**: Data the LLM can read (e.g., database schemas, file listings)
+- **Prompts**: Pre-built prompt templates for common tasks
+
+### MCP Architecture
+
+```mermaid
+flowchart TD
+  subgraph "OpenCode TUI"
+    A["You type a prompt"]
+    B["LLM decides which tool to use"]
+  end
+
+  subgraph "Built-in Tools"
+    C["read, edit, write\nbash, glob, grep\nlist, question, etc."]
+  end
+
+  subgraph "MCP Tools (external)"
+    D["mcp_github_*\n(create issues, PRs)"]
+    E["mcp_postgres_*\n(query database)"]
+    F["mcp_sentry_*\n(error tracking)"]
+  end
+
+  A --> B
+  B --> C
+  B --> D
+  B --> E
+  B --> F
+```
+
+### How MCP Works in OpenCode
+
+1. You configure MCP servers (via CLI or `opencode.json`)
+2. When OpenCode starts, it connects to all configured servers
+3. The LLM gains access to each server's tools and resources
+4. You ask the LLM to do something, and it picks the right tool — whether built-in or MCP
+
+### Transport Types
+
+MCP servers connect to OpenCode using one of three transport protocols:
+
+```mermaid
+flowchart LR
+  subgraph "Local (stdio)"
+    A["OpenCode"] -->|"stdin/stdout"| B["MCP Server\n(child process)"]
+  end
+
+  subgraph "Remote (SSE)"
+    C["OpenCode"] -->|"HTTP + Server-Sent Events"| D["MCP Server\n(remote URL)"]
+  end
+
+  subgraph "Remote (Streamable HTTP)"
+    E["OpenCode"] -->|"HTTP POST/GET\nwith streaming"| F["MCP Server\n(remote URL)"]
+  end
+```
+
+| Transport           | Config `type` | How It Works                                                                 | When to Use                       |
+| ------------------- | ------------- | ---------------------------------------------------------------------------- | --------------------------------- |
+| **stdio**           | `"local"`     | OpenCode spawns the server as a child process; communicates via stdin/stdout | Local tools, npm packages         |
+| **SSE**             | `"remote"`    | HTTP connection with Server-Sent Events for streaming responses              | Remote servers, SaaS integrations |
+| **Streamable HTTP** | `"remote"`    | Newer protocol using standard HTTP POST/GET with streaming support           | Modern remote servers             |
+
+OpenCode auto-detects whether a remote server uses SSE or Streamable HTTP — you just provide the URL.
+
+### Environment Variable Expansion
+
+MCP configs support `{env:VAR}` syntax to inject environment variables at runtime:
+
+```json
+{
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_TOKEN": "{env:GITHUB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+**How `{env:VAR}` works:**
+
+1. OpenCode reads the value of `GITHUB_TOKEN` from your shell environment
+2. Substitutes it into the config before passing to the MCP server
+3. If the variable is unset, the value is an empty string
+
+This means your secrets stay in your environment (e.g., `.bashrc`, `.zshrc`) and never get committed to `opencode.json`.
+
+**Common pattern — set env vars before starting OpenCode:**
+
+```bash
+export GITHUB_TOKEN='ghp_...'
+export SENTRY_AUTH_TOKEN='sntrys_...'
+opencode
+```
+
+### MCP Tool Naming Convention
+
+MCP tools follow a consistent naming pattern: `mcp_<servername>_<toolname>`. This matters for permissions and per-agent tool control:
+
+```
+Server: "github"    → Tools: mcp_github_create_issue, mcp_github_list_repos, ...
+Server: "postgres"  → Tools: mcp_postgres_query, mcp_postgres_list_tables, ...
+Server: "sentry"    → Tools: mcp_sentry_list_issues, mcp_sentry_get_event, ...
+```
+
+### MCP CLI Commands
+
+```bash
+# Add a new MCP server (interactive)
+opencode mcp add
+
+# List all configured servers
+opencode mcp list
+
+# Authenticate with an MCP server (OAuth)
+opencode mcp auth
+
+# Debug MCP server connection
+opencode mcp debug
+
+# Remove/disconnect from an MCP server
+opencode mcp logout
+```
+
+### Connecting in the TUI
+
+You can also connect to MCP servers from within the TUI:
+
+```
+/connect
+```
+
+---
+
+## 🔧 Local MCP Servers
+
+Local servers run as child processes on your machine. Set `"type": "local"` and provide the `command` as an array:
+
+```json
+{
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_TOKEN": "{env:GITHUB_TOKEN}"
+      }
+    },
+    "postgres": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-postgres"],
+      "environment": {
+        "PGHOST": "localhost",
+        "PGPORT": "5432",
+        "PGDATABASE": "mydb"
+      }
+    }
+  }
+}
+```
+
+### Local Server Lifecycle
+
+```mermaid
+sequenceDiagram
+  participant OpenCode
+  participant Server Process
+
+  OpenCode->>Server Process: Spawn child process (command array)
+  Server Process-->>OpenCode: Ready (stdio connected)
+  Note over OpenCode,Server Process: Session active — tools available
+
+  OpenCode->>Server Process: tools/list
+  Server Process-->>OpenCode: Available tools + schemas
+
+  OpenCode->>Server Process: tools/call (e.g., create_issue)
+  Server Process-->>OpenCode: Result
+
+  Note over OpenCode: On exit or disable:
+  OpenCode->>Server Process: Terminate
+```
+
+### Local Server Options
+
+| Option        | Description                                             |
+| ------------- | ------------------------------------------------------- |
+| `type`        | `"local"`                                               |
+| `command`     | Array: executable + arguments                           |
+| `environment` | Key-value env vars passed to the server process         |
+| `enabled`     | `true` (default) or `false` to disable without removing |
+| `timeout`     | Startup timeout in milliseconds                         |
+
+### Disabling Without Removing
+
+```json
+{
+  "mcp": {
+    "heavy-server": {
+      "type": "local",
+      "command": ["heavy-mcp-server"],
+      "enabled": false
+    }
+  }
+}
+```
+
+### Config Scopes — Project vs Global
+
+MCP servers can be configured at two levels:
+
+| Scope   | File Location                      | Applies To                       |
+| ------- | ---------------------------------- | -------------------------------- |
+| Project | `opencode.json` in project root    | Only this project                |
+| Global  | `~/.config/opencode/opencode.json` | All projects (unless overridden) |
+
+Project config takes precedence over global config. You can define a server globally (e.g., GitHub) and override or disable it per-project.
+
+---
+
+## 🌐 Remote MCP Servers
+
+Remote servers connect over HTTP. Set `"type": "remote"` and provide the URL:
+
+```json
+{
+  "mcp": {
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/sse"
+    },
+    "internal-api": {
+      "type": "remote",
+      "url": "https://mcp.internal.example.com/sse",
+      "headers": {
+        "Authorization": "Bearer {env:INTERNAL_API_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+### Remote Server Options
+
+| Option    | Description                                      |
+| --------- | ------------------------------------------------ |
+| `type`    | `"remote"`                                       |
+| `url`     | Full URL to the remote MCP server                |
+| `headers` | HTTP headers (supports `{env:VAR}` substitution) |
+
+---
+
+## 🔑 OAuth & Authentication
+
+OpenCode supports OAuth for MCP servers that require it. OAuth flows are handled automatically when possible.
+
+### Automatic OAuth
+
+Many remote MCP servers trigger an OAuth flow automatically on first connection. OpenCode opens the browser and stores the token.
+
+### Pre-Registered OAuth
+
+For servers requiring pre-registered credentials:
+
+```json
+{
+  "mcp": {
+    "my-service": {
+      "type": "remote",
+      "url": "https://mcp.example.com/sse",
+      "clientId": "your-client-id",
+      "clientSecret": "{env:MY_SERVICE_CLIENT_SECRET}",
+      "scope": "read write"
+    }
+  }
+}
+```
+
+### Managing OAuth
+
+```bash
+# Authenticate with a specific server
+opencode mcp auth
+
+# Remove stored credentials
+opencode mcp logout
+```
+
+---
+
+## 🎛️ Per-Agent MCP Management
+
+Control which MCP servers are available to each agent using glob patterns in the agent config:
+
+```json
+{
+  "agent": {
+    "build": {
+      "tools": {
+        "mcp_sentry_*": true,
+        "mcp_github_*": true,
+        "mcp_postgres_*": false
+      }
+    },
+    "explore": {
+      "tools": {
+        "mcp_*": false
+      }
+    }
+  }
+}
+```
+
+This lets you restrict database access to specific agents while giving all agents access to GitHub tools.
+
+---
+
+## 🛠️ Common MCP Servers
+
+### Featured Examples (from Docs)
+
+**Sentry** — Error tracking:
+
+```json
+{
+  "mcp": {
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/sse"
+    }
+  }
+}
+```
+
+**Context7** — Library documentation:
+
+```json
+{
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp@latest"]
+    }
+  }
+}
+```
+
+**Grep by Vercel** — Code context:
+
+```json
+{
+  "mcp": {
+    "grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app/sse"
+    }
+  }
+}
+```
+
+### Official MCP Servers
+
+| Server         | Package                                   | Purpose                 |
+| -------------- | ----------------------------------------- | ----------------------- |
+| **Filesystem** | `@modelcontextprotocol/server-filesystem` | Browse and manage files |
+| **GitHub**     | `@modelcontextprotocol/server-github`     | Repos, issues, PRs      |
+| **PostgreSQL** | `@modelcontextprotocol/server-postgres`   | Database queries        |
+| **SQLite**     | `@modelcontextprotocol/server-sqlite`     | SQLite database         |
+
+### Example: GitHub Server
+
+```json
+{
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_TOKEN": "{env:GITHUB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Once connected, you can ask the LLM:
+
+```
+List open issues in the repository
+Create a pull request for the current branch
+Show me the CI status for the latest commit
+```
+
+### Creating Custom MCP Servers
+
+> **Advanced topic** — This requires JavaScript/TypeScript knowledge. If you're just getting started with MCP, skip to [Practice Exercises](#-practice-exercises) and come back later.
+
+You can create your own MCP server using the MCP SDK. Here's a complete, minimal server:
+
+**File: `my-mcp-server/index.js`**
+
+```javascript
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+const server = new Server({
+  name: 'my-server',
+  version: '1.0.0',
+}, {
+  capabilities: { tools: {} }
+});
+
+// List available tools
+server.setRequestHandler('tools/list', async () => ({
+  tools: [{
+    name: 'greet',
+    description: 'Greet a user by name',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', description: 'Name to greet' }
+      },
+      required: ['name']
+    }
+  }, {
+    name: 'timestamp',
+    description: 'Get the current timestamp',
+    inputSchema: { type: 'object', properties: {} }
+  }]
+}));
+
+// Handle tool calls
+server.setRequestHandler('tools/call', async (request) => {
+  const { name, arguments: args } = request.params;
+  switch (name) {
+    case 'greet':
+      return {
+        content: [{ type: 'text', text: `Hello, ${args.name}!` }]
+      };
+    case 'timestamp':
+      return {
+        content: [{ type: 'text', text: new Date().toISOString() }]
+      };
+    default:
+      throw new Error(`Unknown tool: ${name}`);
+  }
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+**File: `my-mcp-server/package.json`**
+
+```json
+{
+  "name": "my-mcp-server",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
+```
+
+**Connect it in `opencode.json`:**
+
+```json
+{
+  "mcp": {
+    "my-server": {
+      "type": "local",
+      "command": ["node", "my-mcp-server/index.js"]
+    }
+  }
+}
+```
+
+**Then in the TUI:**
+
+```
+Use the greet tool to say hello to Alice
+```
+
+**Expected:** The LLM calls `mcp_my-server_greet` with `{"name": "Alice"}` and returns "Hello, Alice!"
+
+### MCP Output Limits
+
+MCP tool responses are subject to the LLM's context window. Large responses (e.g., a full database dump) will be truncated. Best practices:
+
+- **Paginate**: Return limited results with a "next page" parameter
+- **Filter**: Let the LLM specify what it needs (e.g., `WHERE` clauses)
+- **Summarize**: Return counts and summaries instead of full data sets
+
+---
+
+## 🔒 MCP Tool Permissions
+
+Control access to MCP-provided tools using glob patterns in permissions:
+
+```json
+{
+  "permission": {
+    "mcp_github_*": "allow",
+    "mcp_postgres_*": "ask",
+    "mcp_dangerous_*": "deny"
+  }
+}
+```
+
+MCP tool names follow the pattern `mcp_<servername>_<toolname>`.
+
+---
+
+## 🧪 Practice Exercises
+
+### Exercise 1: Add a Local MCP Server
+
+Configure a local filesystem server in `opencode.json`:
+
+```json
+{
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/home/user/projects"]
+    }
+  }
+}
+```
+
+### Exercise 2: Add a Remote MCP Server
+
+Connect to a remote server like Sentry or Grep:
+
+```json
+{
+  "mcp": {
+    "grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app/sse"
+    }
+  }
+}
+```
+
+### Exercise 3: Per-Agent MCP Control
+
+Restrict MCP tools so only the build agent can access GitHub:
+
+```json
+{
+  "agent": {
+    "build": {
+      "tools": { "mcp_github_*": true }
+    },
+    "explore": {
+      "tools": { "mcp_github_*": false }
+    }
+  }
+}
+```
+
+### Exercise 4: Debug a Connection
+
+```bash
+opencode mcp debug
+```
+
+---
+
+## ❓ Common Questions
+
+**Q: What's the difference between MCP servers and built-in tools?**
+Built-in tools (read, edit, bash, etc.) come with OpenCode. MCP servers add external capabilities (databases, APIs, etc.).
+
+**Q: Can MCP servers be remote?**
+Yes. Use `"type": "remote"` with a URL. OpenCode supports remote servers with optional OAuth authentication.
+
+**Q: Where are MCP servers configured?**
+In `opencode.json` under `"mcp"`, or via `opencode mcp add` on the CLI.
+
+**Q: Can I use multiple MCP servers at once?**
+Yes. Configure as many as needed — each gets its own key.
+
+**Q: How do I temporarily disable a server?**
+Set `"enabled": false` in the server's config instead of removing it.
+
+---
+
+## 🐛 Troubleshooting
+
+### Server Not Connecting
+
+```bash
+# Debug the connection
+opencode mcp debug
+
+# Verify the server package is installed
+npx -y @modelcontextprotocol/server-github --help
+
+# Check environment variables
+echo $GITHUB_TOKEN
+```
+
+### Authentication Issues
+
+```bash
+# Re-authenticate (OAuth)
+opencode mcp auth
+
+# Or set environment variables manually
+export GITHUB_TOKEN='your_token'
+```
+
+### Server Crashes
+
+- Check that the server package is up to date
+- Verify environment variables are correctly set
+- Check server logs via `opencode mcp debug`
+
+---
+
+## 🚶 Next Steps
+
+Continue to **[Module 09: Advanced Features](../09-advanced-features/)** to learn about plugins, custom tools, permissions, and advanced configuration.
 
 ---
 
@@ -536,8 +768,9 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **License:** MIT - See [LICENSE](../LICENSE) for details.
 
-**Last Updated:** April 2026  
+[⬆ Back to top](#-08-mcp-servers)
+
+**Last Updated:** April 2026
 **OpenCode Version:** 1.0+ compatible
 
 ---
-

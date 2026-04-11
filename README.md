@@ -13,8 +13,6 @@
 
 **[Get Started in 15 Minutes](#-get-started-in-15-minutes)** • **[Find Your Level](#-find-your-level)** • **[Browse Modules](#-learning-modules)** • **[Quick Reference](QUICK-REFERENCE.md)**
 
-![OpenCode Workflow](https://via.placeholder.com/800x200/0a0a2a/ffffff?text=OpenCode+Primer+-+Structured+Learning+Paths+for+AI+Coding+Agents)
-
 </div>
 
 ---
@@ -24,20 +22,15 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [🚀 Overview](#-overview)
 - [🎯 The Problem](#-the-problem)
-- [✨ How This Guide Fixes This](#-how-this-guide-fixes-this)
+- [✨ How This Guide Helps](#-how-this-guide-fixes-this)
 - [⚙️ How It Works](#️-how-it-works)
-- [🤔 Not Sure Where to Start?](#-not-sure-where-to-start)
 - [⚡ Get Started in 15 Minutes](#-get-started-in-15-minutes)
-- [🏗️ What Can You Build With This?](#️-what-can-you-build-with-this)
 - [📚 Learning Modules](#-learning-modules)
+- [🏗️ What Can You Build?](#️-what-can-you-build-with-this)
 - [❓ FAQ](#-faq)
-- [🛠️ Quick Start Examples](#️-quick-start-examples)
 - [🐛 Troubleshooting](#-troubleshooting)
 - [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [📊 Progress Tracking](#-progress-tracking)
 
 </details>
 
@@ -60,13 +53,13 @@ graph TD
 
 ### The Core Issues:
 
-| Problem | Impact | Solution in This Guide |
-|---------|--------|------------------------|
+| Problem                                    | Impact                                           | Solution in This Guide                                   |
+| ------------------------------------------ | ------------------------------------------------ | -------------------------------------------------------- |
 | **Feature descriptions without workflows** | You know tools exist but not how to combine them | **Production-ready templates** that chain tools together |
-| **No structured learning path** | You skim everything but master nothing | **10 progressive modules** with clear prerequisites |
-| **Basic "hello world" examples** | Can't build real automation pipelines | **Real-world use cases** from code review to deployment |
-| **Missing troubleshooting guidance** | Get stuck on simple issues | **Common pitfalls & solutions** for every module |
-| **No visual learning aids** | Hard to grasp complex workflows | **Diagrams, flowcharts, and screenshots** |
+| **No structured learning path**            | You skim everything but master nothing           | **10 progressive modules** with clear prerequisites      |
+| **Basic "hello world" examples**           | Can't build real automation pipelines            | **Real-world use cases** from code review to deployment  |
+| **Missing troubleshooting guidance**       | Get stuck on simple issues                       | **Common pitfalls & solutions** for every module         |
+| **No visual learning aids**                | Hard to grasp complex workflows                  | **Diagrams, flowcharts, and screenshots**                |
 
 You're leaving **90% of opencode's power on the table** — and you don't know what you don't know.
 
@@ -80,16 +73,16 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 
 ### 📊 Comparison: Official Docs vs This Guide
 
-| | **Official Documentation** | **This Primer** |
-|-|----------------------------|-----------------|
-| **📚 Content Type** | Reference documentation | Visual tutorials with examples |
-| **🎯 Focus** | Feature descriptions | How it works under the hood |
-| **💡 Examples** | Basic snippets | Production-ready workflows |
-| **🗺️ Organization** | Feature-organized | Progressive learning path |
-| **🧭 Guidance** | Self-directed | Guided roadmap with time estimates |
-| **📝 Assessment** | None | Interactive quizzes to find gaps |
-| **🖼️ Visuals** | Minimal | Diagrams, flowcharts, screenshots |
-| **🔧 Templates** | None | Copy-paste workflows |
+|                    | **Official Documentation** | **This Primer**                    |
+| ------------------ | -------------------------- | ---------------------------------- |
+| **📚 Content Type** | Reference documentation    | Visual tutorials with examples     |
+| **🎯 Focus**        | Feature descriptions       | How it works under the hood        |
+| **💡 Examples**     | Basic snippets             | Production-ready workflows         |
+| **🗺️ Organization** | Feature-organized          | Progressive learning path          |
+| **🧭 Guidance**     | Self-directed              | Guided roadmap with time estimates |
+| **📝 Assessment**   | None                       | Interactive quizzes to find gaps   |
+| **🖼️ Visuals**      | Minimal                    | Diagrams, flowcharts, screenshots  |
+| **🔧 Templates**    | None                       | Copy-paste workflows               |
 
 </div>
 
@@ -163,11 +156,11 @@ Take the **self-assessment** or pick your level below:
 
 ### 🎯 Quick Level Guide
 
-| Level | Badge | You Can... | Start Here | Time |
-|-------|-------|------------|------------|------|
-| **Beginner** | 🟢 | Run basic opencode commands | [01 - Basic Commands](01-basic-commands) | ~2 hours |
-| **Intermediate** | 🟡 | Use file operations and search | [03 - Search Tools](03-search-tools) | ~3 hours |
-| **Advanced** | 🔴 | Create automation workflows | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
+| Level            | Badge | You Can...                     | Start Here                               | Time     |
+| ---------------- | ----- | ------------------------------ | ---------------------------------------- | -------- |
+| **Beginner**     | 🟢     | Run basic opencode commands    | [01 - Basic Commands](01-basic-commands) | ~2 hours |
+| **Intermediate** | 🟡     | Use file operations and search | [03 - Search Tools](03-search-tools)     | ~3 hours |
+| **Advanced**     | 🔴     | Create automation workflows    | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
 
 ## 📚 Learning Modules
 
@@ -175,18 +168,18 @@ Take the **self-assessment** or pick your level below:
 
 ### 🗺️ Complete Learning Path (10 Modules)
 
-| # | Module | Level | ⏱️ Time | Status |
-|---|--------|-------|---------|--------|
-| 1 | [🚀 Basic Commands & TUI](01-basic-commands) | Beginner | 30 min | ✅ Ready |
-| 2 | [📁 File Operations](02-file-operations) | Beginner+ | 45 min | ✅ Ready |
-| 3 | [🔍 Search Tools](03-search-tools) | Beginner+ | 45 min | ✅ Ready |
-| 4 | [💻 Bash Integration](04-bash-integration) | Intermediate | 1 hour | ✅ Ready |
-| 5 | [❓ Question & Todo Tools](05-question-todo) | Intermediate | 45 min | ✅ Ready |
-| 6 | [🌐 Web Tools](06-web-tools) | Intermediate | 45 min | ✅ Ready |
-| 7 | [🤖 Skills & Agents](07-skills-agents) | Intermediate+ | 1 hour | ✅ Ready |
-| 8 | [🔌 MCP Servers](08-mcp-servers) | Intermediate+ | 1 hour | ✅ Ready |
-| 9 | [⚙️ Advanced Features](09-advanced-features) | Advanced | 1.5 hours | ✅ Ready |
-| 10 | [🤝 OpenWork Integration](10-openwork) | Advanced | 1 hour | ✅ Ready |
+| #   | Module                                      | Level         | ⏱️ Time    | Status  |
+| --- | ------------------------------------------- | ------------- | --------- | ------- |
+| 1   | [🚀 Basic Commands & TUI](01-basic-commands) | Beginner      | 30 min    | ✅ Ready |
+| 2   | [📁 File Operations](02-file-operations)     | Beginner+     | 45 min    | ✅ Ready |
+| 3   | [🔍 Search Tools](03-search-tools)           | Beginner+     | 45 min    | ✅ Ready |
+| 4   | [💻 Bash Integration](04-bash-integration)   | Intermediate  | 1 hour    | ✅ Ready |
+| 5   | [❓ Question & Todo Tools](05-question-todo) | Intermediate  | 20 min    | ✅ Ready |
+| 6   | [🌐 Web Tools](06-web-tools)                 | Intermediate  | 45 min    | ✅ Ready |
+| 7   | [🤖 Skills & Agents](07-skills-agents)       | Intermediate+ | 1 hour    | ✅ Ready |
+| 8   | [🔌 MCP Servers](08-mcp-servers)             | Intermediate+ | 1 hour    | ✅ Ready |
+| 9   | [⚙️ Advanced Features](09-advanced-features) | Advanced      | 1.5 hours | ✅ Ready |
+| 10  | [🤝 OpenWork Integration](10-openwork)       | Advanced      | 1 hour    | ✅ Ready |
 
 **📊 Total Time Estimate:** ~10 hours
 
@@ -328,18 +321,18 @@ By the end of 15 minutes, you should be able to:
 
 ### 🔧 Real-World Use Cases
 
-| Use Case | 🎯 Goal | ⚙️ Features Combined | Module |
-|----------|---------|----------------------|--------|
-| **Code Review Automation** | Automate code quality checks | 🔍 Search + 📁 File Ops + 💻 Bash | 1-4 |
-| **Refactoring Workflows** | Safe, batch code modifications | ✏️ Edit + 🔍 Search + 🤖 Automation | 2-3-7 |
-| **CI/CD Integration** | Streamline deployment pipelines | 💻 Bash + 🤖 Automation + 🔄 Workflows | 4-7-9 |
-| **Documentation Generation** | Auto-generate project docs | 📁 File Ops + 🔍 Search + 🤖 Automation | 2-3-7 |
-| **Security Audits** | Find vulnerabilities in codebase | 🔍 Search + 📖 File Reading + 💻 Bash | 3-2-4 |
-| **DevOps Pipelines** | Infrastructure as code workflows | 🤖 Automation + 💻 Bash + 🔄 Workflows | 7-4-9 |
-| **Complex Refactoring** | Large-scale code migrations | 🔍 Search + ✏️ Edit + 🤖 Task Automation | 3-2-7 |
-| **API Client Generation** | Auto-create API clients from docs | 🌐 Web Tools + 📁 File Ops + 🤖 Agents | 6-2-7 |
-| **Database Migrations** | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation | 8-7 |
-| **Team Collaboration** | Shared development workflows | 🤝 OpenWork + 🔄 Workflows + 🤖 Agents | 10-9-7 |
+| Use Case                     | 🎯 Goal                              | ⚙️ Features Combined                   | Module |
+| ---------------------------- | ----------------------------------- | ------------------------------------- | ------ |
+| **Code Review Automation**   | Automate code quality checks        | 🔍 Search + 📁 File Ops + 💻 Bash        | 1-4    |
+| **Refactoring Workflows**    | Safe, batch code modifications      | ✏️ Edit + 🔍 Search + 🤖 Automation      | 2-3-7  |
+| **CI/CD Integration**        | Streamline deployment pipelines     | 💻 Bash + 🤖 Automation + 🔄 Workflows   | 4-7-9  |
+| **Documentation Generation** | Auto-generate project docs          | 📁 File Ops + 🔍 Search + 🤖 Automation  | 2-3-7  |
+| **Security Audits**          | Find vulnerabilities in codebase    | 🔍 Search + 📖 File Reading + 💻 Bash    | 3-2-4  |
+| **DevOps Pipelines**         | Infrastructure as code workflows    | 🤖 Automation + 💻 Bash + 🔄 Workflows   | 7-4-9  |
+| **Complex Refactoring**      | Large-scale code migrations         | 🔍 Search + ✏️ Edit + 🤖 Task Automation | 3-2-7  |
+| **API Client Generation**    | Auto-create API clients from docs   | 🌐 Web Tools + 📁 File Ops + 🤖 Agents   | 6-2-7  |
+| **Database Migrations**      | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation          | 8-7    |
+| **Team Collaboration**       | Shared development workflows        | 🤝 OpenWork + 🔄 Workflows + 🤖 Agents   | 10-9-7 |
 
 </div>
 
@@ -376,15 +369,15 @@ changed_files=$(git diff --name-only HEAD~1 HEAD)
 
 # 2. Search for issues
 for file in $changed_files; do
-    opencode grep "TODO\|FIXME\|BUG" "$file"
-    opencode grep "console\.log\|print\(" "$file"  # Debug statements
+    grep -n 'TODO\|FIXME\|BUG' "$file" 2>/dev/null
+    grep -n 'console\.log\|print(' "$file" 2>/dev/null  # Debug statements
 done
 
 # 3. Check code style
-opencode bash "npm run lint"
+npm run lint
 
 # 4. Run tests
-opencode bash "npm test"
+npm test
 
 # 5. Generate report
 echo "Code Review Complete" > review_report.md
@@ -394,12 +387,12 @@ echo "Code Review Complete" > review_report.md
 
 ### 🏆 Skill Progression
 
-| Level | Capabilities | Projects You Can Build |
-|-------|--------------|------------------------|
-| **Beginner** | Basic commands, file reading | Script organization, simple edits |
+| Level            | Capabilities                      | Projects You Can Build              |
+| ---------------- | --------------------------------- | ----------------------------------- |
+| **Beginner**     | Basic commands, file reading      | Script organization, simple edits   |
 | **Intermediate** | Search patterns, bash integration | Code cleanup, documentation scripts |
-| **Advanced** | Automation, MCP servers, agents | CI/CD pipelines, refactoring tools |
-| **Expert** | OpenWork, complex workflows | Team automation, production systems |
+| **Advanced**     | Automation, MCP servers, agents   | CI/CD pipelines, refactoring tools  |
+| **Expert**       | OpenWork, complex workflows       | Team automation, production systems |
 
 **[🔧 Browse Example Workflows ->](CATALOG.md#example-workflows)**
 
@@ -485,653 +478,44 @@ Regularly! We track OpenCode releases and update examples and best practices acc
 
 ---
 
-## 📊 Progress Tracking
-
-<details>
-<summary><strong>Track Your Learning Journey</strong></summary>
-
-### 🎯 Module Completion Checklist
-
-| Module | Status | Completed On | Notes |
-|--------|--------|--------------|-------|
-| [01 - Basic Commands](01-basic-commands) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [02 - File Operations](02-file-operations) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [03 - Search Tools](03-search-tools) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [04 - Bash Integration](04-bash-integration) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [05 - Question & Todo Tools](05-question-todo) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [06 - Web Tools](06-web-tools) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [07 - Skills & Agents](07-skills-agents) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [08 - MCP Servers](08-mcp-servers) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [09 - Advanced Features](09-advanced-features) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-| [10 - OpenWork Integration](10-openwork) | □ Not Started<br>□ In Progress<br>✅ Completed | | |
-
-### 🏆 Skills Acquired
-
-| Skill | Level | Evidence |
-|-------|-------|----------|
-| **Basic OpenCode Commands** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can navigate TUI, use @ references |
-| **File Operations** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can read, edit, write files efficiently |
-| **Search Patterns** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can find files and content effectively |
-| **Bash Integration** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can execute shell commands |
-| **Automation Workflows** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can create multi-step automations |
-| **MCP Server Integration** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can connect to external tools |
-| **Team Collaboration** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can use OpenWork effectively |
-
-### 🎓 Certification (Self-Assessed)
-
-Copy this badge when you complete all modules:
-
-```markdown
-[![OpenCode Primer Certified](https://img.shields.io/badge/OpenCode_Primer-Certified-success)](https://github.com/your-username/opencode-primer)
-```
-
-</details>
-
-## 🚀 Start Mastering OpenCode Today
-
-You already have opencode installed. The only thing between you and **10x productivity** is knowing how to use it effectively. This primer gives you the structured path, the practical explanations, and the real-world templates to get there.
-
-**MIT licensed. Free forever. Clone it, fork it, make it yours.**
-
-<div align="center">
-
-### 📚 Quick Links
-
-[![Start Learning](https://img.shields.io/badge/🚀_Start_Learning-LEARNING_ROADMAP-blue)](LEARNING-ROADMAP.md)
-[![Browse Catalog](https://img.shields.io/badge/📋_Browse_Catalog-CATALOG-orange)](CATALOG.md)
-[![Quick Reference](https://img.shields.io/badge/⚡_Quick_Reference-QUICK_REFERENCE-green)](QUICK-REFERENCE.md)
-[![Troubleshooting](https://img.shields.io/badge/🐛_Troubleshooting-TROUBLESHOOTING-red)](TROUBLESHOOTING.md)
-
-</div>
+[⬆ Back to top](#-opencode-primer)
 
 ---
-
----
-
-## Quick Navigation — All Features
-
-| Feature | Description | Folder |
-|---------|-------------|--------|
-| **Feature Catalog** | Complete reference with installation commands | [CATALOG.md](CATALOG.md) |
-| **Basic Commands** | Core opencode usage | [01-basic-commands/](01-basic-commands) |
-| **File Reading** | Read files and directories | [02-file-reading/](02-file-reading) |
-| **File Operations** | Edit and write files | [03-file-operations/](03-file-operations) |
-| **Search Tools** | Find files and content | [04-search-tools/](04-search-tools) |
-| **Bash Integration** | Execute shell commands | [05-bash-integration/](05-bash-integration) |
-| **Task Automation** | Automate repetitive tasks | [06-task-automation/](06-task-automation) |
-| **Automation** | Advanced automation workflows | [07-automation/](07-automation) |
-| **Advanced Features** | Power user features | [08-advanced-features/](08-advanced-features) |
-| **Workflows** | Complete workflow examples | [09-workflows/](09-workflows) |
-| **OpenWork Integration** | OpenWork platform features | [10-openwork/](10-openwork) |
-
-## Feature Comparison
-
-| Feature | Primary Use | Best For |
-|---------|-------------|----------|
-| **Basic Commands** | Core operations | Getting started |
-| **File Reading** | Read files and dirs | Understanding codebases |
-| **File Operations** | Edit and write files | Making changes |
-| **Search Tools** | Find files/content | Navigation and discovery |
-| **Bash Integration** | Execute shell commands | System operations |
-| **Task Automation** | Automate tasks | Repetitive work |
-| **Automation** | Complex workflows | Multi-step processes |
-| **Advanced Features** | Power user tools | Expert usage |
-| **Workflows** | Complete solutions | Real-world projects |
-| **OpenWork Integration** | Platform features | Team collaboration |
-
-## 🛠️ Quick Start Examples
-
-### 🎯 Example 1: Complete Code Review Workflow
-
-<details>
-<summary><strong>View full workflow with explanation</strong></summary>
-
-**Goal:** Automate code quality checks
-**Tools:** 🔍 Search + 📁 File Operations + 💻 Bash
-**Time:** ~5 minutes
-
-```bash
-#!/bin/bash
-# Complete Code Review Automation
-
-echo "🔍 Starting code review..."
-
-# 1. Search for potential issues
-echo "Searching for TODOs, FIXMEs, and BUGs..."
-opencode search "TODO|FIXME|BUG" --include="*.{js,ts,py}"
-
-# 2. Read files with issues (first 3 files)
-echo "Reading files with issues..."
-files=$(opencode search -l "TODO|FIXME|BUG" --include="*.{js,ts,py}" | head -3)
-for file in $files; do
-    echo "📄 Reviewing: $file"
-    opencode read "$file" | head -20  # First 20 lines
-done
-
-# 3. Edit files to fix issues (example)
-echo "Ready to fix issues..."
-# opencode edit /path/to/file.js --old="TODO: fix this" --new="Fixed: implemented solution"
-
-# 4. Run tests
-echo "Running tests..."
-opencode bash "npm test 2>&1 | tail -20"  # Last 20 lines of output
-
-echo "✅ Code review complete!"
-```
-
-**What this teaches:**
-- Combining multiple opencode tools
-- Pipeline automation
-- Error handling with output filtering
-- Progress feedback to user
-
-</details>
-
-### 🔄 Example 2: Automated Refactoring
-
-<details>
-<summary><strong>View full workflow with explanation</strong></summary>
-
-**Goal:** Safe, batch code modifications  
-**Tools:** ✏️ Edit + 🔍 Search + 🤖 Automation
-**Time:** ~10 minutes
-
-```bash
-#!/bin/bash
-# Automated Function Renaming
-
-OLD_NAME="oldFunctionName"
-NEW_NAME="newFunctionName"
-
-echo "🔄 Starting refactoring: $OLD_NAME → $NEW_NAME"
-
-# 1. Find all occurrences
-echo "Searching for '$OLD_NAME'..."
-matches=$(opencode search -l "$OLD_NAME" --include="*.js")
-count=$(echo "$matches" | wc -l)
-echo "Found $count occurrences"
-
-# 2. Preview changes
-echo "Previewing changes..."
-for file in $matches; do
-    echo "📝 File: $file"
-    opencode grep "$OLD_NAME" "$file" | head -3
-done
-
-# 3. Confirm before proceeding
-read -p "Proceed with refactoring? (y/n): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # 4. Batch rename
-    echo "Renaming..."
-    for file in $matches; do
-        echo "Updating: $file"
-        opencode edit "$file" --old="$OLD_NAME" --new="$NEW_NAME" --replaceAll
-    done
-    
-    # 5. Verify changes
-    echo "Verifying..."
-    remaining=$(opencode search -l "$OLD_NAME" --include="*.js" | wc -l)
-    echo "✅ Renamed $count functions. $remaining remaining."
-    
-    # 6. Run tests
-    echo "Running tests..."
-    opencode bash "npm run lint && npm test"
-else
-    echo "❌ Refactoring cancelled"
-fi
-```
-
-**What this teaches:**
-- Safe batch operations
-- User confirmation patterns
-- Progress tracking
-- Verification steps
-
-</details>
-
-### 🚀 Example 3: DevOps Deployment Pipeline
-
-<details>
-<summary><strong>View full workflow with explanation</strong></summary>
-
-**Goal:** Streamline deployment process
-**Tools:** 💻 Bash + 🤖 Automation + 🔄 Workflows
-**Time:** ~15 minutes
-
-```bash
-#!/bin/bash
-# DevOps Deployment Pipeline
-
-echo "🚀 Starting deployment pipeline..."
-
-# 1. Environment check
-echo "🔧 Checking environment..."
-opencode bash """
-    echo 'Node: ' && node --version
-    echo 'NPM: ' && npm --version
-    echo 'Docker: ' && docker --version 2>/dev/null || echo 'Docker not installed'
-"""
-
-# 2. Install dependencies
-echo "📦 Installing dependencies..."
-opencode bash "npm ci --silent"  # Clean install
-
-# 3. Run tests
-echo "🧪 Running tests..."
-if opencode bash "npm test 2>&1"; then
-    echo "✅ Tests passed"
-else
-    echo "❌ Tests failed - aborting deployment"
-    exit 1
-fi
-
-# 4. Build project
-echo "🏗️ Building project..."
-opencode bash "npm run build"
-
-# 5. Deploy (example - customize for your platform)
-echo "🚀 Deploying..."
-# For AWS:
-# opencode bash "aws s3 sync dist/ s3://your-bucket/"
-
-# For Docker:
-# opencode bash "docker build -t your-app ."
-# opencode bash "docker push your-registry/your-app"
-
-# 6. Verify deployment
-echo "🔍 Verifying deployment..."
-opencode bash """
-    sleep 10  # Wait for deployment
-    curl -s -o /dev/null -w '%{http_code}' https://your-app.com/health
-"""
-
-echo "🎉 Deployment complete!"
-```
-
-**What this teaches:**
-- Environment validation
-- Error handling and abort conditions
-- Multi-step deployment workflows
-- Platform-agnostic patterns
-
-</details>
-
-### 🎓 Try It Yourself
-
-<details>
-<summary><strong>Interactive Exercise</strong></summary>
-
-**Challenge:** Create a script that:
-1. Finds all JavaScript files in a directory
-2. Counts the number of functions in each file
-3. Creates a summary report
-
-**Starter Code:**
-```bash
-#!/bin/bash
-# Function Counter Challenge
-
-DIRECTORY="./src"  # Change this to your directory
-
-echo "📊 Function Counter"
-echo "Directory: $DIRECTORY"
-
-# Your code here...
-# Hint: Use opencode search and bash commands
-
-echo "✅ Challenge complete!"
-```
-
-**Solution:** (Try yourself first!)
-<details>
-<summary>Click to reveal solution</summary>
-
-```bash
-#!/bin/bash
-# Function Counter Solution
-
-DIRECTORY="./src"
-REPORT="function_report.md"
-
-echo "# Function Count Report" > "$REPORT"
-echo "Generated: $(date)" >> "$REPORT"
-echo "" >> "$REPORT"
-
-for file in $(find "$DIRECTORY" -name "*.js" -o -name "*.ts"); do
-    count=$(opencode grep -c "function\\s+\\w+" "$file")
-    echo "- **$file**: $count functions" >> "$REPORT"
-    echo "  - $file: $count functions"
-done
-
-echo "" >> "$REPORT"
-echo "Total files: $(find "$DIRECTORY" -name "*.js" -o -name "*.ts" | wc -l)" >> "$REPORT"
-
-echo "📄 Report saved to: $REPORT"
-```
-
-</details>
-
-</details>
-
----
-
-## Directory Structure
-
-```
-├── 01-basic-commands/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 02-file-reading/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 03-file-operations/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 04-search-tools/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 05-bash-integration/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 06-task-automation/
-│   ├── examples/
-│   ├── patterns.md
-│   └── README.md
-├── 07-automation/
-│   ├── templates/
-│   ├── workflows/
-│   └── README.md
-├── 08-advanced-features/
-│   ├── examples/
-│   └── README.md
-├── 09-workflows/
-│   ├── code-review/
-│   ├── refactoring/
-│   ├── deployment/
-│   └── README.md
-├── 10-openwork/
-│   ├── integration/
-│   ├── examples/
-│   └── README.md
-└── README.md (this file)
-```
-
-## Best Practices
-
-### Do's
-
-- Start simple with basic commands
-- Add features incrementally
-- Use search before editing
-- Test commands in safe environment first
-- Document custom workflows
-- Version control your automation scripts
-- Share workflows with team
-
-### Don'ts
-
-- Don't run destructive commands without testing
-- Don't hardcode sensitive information
-- Don't skip error handling
-- Don't over-complicate simple tasks
-- Don't ignore security best practices
-- Don't commit secrets or credentials
 
 ## 🐛 Troubleshooting
 
-<details>
-<summary><strong>Common Issues & Solutions</strong></summary>
+| Issue                    | Quick Fix                                                        |
+| ------------------------ | ---------------------------------------------------------------- |
+| `command not found`      | Verify install: `which opencode` — check your `$PATH`            |
+| TUI not starting         | Try `TERM=xterm opencode` — check terminal compatibility         |
+| `permission denied`      | `chmod +x` the file, or check `opencode.json` permissions config |
+| TUI unresponsive         | Press `Ctrl+C` to interrupt; worst case: `pkill -f opencode`     |
+| MCP server won't connect | Run `opencode mcp debug` — check `opencode.json` for typos       |
 
-### 🚫 Command Not Working
+**[📖 Full Troubleshooting Guide ->](TROUBLESHOOTING.md)** — covers file operations, search, debugging workflows, and emergency recovery.
 
-| Symptom | Possible Cause | Solution |
-|---------|---------------|----------|
-| `command not found` | OpenCode not in PATH | `export PATH=$PATH:/path/to/opencode` |
-| `permission denied` | Insufficient permissions | `chmod +x /path/to/file` or use `sudo` |
-| `invalid option` | Wrong command syntax | Check `opencode --help` for correct usage |
-| `no such file or directory` | Wrong file path | Use `pwd` and `ls` to verify path |
-
-**Quick Fix:**
-```bash
-# Verify installation
-which opencode
-
-# Check version
-opencode --version
-
-# Test with simple command
-opencode bash "echo 'test'"
-```
-
-### 📁 File Operations Failed
-
-| Symptom | Possible Cause | Solution |
-|---------|---------------|----------|
-| `oldString not found` | Text doesn't match exactly | Check whitespace, case sensitivity |
-| `multiple matches found` | Ambiguous text | Add more context to oldString |
-| `permission denied` | File not writable | `chmod +w filename` |
-| `file not found` | Wrong path | Use absolute paths or verify location |
-
-**Quick Fix:**
-```bash
-# Verify file exists
-ls -la /path/to/file
-
-# Check file contents
-head -20 /path/to/file
-
-# Test with simple edit first
-opencode edit test.txt --old="test" --new="TEST" 2>&1
-```
-
-### 🔍 Search Not Finding Results
-
-| Symptom | Possible Cause | Solution |
-|---------|---------------|----------|
-| `no matches` | Wrong pattern | Use simpler pattern first |
-| `wrong directory` | Search path incorrect | Specify full path |
-| `file type excluded` | Wrong include pattern | Use `--include="*"` to test |
-| `case sensitivity` | Pattern case mismatch | Use `-i` flag for case-insensitive |
-
-**Quick Fix:**
-```bash
-# Test with simple pattern
-opencode grep "test" .
-
-# Check file list
-find . -name "*.js" | head -10
-
-# Verify search syntax
-opencode grep --help
-```
-
-</details>
-
-<details>
-<summary><strong>Advanced Troubleshooting</strong></summary>
-
-### 🔧 OpenCode TUI Issues
-
-| Issue | Solution |
-|-------|----------|
-| **TUI not starting** | Check terminal compatibility, try `TERM=xterm opencode` |
-| **No response to input** | Press `Ctrl+C` to interrupt, restart |
-| **Display glitches** | Resize terminal, check `$TERM` variable |
-| **Plan/Build mode stuck** | Press `Tab` key to toggle |
-
-### 🐛 Common Error Messages
-
-```bash
-# Error: "Tool execution failed"
-# Usually means missing dependencies or permissions
-opencode bash "which git"  # Check if git exists
-
-# Error: "Timeout exceeded"
-# Increase timeout or optimize command
-opencode --timeout=60 bash "long-running-command"
-
-# Error: "Network error"
-# Check internet connection
-opencode bash "curl -s https://opencode.ai"  # Test connectivity
-```
-
-### 🚨 Emergency Recovery
-
-```bash
-# If opencode becomes unresponsive:
-# 1. Press Ctrl+C multiple times
-# 2. If still stuck, force kill:
-pkill -f opencode
-
-# Reset configuration (if corrupted):
-rm -rf ~/.config/opencode/sessions
-rm -rf ~/.cache/opencode
-
-# Fresh start:
-mv ~/.config/opencode ~/.config/opencode.backup
-opencode  # Creates fresh config
-```
-
-</details>
-
-<details>
-<summary><strong>Debugging Workflows</strong></summary>
-
-### 🐞 Step-by-Step Debugging
-
-1. **Isolate the Problem:**
-   ```bash
-   # Test each component separately
-   opencode bash "echo 'Step 1: OK'"
-   opencode read test.txt
-   opencode grep "pattern" test.txt
-   ```
-
-2. **Add Debug Output:**
-   ```bash
-   # Add echo statements
-   echo "DEBUG: Starting search..."
-   results=$(opencode search "pattern")
-   echo "DEBUG: Found $(echo "$results" | wc -l) results"
-   ```
-
-3. **Check Exit Codes:**
-   ```bash
-   opencode bash "some-command"
-   echo "Exit code: $?"
-   # 0 = success, non-zero = error
-   ```
-
-4. **Log Everything:**
-   ```bash
-   # Redirect output to log file
-   {
-     echo "=== Starting workflow ==="
-     date
-     opencode bash "command1"
-     opencode bash "command2"
-   } > workflow.log 2>&1
-   ```
-
-### 🧪 Test Environment
-
-Create a safe test environment:
-```bash
-# Create test directory
-mkdir -p /tmp/opencode-test
-cd /tmp/opencode-test
-
-# Create test files
-echo "test content" > test1.txt
-echo "more test" > test2.txt
-
-# Test commands safely
-opcode grep "test" .
-opencode edit test1.txt --old="test" --new="TEST"
-```
-
-</details>
-
-**[📖 Complete Troubleshooting Guide ->](TROUBLESHOOTING.md)**
+[⬆ Back to top](#-opencode-primer)
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Found an issue or want to contribute an example? We'd love your help!
+We welcome contributions! See **[CONTRIBUTING.md](CONTRIBUTING.md)** for guidelines.
 
-**Please read [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:**
-
-- Types of contributions (examples, docs, features, bugs, feedback)
-- How to set up your development environment
-- Directory structure and how to add content
-- Writing guidelines and best practices
-- Commit and PR process
-
-**Our Community Standards:**
-
-- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) - How we treat each other
-- [SECURITY.md](SECURITY.md) - Security policy and vulnerability reporting
-
-### Reporting Security Issues
-
-If you discover a security vulnerability, please report it responsibly:
-
-1. **Do NOT** open a public issue for security vulnerabilities
-2. Report through secure channels
-3. Include detailed reproduction steps
-
-Quick start:
-
-1. Fork and clone the repository
-2. Create a descriptive branch (`add/feature-name`, `fix/bug`, `docs/improvement`)
-3. Make your changes following the guidelines
-4. Submit a pull request with a clear description
-
-**Need help?** Open an issue, and we'll guide you through the process.
+Quick start: fork → branch → edit → PR. See also [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ---
 
-## License
+## 📄 License
 
-MIT License - see [LICENSE](LICENSE). Free to use, modify, and distribute. The only requirement is including the license notice.
+MIT License — see [LICENSE](LICENSE). Free to use, modify, and distribute.
 
 ---
 
-**Last Updated**: April 10, 2026  
-**OpenCode Version**: Latest  
-**OpenWork Integration**: Available
+<div align="center">
 
-## About
+**[Start Learning](LEARNING-ROADMAP.md)** • **[Quick Reference](QUICK-REFERENCE.md)** • **[Troubleshooting](TROUBLESHOOTING.md)** • **[Catalog](CATALOG.md)**
 
-A structured, example-driven guide to mastering opencode CLI and openwork platform — from basic concepts to advanced automation workflows.
+**Last Updated:** April 2026 • **OpenCode Version:** 1.0+
 
-### Topics
-
-[tutorial](https://github.com/topics/tutorial) [guide](https://github.com/topics/guide) [opencode](https://github.com/topics/opencode) [openwork](https://github.com/topics/openwork) [automation](https://github.com/topics/automation)
-
-### Resources
-
-[Readme](README.md)
-
-### License
-
-[MIT license](LICENSE)
-
-### Code of conduct
-
-[Code of conduct](CODE_OF_CONDUCT.md)
-
-### Contributing
-
-[Contributing](CONTRIBUTING.md)
-
-### Security policy
-
-[Security policy](SECURITY.md)
+</div>

@@ -4,60 +4,67 @@ Complete reference of opencode's built-in tools, modules, and learning resources
 
 ## 📋 Table of Contents
 
-- [Module Overview](#module-overview)
-- [OpenCode Built-in Tools](#opencode-built-in-tools)
-- [Quick Start Reference](#quick-start-reference)
-- [Complete Module Reference](#complete-module-reference)
-- [Use Case Matrix](#use-case-matrix)
-- [Troubleshooting](#troubleshooting)
-- [Additional Resources](#additional-resources)
+- [Module Overview](#-module-overview)
+- [OpenCode Built-in Tools](#️-opencode-built-in-tools)
+- [Quick Start Reference](#-quick-start-reference)
+- [Complete Module Reference](#-complete-module-reference)
+- [Use Case Matrix](#-use-case-matrix)
+- [Troubleshooting](#-troubleshooting)
+- [Additional Resources](#-additional-resources)
 
 ## 📊 Module Overview
 
-| Module | Level | Time | Focus | Key Tools Covered |
-|--------|-------|------|-------|-------------------|
-| **[01. Basic Commands & TUI](01-basic-commands)** | Beginner | 30 min | Interface fundamentals | TUI, slash commands, file references |
-| **[02. File Operations](02-file-operations)** | Beginner+ | 45 min | File manipulation | `read`, `edit`, `write` |
-| **[03. Search Tools](03-search-tools)** | Intermediate | 45 min | Codebase navigation | `glob`, `grep`, `list` |
-| **[04. Bash Integration](04-bash-integration)** | Intermediate | 1 hour | System operations | `bash` |
-| **[05. Question & Todo Tools](05-question-todo)** | Intermediate | 45 min | Interactive workflows | `question`, `todowrite` |
-| **[06. Web Tools](06-web-tools)** | Intermediate | 45 min | Research capabilities | `webfetch`, `websearch` |
-| **[07. Skills & Agents](07-skills-agents)** | Intermediate+ | 1 hour | Custom capabilities | `skill`, agent configuration |
-| **[08. MCP Servers](08-mcp-servers)** | Intermediate+ | 1 hour | External integration | MCP server management |
-| **[09. Advanced Features](09-advanced-features)** | Advanced | 1.5 hours | Configuration | Permissions, formatters, LSP |
-| **[10. OpenWork Integration](10-openwork)** | Advanced | 1 hour | Team collaboration | OpenWork platform setup |
+| Module                                            | Level         | Time      | Focus                  | Key Tools Covered                      |
+| ------------------------------------------------- | ------------- | --------- | ---------------------- | -------------------------------------- |
+| **[01. Basic Commands & TUI](01-basic-commands)** | Beginner      | 30 min    | Interface fundamentals | TUI, slash commands, file references   |
+| **[02. File Operations](02-file-operations)**     | Beginner+     | 45 min    | File manipulation      | `read`, `edit`, `write`                |
+| **[03. Search Tools](03-search-tools)**           | Intermediate  | 45 min    | Codebase navigation    | `glob`, `grep`, `list`                 |
+| **[04. Bash Integration](04-bash-integration)**   | Intermediate  | 1 hour    | System operations      | `bash`, granular permissions           |
+| **[05. Question & Todo Tools](05-question-todo)** | Intermediate  | 45 min    | Interactive workflows  | `question`, `todowrite`                |
+| **[06. Web Tools](06-web-tools)**                 | Intermediate  | 45 min    | Web, sharing, IDE      | `webfetch`, `websearch`, share, web    |
+| **[07. Skills & Agents](07-skills-agents)**       | Intermediate+ | 1 hour    | Skills, agents, cmds   | Skills, agents, custom commands        |
+| **[08. MCP Servers](08-mcp-servers)**             | Intermediate+ | 1 hour    | External integration   | Local/remote MCP, OAuth, per-agent     |
+| **[09. Advanced Features](09-advanced-features)** | Advanced      | 1.5 hours | Plugins & config       | Plugins, custom tools, permissions     |
+| **[10. OpenWork Integration](10-openwork)**       | Advanced      | 1 hour    | Team collaboration     | Desktop app, Slack, automations, Cloud |
 
 ## 🛠️ OpenCode Built-in Tools
 
 OpenCode provides these core tools that AI agents can use:
 
 ### File Operations
+
 - **`read`**: Read file contents and directories
 - **`edit`**: Modify existing files with exact string replacement
 - **`write`**: Create new files or overwrite existing ones
 
 ### Search & Navigation
+
 - **`glob`**: Find files by pattern (e.g., `**/*.js`)
 - **`grep`**: Search file contents using regex
 - **`list`**: List directory contents with filtering
 
 ### System Integration
+
 - **`bash`**: Execute shell commands in project environment
 
 ### Interactive Workflows
+
 - **`question`**: Ask users questions during execution
 - **`todowrite`**: Manage todo lists for task tracking
 
 ### Web & Research
+
 - **`webfetch`**: Fetch web content (requires permissions)
 - **`websearch`**: Search the web using Exa AI
 
 ### Extensibility
+
 - **`skill`**: Load SKILL.md files for specialized knowledge
 - **MCP Servers**: Connect to external tools and services
-- **Plugins**: JavaScript/TypeScript modules for event-driven automation (hooks system)
+- **Custom Agents**: Configure agents via AGENTS.md or opencode.json
 
 ### Experimental Features
+
 - **`lsp`**: LSP server integration (experimental)
 - **`apply_patch`**: Apply patch files to codebase
 
@@ -123,6 +130,7 @@ opencode
 **What**: OpenCode's terminal user interface and core interaction patterns
 
 **Key Concepts**:
+
 - Starting and navigating the TUI
 - Using slash commands (`/help`, `/undo`, `/redo`, `/share`)
 - File references with `@` symbol
@@ -130,6 +138,7 @@ opencode
 - Conversation flow and context management
 
 **Examples**:
+
 ```bash
 # Start opencode
 opencode
@@ -151,23 +160,23 @@ Look at the configuration in @config.json
 **What**: Reading, editing, and creating files
 
 **Key Concepts**:
+
 - `read` tool for examining files and directories
 - `edit` tool for exact string replacements
 - `write` tool for creating new files
-- Using `--replaceAll` for batch operations
+- `@` file references for directing the LLM
 - File path navigation and permissions
 
 **Examples**:
+
 ```bash
-# Read files
-opencode read .
-opencode read package.json --limit=10
+# In the TUI, ask the LLM to read, edit, or create files:
+# "Show me the contents of package.json"
+# "Change the port from 3000 to 8080 in @config.json"
+# "Create a new file called utils.js with a helper function"
 
-# Edit files
-opencode edit config.json --old='"port": 3000' --new='"port": 8080'
-
-# Create files
-opencode write new-file.js --content='console.log("Hello");'
+# Or non-interactively:
+opencode run 'Show me the first 10 lines of package.json'
 ```
 
 ### 03. Search Tools
@@ -177,6 +186,7 @@ opencode write new-file.js --content='console.log("Hello");'
 **What**: Finding files and content in codebases
 
 **Key Concepts**:
+
 - `glob` for file pattern matching
 - `grep` for content search with regex
 - `list` for directory listing
@@ -184,17 +194,17 @@ opencode write new-file.js --content='console.log("Hello");'
 - Ignore patterns and filtering
 
 **Examples**:
+
 ```bash
-# Find files
-opencode glob "**/*.js"
-opencode glob "src/**/*.{ts,tsx}"
+# In the TUI, the LLM uses glob/grep/list tools internally:
+# "Find all JavaScript files in the project"
+# "Search for TODO and FIXME comments"
+# "List the contents of the src/ directory"
 
-# Search content
-opencode grep "TODO|FIXME"
-opencode grep "function " --include="*.js"
-
-# List directories
-opencode list "src/" --include="*.js"
+# Standard shell equivalents:
+find . -name '*.js'
+grep -rn 'TODO\|FIXME' --include='*.js' .
+ls -la src/
 ```
 
 ### 04. Bash Integration
@@ -204,20 +214,23 @@ opencode list "src/" --include="*.js"
 **What**: Executing shell commands through opencode
 
 **Key Concepts**:
+
 - `bash` tool for system operations
 - Command chaining and error handling
 - Working directory management
 - Permission considerations for dangerous commands
 
 **Examples**:
-```bash
-# Run commands
-opencode bash "npm install"
-opencode bash "git status"
-opencode bash "docker-compose up -d"
 
-# Chained operations
-opencode bash "cd /tmp && pwd"
+```bash
+# In the TUI, ask the LLM to run commands:
+# "Run npm install"
+# "Show the git status"
+# "Start docker compose in detached mode"
+
+# Or use the ! prefix in TUI for direct execution:
+# !npm install
+# !git status
 ```
 
 ### 05. Question & Todo Tools
@@ -227,12 +240,14 @@ opencode bash "cd /tmp && pwd"
 **What**: Interactive workflows and task management
 
 **Key Concepts**:
+
 - `question` tool for gathering user input
 - `todowrite` tool for tracking tasks
 - Creating interactive automation
 - Managing multi-step workflows
 
 **Examples**:
+
 ```bash
 # opencode will use question to ask:
 # "Which database should we use: PostgreSQL or MySQL?"
@@ -247,86 +262,111 @@ opencode bash "cd /tmp && pwd"
 
 **Location**: [06-web-tools/](06-web-tools)
 
-**What**: Web research and content fetching
+**What**: Web tools, session sharing, web UI, and IDE integration
 
 **Key Concepts**:
+
 - `webfetch` for retrieving web pages
-- `websearch` for searching the web
-- Permission requirements for web access
-- Research workflows for development
+- `websearch` for searching the web (requires `OPENCODE_ENABLE_EXA=1`)
+- Session sharing (`/share`, `/unshare`, auto/manual/disabled modes)
+- Web interface (`opencode web`) as alternative to TUI
+- IDE extension for VS Code, Cursor, Windsurf, VSCodium
 
 **Examples**:
-```bash
-# opencode can fetch documentation
-# (uses webfetch tool internally)
 
-# opencode can search for solutions
-# (uses websearch tool internally)
+```bash
+# Web search (requires env var)
+OPENCODE_ENABLE_EXA=1 opencode
+
+# Share sessions
+/share     # Returns opncd.ai/s/<id> URL
+/unshare   # Remove shared session
+
+# Start web UI
+opencode web
 ```
 
 ### 07. Skills & Agents
 
 **Location**: [07-skills-agents/](07-skills-agents)
 
-**What**: Custom capabilities and agent configuration
+**What**: Skills, custom agents, and custom commands
 
 **Key Concepts**:
-- `skill` tool for loading SKILL.md files
-- Creating custom agents in AGENTS.md
-- Agent permissions and capabilities
-- Specialized workflows for different tasks
+
+- `skill` tool for loading SKILL.md files with YAML frontmatter
+- Skill search paths (`.opencode/skills/`, `~/.config/opencode/skills/`, `.claude/skills/`)
+- Custom agents via Markdown (`.opencode/agents/`) or JSON (`opencode.json`)
+- Agent options: temperature, steps, mode, permissions, model, color
+- Custom commands (`.opencode/commands/`) with template variables ($ARGUMENTS, $1/$2)
+- @-mentioning subagents (`@explore`, `@general`)
+- `opencode agent create` interactive wizard
 
 **Examples**:
-```bash
-# Skill file example (SKILL.md)
-# Provides specialized knowledge for code reviews
 
-# Agent configuration (AGENTS.md)
-# Defines agents with specific tool permissions
+```bash
+# @-mention a subagent
+@explore analyze the project structure
+
+# Use a custom command
+/review src/auth.ts
+
+# Create a new agent
+opencode agent create
 ```
 
 ### 08. MCP Servers
 
 **Location**: [08-mcp-servers/](08-mcp-servers)
 
-**What**: Model Context Protocol server integration
+**What**: Local and remote MCP server integration
 
 **Key Concepts**:
-- Adding MCP servers with `opencode mcp add`
-- Connecting to external tools and APIs
-- GitHub, database, and filesystem MCP servers
-- Authentication and configuration
+
+- Local servers (`"type": "local"`, command array, env vars)
+- Remote servers (`"type": "remote"`, URL, headers)
+- OAuth authentication (automatic and pre-registered)
+- Per-agent MCP management with glob patterns
+- `enabled` flag to disable without removing
+- MCP tool permissions (glob patterns like `mcp_github_*`)
 
 **Examples**:
+
 ```bash
 # Add MCP servers
 opencode mcp add  # Interactive setup
 
 # List configured servers
 opencode mcp list
+
+# OAuth auth
+opencode mcp auth
 ```
 
 ### 09. Advanced Features
 
 **Location**: [09-advanced-features/](09-advanced-features)
 
-**What**: Advanced configuration and experimental features
+**What**: Plugins, custom tools, granular permissions, formatters, LSP, and advanced configuration
 
 **Key Concepts**:
-- Permission configuration in opencode.json
-- Code formatters (Prettier, Black, etc.)
-- Experimental LSP tool integration
-- Environment variables and settings
+
+- Plugin system with 30+ event hooks and npm/local plugins
+- Custom tools (`.opencode/tools/`) with TypeScript and Zod schemas
+- Granular permissions with object syntax and glob patterns
+- Code formatters (custom commands, extension matching)
+- 30+ built-in LSP servers with auto-install
+- Config precedence (7 layers from Remote to Managed)
+- Variable substitution (`{env:VAR}`, `{file:path}`)
+- Snapshots, compaction, file watcher, sharing config
 
 **Examples**:
+
 ```json
-// opencode.json
 {
-  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-supermemory"],
   "permission": {
-    "edit": "ask",
-    "bash": "allow",
-    "webfetch": "deny"
+    "bash": { "*": "ask", "git *": "allow", "rm *": "deny" }
   }
 }
 ```
@@ -335,34 +375,43 @@ opencode mcp list
 
 **Location**: [10-openwork/](10-openwork)
 
-**What**: OpenWork platform for team collaboration
+**What**: Desktop app, Slack integration, browser automation, task scheduling, and team Cloud
 
 **Key Concepts**:
-- Setting up remote workspaces
-- Team collaboration features
-- Shared agents and skills
-- Production workflow integration
+
+- OpenWork desktop app (GUI for OpenCode)
+- Self-hosted setup with `openwork-orchestrator`
+- Skill sharing and importing (share URLs, `/skill-creator`, share.openworklabs.com)
+- Browser automation via Chrome DevTools MCP (Computer Use)
+- Slack bot integration (xoxb/xapp tokens, Settings → Messaging)
+- Task Automation (scheduled prompts via Settings → Automations)
+- Custom MCP servers from the desktop UI
+- OpenWork Cloud: skill hubs, shared workspaces (Alpha), managed/custom LLM providers, RBAC, team templates
 
 **Examples**:
+
 ```bash
-# Start OpenWork server
+# Install the orchestrator for self-hosting
+npm install -g openwork-orchestrator
+
+# Start OpenWork in your workspace
 openwork start --workspace /path/to/project --approval auto
 
-# Connect from desktop app
-# (Use provided URL and token)
+# Connect from the desktop app using the URL and token
 ```
 
 ## 🎯 Use Case Matrix
 
-| Use Case | Recommended Tools | Example Workflow |
-|----------|-------------------|------------------|
-| **Code Understanding** | `read`, `grep`, `list` | Read files → Search patterns → Understand structure |
-| **Code Modification** | `edit`, `write` | Find code → Plan changes → Edit files |
-| **Refactoring** | `grep`, `edit` --replaceAll | Search patterns → Batch replace → Verify |
-| **Debugging** | `bash`, `grep`, `read` | Run tests → Search errors → Examine code |
-| **Research** | `webfetch`, `websearch` | Search docs → Fetch content → Apply knowledge |
-| **Team Collaboration** | OpenWork, `/share` | Share conversations → Remote workspaces → Team review |
-| **CI/CD Integration** | `bash`, agents | Build → Test → Deploy → Verify |
+| Use Case               | Recommended Tools           | Example Workflow                                           |
+| ---------------------- | --------------------------- | ---------------------------------------------------------- |
+| **Code Understanding** | `read`, `grep`, `list`      | Ask to read files → Search patterns → Understand structure |
+| **Code Modification**  | `edit`, `write`             | Find code → Plan changes → Ask to edit files               |
+| **Refactoring**        | `grep`, `edit`              | Search patterns → Batch replace → Verify                   |
+| **Debugging**          | `bash`, `grep`, `read`      | Run tests → Search errors → Examine code                   |
+| **Research**           | `webfetch`, `websearch`     | Search docs → Fetch content → Apply knowledge              |
+| **Sharing**            | `/share`, `opencode export` | Share conversations → Export sessions → Team review        |
+| **CI/CD Integration**  | `opencode run`, agents      | Non-interactive prompts → Build → Test → Deploy            |
+| **Team Collaboration** | OpenWork, skill sharing     | Desktop app → Share skills/MCPs → Team runs instantly      |
 
 ## 🔧 Troubleshooting
 
@@ -370,6 +419,7 @@ openwork start --workspace /path/to/project --approval auto
 
 **Issue**: OpenCode won't start  
 **Solution**: Check installation and dependencies
+
 ```bash
 # Verify installation
 opencode --version
@@ -378,11 +428,12 @@ opencode --version
 node --version
 
 # Reinstall if needed
-npm install -g opencode-ai
+curl -fsSL https://opencode.ai/install | bash
 ```
 
 **Issue**: Permission denied for tools  
 **Solution**: Configure permissions in opencode.json
+
 ```json
 {
   "permission": {
@@ -394,6 +445,7 @@ npm install -g opencode-ai
 
 **Issue**: MCP servers not connecting  
 **Solution**: Check server configuration and authentication
+
 ```bash
 # List MCP servers
 opencode mcp list
@@ -404,6 +456,7 @@ opencode mcp debug <server-name>
 
 **Issue**: Web tools not working  
 **Solution**: Enable websearch and check permissions
+
 ```bash
 # Enable Exa search
 OPENCODE_ENABLE_EXA=1 opencode

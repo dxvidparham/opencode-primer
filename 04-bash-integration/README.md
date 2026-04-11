@@ -2,14 +2,14 @@
 
 # 💻 04. Bash Integration
 
-**Execute shell commands and integrate with terminal workflows**
+**Execute shell commands through OpenCode's bash tool**
 
 [![Module Level](https://img.shields.io/badge/Level-Intermediate-orange)]()
 [![Time Required](https://img.shields.io/badge/Time-60_min-yellow)]()
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_03-blue)]()
 [![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-[⬅️ Previous Module](../03-search-tools/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../05-question-todo/)
+[⬅️ Previous Module](../03-search-tools/) • [🏠 Main Menu](../README.md) • [Next Module ➡️](../05-question-todo/)
 
 </div>
 
@@ -25,7 +25,6 @@
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
@@ -36,405 +35,490 @@
 
 ---
 
+## 🎯 Overview
+
+### 📝 What This Module Covers
+
+| Topic                 | Description                                 | Why It Matters                           |
+| --------------------- | ------------------------------------------- | ---------------------------------------- |
+| **`bash` tool**       | LLM executes shell commands in your project | Run builds, tests, installs, deployments |
+| **Permission config** | Control what commands the LLM can run       | Security and safety                      |
+| **Command workflows** | Combining bash with other tools             | End-to-end development automation        |
+
+### 🎓 Learning Objectives
+
+- ✅ **Understand** how the `bash` tool works as an LLM-internal tool
+- ✅ **Ask OpenCode** to run shell commands via natural language
+- ✅ **Configure permissions** for bash operations in `opencode.json`
+- ✅ **Combine** bash with file and search tools for complete workflows
+
+> **Important**: There is no `opencode bash "command"` CLI syntax. The `bash` tool is used **internally by the LLM** when you ask it to run commands. You can also prefix commands with `!` in the TUI for direct execution (bypasses the LLM — runs the command immediately without AI interpretation).
+
 ---
 
+## ✅ Prerequisites
 
-<details>
-<summary>Click to expand/collapse</summary>
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
 
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
+- [x] Completed [Module 03: Search Tools](../03-search-tools/)
 
 ---
-# 04. Bash Integration
 
-**Location**: `04-bash-integration/`  
-**Level**: Intermediate  
-**Time**: 1 hour  
-**Focus**: Executing shell commands through opencode's `bash` tool
+## ⚡ Quick Start
 
-## 📚 Overview
+### Running Commands via the TUI
 
-This module covers opencode's `bash` tool, which allows the AI agent to execute shell commands in your project environment. You'll learn how opencode can run terminal commands, how to control permissions, and how to combine bash operations with other tools.
+In the OpenCode TUI, type:
 
-## 🎯 What You'll Learn
-
-- Execute shell commands with the `bash` tool
-- Understand permission configurations for bash operations
-- Chain commands and handle errors
-- Combine bash with file operations and search tools
-- Use workdir parameter for directory management
-
-## 🚀 Quick Start
-
-### Basic Bash Commands
-
-```bash
-# Run simple commands
-opencode bash "pwd"
-opencode bash "ls -la"
-opencode bash "git status"
-
-# Install dependencies
-opencode bash "npm install"
-opencode bash "pip install -r requirements.txt"
-opencode bash "bundle install"
-
-# Check versions
-opencode bash "node --version"
-opencode bash "python --version"
-opencode bash "docker --version"
+```
+Run npm install
 ```
 
-### Command Chaining
+The LLM will use its internal `bash` tool to execute `npm install` and show you the output.
 
-```bash
-# Chain commands with &&
-opencode bash "cd /tmp && pwd"
-opencode bash "npm install && npm run build"
-opencode bash "git pull && npm test"
+### More Examples
 
-# Multiple commands
-opencode bash "mkdir -p logs && touch logs/app.log && chmod 644 logs/app.log"
+```
+Check the git status
+Run the test suite
+Show me the Node.js and npm versions
+Start docker compose in detached mode
 ```
 
-## 📖 Detailed Topics
+### The `!` Prefix
 
-### 1. The `bash` Tool
+You can prefix a command with `!` in the TUI to run it directly without the LLM interpreting it:
 
-The `bash` tool executes shell commands in your project environment:
-
-```bash
-# Basic syntax
-opencode bash "<command>"
-
-# Examples
-opencode bash "ls -la"
-opencode bash "git log --oneline -5"
-opencode bash "docker-compose up -d"
-opencode bash "npm run test:coverage"
+```
+!npm install
+!git status
+!docker-compose up -d
 ```
 
-**Important Considerations:**
-- Commands run in your project's context
--
-.
+### Non-Interactive Mode
 
-### 2. Permission Configuration
+```bash
+# Run commands via opencode run
+opencode run 'Run npm install and show the output'
+opencode run 'Run the tests and tell me if any failed'
+```
 
-Bash tool permissions are controlled in `opencode.json`:
+---
+
+## 📚 Core Concepts
+
+### How the Bash Tool Works
+
+When you ask OpenCode to run a command, the LLM uses its internal `bash` tool:
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant LLM
+  participant Permission Engine
+  participant Bash Tool
+  participant Shell
+
+  You->>LLM: "Run the tests"
+  LLM->>Permission Engine: bash("npm test")
+  Permission Engine->>Permission Engine: Check rules (last match wins)
+  alt Permission = "allow"
+    Permission Engine-->>Bash Tool: Approved
+  else Permission = "ask"
+    Permission Engine-->>You: "Run npm test?" [once/always/reject]
+    You-->>Permission Engine: "once"
+    Permission Engine-->>Bash Tool: Approved
+  else Permission = "deny"
+    Permission Engine-->>LLM: Blocked
+    LLM-->>You: "I can't run that command"
+  end
+  Bash Tool->>Shell: Execute npm test
+  Shell-->>Bash Tool: stdout + stderr + exit code
+  Bash Tool-->>LLM: Output + exit code
+  LLM-->>You: "All 42 tests passed ✓"
+```
+
+1. You type a request like "Run the tests"
+2. The LLM decides to use the `bash` tool
+3. The permission engine checks your `opencode.json` rules
+4. If approved, it executes the command in your project directory
+5. Output is shown in the TUI
+6. The LLM can interpret results and take follow-up actions
+
+### The `!` Prefix — Direct Execution
+
+The `!` prefix bypasses the LLM entirely and runs the command directly:
+
+```
+!npm install        ← Runs immediately, no LLM involved
+!git status         ← Same as running in your terminal
+!docker ps          ← Quick system check
+```
+
+**When to use `!` vs natural language:**
+
+| Approach         | When to Use                                      | Example                      |
+| ---------------- | ------------------------------------------------ | ---------------------------- |
+| Natural language | When you want the LLM to interpret results       | "Run tests and fix failures" |
+| `!` prefix       | Quick commands where you don't need LLM analysis | `!git status`                |
+| `opencode run`   | Non-interactive scripting from outside the TUI   | CI/CD pipelines              |
+
+### Permission Configuration
+
+Control bash permissions in `opencode.json`:
 
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
   "permission": {
-    "bash": "ask"  // Options: "allow", "deny", "ask"
+    "bash": "ask"
   }
 }
 ```
 
 **Permission Levels:**
--
-.
 
-### 3. Command Safety
+| Level     | Behavior                                           |
+| --------- | -------------------------------------------------- |
+| `"allow"` | LLM can run commands without asking                |
+| `"ask"`   | LLM must ask for approval before running (default) |
+| `"deny"`  | LLM cannot run any shell commands                  |
 
-```bash
-# Safe commands (typically allowed)
-opencode bash "pwd"
-opencode bash "ls"
-opencode bash "git status"
-opencode bash "npm run lint"
+### Granular Bash Permissions
 
-# Potentially dangerous commands (may require approval)
-opencode bash "rm -rf node_modules/"
-opencode bash "git reset --hard HEAD"
-opencode bash "docker system prune -f"
-opencode bash "sudo apt-get update"
+For fine-grained control, use an object with command patterns. The **last matching rule wins**:
+
+```json
+{
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git status *": "allow",
+      "git log *": "allow",
+      "git diff *": "allow",
+      "npm test *": "allow",
+      "npm run lint *": "allow",
+      "rm *": "deny",
+      "git push *": "ask",
+      "git reset --hard *": "deny"
+    }
+  }
+}
 ```
 
-### 4. Combining with Other Tools
+This lets safe read-only commands run freely while blocking destructive commands and requiring approval for everything else.
 
-```bash
-# Read file then process with bash
-opencode read package.json
-opencode bash "npm install"
+**How precedence works (last matching rule wins):**
 
-# Search for files then process
-for file in $(opencode glob "**/*.test.js"); do
-  opencode bash "node $file"
-done
+```mermaid
+flowchart TD
+  A["LLM wants to run: git status"] --> B{"Match '*' → ask"}
+  B --> C{"Match 'git status *' → allow"}
+  C --> D["Last match: **allow**\nRuns without asking"]
 
-# Edit file then test
-opencode edit src/index.js --old="localhost" --new="production-server"
-opencode bash "npm test"
+  E["LLM wants to run: rm -rf node_modules"] --> F{"Match '*' → ask"}
+  F --> G{"Match 'rm *' → deny"}
+  G --> H["Last match: **deny**\nBlocked entirely"]
+
+  I["LLM wants to run: curl https://..."] --> J{"Match '*' → ask"}
+  J --> K["No more matches\nLast match: **ask**\nPrompts you for approval"]
 ```
 
-## 🧪 Hands-on Exercises
+Wildcards:
 
-### Exercise 1: Basic System Operations
+- `*` matches zero or more characters
+- `?` matches exactly one character
 
-```bash
-# 1. Check current directory
-opencode bash "pwd"
+### Per-Agent Bash Permissions
 
-# 2. List files
-opencode bash "ls -la"
+Different agents can have different bash access:
 
-# 3. Check git status
-opencode bash "git status"
-
-# 4. Check system information
-opencode bash "uname -a"
-opencode bash "df -h"
-opencode bash "free -h"
+```json
+{
+  "agent": {
+    "build": {
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "git *": "allow",
+          "npm *": "allow"
+        }
+      }
+    },
+    "explore": {
+      "permission": {
+        "bash": "deny"
+      }
+    }
+  }
+}
 ```
 
-### Exercise 2: Dependency Management
+### Command Safety
 
-```bash
-# 1. Install Node.js dependencies
-opencode bash "npm install"
+With `"ask"` permission, the LLM will show you the command before running it. You get three choices:
 
-# 2. Run tests
-opencode bash "npm test"
+| Choice     | Behavior                                          |
+| ---------- | ------------------------------------------------- |
+| **once**   | Approve just this one command                     |
+| **always** | Approve all future commands matching this pattern |
+| **reject** | Deny the command                                  |
 
-# 3. Build project
-opencode bash "npm run build"
+This is especially important for:
 
-# 4. Clean build artifacts
-opencode bash "npm run clean"
+- Destructive commands (`rm -rf`, `git reset --hard`)
+- Commands that modify system state (`sudo`, `docker system prune`)
+- Commands with side effects (`git push`, `npm publish`)
+
+---
+
+## 🔧 Examples & Patterns
+
+### Pattern 1: Development Setup
+
+In the TUI:
+
+```
+Install all dependencies, then run the linter and tests
 ```
 
-### Exercise 3: Docker Operations
+The LLM will chain: `npm install` → `npm run lint` → `npm test`
 
-```bash
-# 1. Check Docker status
-opencode bash "docker --version"
-opencode bash "docker-compose --version"
+**How the LLM chains commands:**
 
-# 2. Start services
-opencode bash "docker-compose up -d"
-
-# 3. Check running containers
-opencode bash "docker ps"
-
-# 4. View logs
-opencode bash "docker-compose logs --tail=50"
+```mermaid
+flowchart TD
+  A["'Install deps, lint, and test'"] --> B["bash: npm install"]
+  B -->|exit 0| C["bash: npm run lint"]
+  B -->|exit ≠ 0| D["LLM: 'Install failed — here's the error…'"]
+  C -->|exit 0| E["bash: npm test"]
+  C -->|exit ≠ 0| F["LLM reads lint output,\nfixes issues with edit tool"]
+  F --> C
+  E -->|exit 0| G["LLM: 'All passed ✓'"]
+  E -->|exit ≠ 0| H["LLM reads test output,\nfinds failing test,\nfixes the code"]
+  H --> E
 ```
 
-### Exercise 4: Development Workflow
+The LLM inspects **exit codes** and **output text** to decide what to do next. A non-zero exit code triggers diagnostic behavior.
 
-```bash
-# 1. Full development workflow
-opencode bash "git pull"
-opencode bash "npm install"
-opencode bash "npm run lint"
-opencode bash "npm test"
-opencode bash "npm run build"
+### Pattern 2: Diagnosis and Fix
 
-# 2. Database operations
-opencode bash "npm run db:migrate"
-opencode bash "npm run db:seed"
-
-# 3. Start development server
-opencode bash "npm run dev"
+```
+Run the tests. If any fail, look at the failing test and the source code it tests, then fix the bug.
 ```
 
-## 📋 Best Practices
+The LLM uses `bash` to run tests, `read` to examine test/source files, then `edit` to fix the code. This is one of the most powerful compound workflows — the LLM:
 
-### ✅ Do
+1. Runs tests and parses the failure output
+2. Identifies the file and line where the assertion failed
+3. Reads the test file to understand what's expected
+4. Reads the source code to find the bug
+5. Edits the source to fix it
+6. Re-runs tests to verify
 
-- **Configure appropriate permissions** in opencode.json
-. **Use command chaining** for related operations
-- **Test commands in safe environment** first
-. **Monitor command output** for errors
-- **Combine with other tools** for complete workflows
-- **Use workdir parameter** for directory-specific commands
+### Pattern 3: Build and Deploy
 
-### ❌ Don't
-
-- **Don't allow unrestricted bash access** in production
-. **Don't run destructive commands** without confirmation
-- **Don't ignore command output** and error codes
-. **Don't use bash for file operations** when edit/write tools exist
-- **Don't forget about environment differences** (local vs production)
-. **Don't run commands with sensitive data** in output
-
-## 🔧 Common Use Cases
-
-### 1. Development Environment Setup
-
-```bash
-#!/bin/bash
-# setup-dev.sh
-
-echo "Setting up development environment..."
-echo
-
-# Check prerequisites
-opencode bash "node --version"
-opencode bash "npm --version"
-opencode bash "git --version"
-
-# Install dependencies
-opencode bash "npm install"
-
-# Setup database
-opencode bash "npm run db:create"
-opencode bash "npm run db:migrate"
-opencode bash "npm run db:seed"
-
-# Run initial tests
-opencode bash "npm test"
-
-echo "Development environment ready!"
+```
+Build the project, run the tests, and if everything passes, create a production build
 ```
 
-### 2. CI/CD Pipeline Commands
+### Pattern 4: System Information
 
-```bash
-# Build stage
-opencode bash "npm ci"  # Clean install
-opencode bash "npm run lint"
-opencode bash "npm test"
-opencode bash "npm run build"
-
-# Docker build
-opencode bash "docker build -t app:latest ."
-opencode bash "docker push app:latest"
-
-# Deployment
-opencode bash "kubectl apply -f k8s/"
-opencode bash "kubectl rollout status deployment/app"
+```
+Show me the system info: OS version, Node version, npm version, and disk space
 ```
 
-### 3. Database Management
+### Pattern 5: Database Operations
 
-```bash
-# Database backups
-opencode bash "pg_dump -U postgres mydb > backup.sql"
-opencode bash "gzip backup.sql"
-
-# Migrations
-opencode bash "npm run db:migrate"
-opencode bash "npm run db:migrate:status"
-
-# Data operations
-opencode bash "npm run db:seed"
-opencode bash "npm run db:reset"
+```
+Run the database migrations and seed the test data
 ```
 
-### 4. System Monitoring
+### Pattern 6: Complex Multi-Tool Workflow
 
-```bash
-# Check system health
-opencode bash "uptime"
-opencode bash "free -h"
-opencode bash "df -h"
-opencode bash "docker ps"
-
-# Check application status
-opencode bash "curl -s http://localhost:3000/health"
-opencode bash "npm run status"
-
-# Log monitoring
-opencode bash "tail -100 logs/app.log"
-opencode bash "grep -i error logs/app.log | head -20"
+```
+Check git status. If there are uncommitted changes, show me a diff.
+Then run the tests. If they pass, commit with a descriptive message
+and show the commit hash.
 ```
 
-## 🚨 Troubleshooting
+**Expected interaction:**
 
-### Command Failed or No Output
-
-```bash
-# Check command syntax
-opencode bash "echo 'test command'"  # Test basic command
-
-# Check permissions
-# Review opencode.json permission settings
-
-# Check command in terminal directly
-# Compare: opencode bash "ls" vs running "ls" manually
-
-# Check for environment differences
-opencode bash "env | grep PATH"
+```
+LLM: [runs git status --porcelain]
+     "You have 3 modified files."
+     [runs git diff]
+     "Changes:
+       - src/auth.ts: added rate limiting middleware
+       - src/api.ts: fixed timeout handling
+       - tests/auth.test.ts: added new test cases"
+     [runs npm test]
+     "All 47 tests passed."
+     [runs git add -A && git commit -m "feat(auth): add rate limiting and fix timeout handling"]
+     "Committed as abc1234."
 ```
 
-### Permission Denied Errors
+---
 
-```bash
-# Check file permissions
-opencode bash "ls -la /path/to/file"
+## 🧪 Practice Exercises
 
-# Check sudo requirements
-# May need to configure opencode to run as appropriate user
+### Exercise 1: Basic Commands
 
-# Use alternative commands
-# Instead of: opencode bash "sudo apt-get update"
-# Try: opencode bash "apt-get update" (if permissions allow)
+In the TUI, try:
+
+```
+1. "Show me the current directory and its contents"
+2. "Check the git log for the last 5 commits"
+3. "Show me the disk usage of this project"
+```
+
+**Expected results:**
+
+- Step 1: LLM runs `pwd && ls -la` — shows path and file listing
+- Step 2: LLM runs `git log --oneline -5` — shows recent commits
+- Step 3: LLM runs `du -sh .` or `du -sh */ | sort -rh` — shows directory sizes
+
+### Exercise 2: Development Workflow
+
+```
+1. "Install dependencies (npm install)"
+2. "Run the linter"
+3. "Run the test suite"
+4. "Show me the test coverage"
+```
+
+**Expected results:**
+
+- Each step: LLM runs the command, shows output, interprets results
+- If the linter finds issues, the LLM may offer to fix them
+- If tests fail, the LLM may read the failing test and suggest fixes
+
+### Exercise 3: Permission Configuration
+
+Create or edit `opencode.json`:
+
+```json
+{
+  "permission": {
+    "bash": "ask"
+  }
+}
+```
+
+Then in the TUI, ask for a command:
+
+```
+"Run npm install"
+```
+
+**Expected:** OpenCode shows you the command and asks for approval:
+
+```
+LLM wants to run: npm install
+[once] [always] [reject]
+```
+
+Choose "once" to approve a single run. Choose "always" to auto-approve matching commands for the rest of the session.
+
+### Exercise 4: Combined Workflow
+
+```
+1. "Check if there are any uncommitted changes"
+2. "Run the tests and show me the results"
+3. "If tests pass, create a git commit with a descriptive message"
+```
+
+**Expected results:**
+
+- Step 1: LLM runs `git status` — reports clean or dirty working tree
+- Step 2: LLM runs `npm test` — shows pass/fail results
+- Step 3: If tests pass, LLM runs `git add -A && git commit -m "..."` with a descriptive message based on the changes
+
+### Exercise 5: The `!` Prefix
+
+Try direct execution:
+
+```
+!echo "Hello from direct execution"
+!node --version
+!git branch --list
+```
+
+**Expected:** Commands run immediately without the LLM interpreting them. Output appears directly — no AI analysis or follow-up.
+
+---
+
+## ❓ Common Questions
+
+**Q: Can I type `opencode bash "npm install"` on the command line?**
+No. `bash` is an internal LLM tool. Just run `npm install` directly, or ask in the TUI.
+
+**Q: How do I run a command without the LLM interpreting it?**
+Use the `!` prefix in the TUI: `!npm install`.
+
+**Q: Can the LLM chain multiple commands?**
+Yes — ask for a workflow and the LLM will run commands sequentially, checking results between each step.
+
+**Q: How do I prevent dangerous commands?**
+Set `"bash": "ask"` in `opencode.json`. The LLM will show you each command before running it.
+
+**Q: Do commands run in my project directory?**
+Yes — commands run in the working directory where you started `opencode`.
+
+---
+
+## 🐛 Troubleshooting
+
+### Command Failed
+
+- Check if the command works when run directly in your terminal
+- Verify environment variables are set
+- Check that required tools are installed
+
+### Permission Denied
+
+Update `opencode.json`:
+
+```json
+{
+  "permission": {
+    "bash": "ask"
+  }
+}
 ```
 
 ### Long-Running Commands
 
-```bash
-# For commands that take time
-opencode bash "npm install"  # May take several minutes
+The LLM handles long-running commands. For servers that run indefinitely, the LLM will typically run them in the background or suggest using `&`.
 
-# Monitor progress
-opencode bash "tail -f npm-debug.log"
+### Environment Differences
 
-# Use background processes when appropriate
-opencode bash "npm run dev &"
-opencode bash "sleep 5 && curl http://localhost:3000"
-```
-
-### Environment Variable Issues
+Commands run in the same shell environment where you started OpenCode. If environment variables are missing, set them before starting:
 
 ```bash
-# Check environment
-opencode bash "env | grep NODE"
-
-# Set environment variables
-opencode bash "NODE_ENV=production npm run build"
-
-# Use .env files
-opencode bash "source .env && npm start"
+export NODE_ENV=development
+opencode
 ```
-
-## 📚 Additional Resources
-
-- [OpenCode bash Tool](https://opencode.ai/docs/tools#bash)
-- [Permission Configuration](https://opencode.ai/docs/permissions)
-- [Security Best Practices](https://opencode.ai/docs/security)
-
-## 🎓 Next Steps
-
-Once you're comfortable with bash integration, proceed to:
-
-1. **[05-question-todo](05-question-todo)**: Create interactive workflows with user input
-2. **[06-web-tools](06-web-tools)**: Combine bash with web research tools
-3. **[07-skills-agents](07-skills-agents)**: Build specialized agents with bash capabilities
 
 ---
 
-**Ready for more?** Practice by creating automation scripts that combine bash commands with opencode's other tools.
+## 📈 What You've Learned
 
-[← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Previous: Search Tools ←](03-search-tools/README.md) | [Next: Question & Todo Tools →](05-question-todo/README.md)
+- ✅ The `bash` tool is an **LLM-internal tool**, not a CLI command
+- ✅ Ask the LLM to run commands via **natural language**
+- ✅ Use the **`!` prefix** in the TUI for direct command execution
+- ✅ Configure **permissions** in `opencode.json` for safety
+- ✅ The LLM can **chain commands** and interpret results
 
 ---
 
+## 🚶 Next Steps
+
+Continue to **[Module 05: Question & Todo Tools](../05-question-todo/)** to learn about interactive workflows and task management.
 
 ---
 
@@ -444,8 +528,9 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **License:** MIT - See [LICENSE](../LICENSE) for details.
 
-**Last Updated:** April 2026  
+[⬆ Back to top](#-04-bash-integration)
+
+**Last Updated:** April 2026
 **OpenCode Version:** 1.0+ compatible
 
 ---
-

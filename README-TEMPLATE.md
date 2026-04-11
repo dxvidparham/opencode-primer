@@ -55,10 +55,10 @@ graph TD
 
 ### 📝 What This Module Covers
 
-| Topic | Description | Why It Matters |
-|-------|-------------|----------------|
-| **Topic 1** | Brief description | How it helps in real work |
-| **Topic 2** | Brief description | Practical applications |
+| Topic       | Description       | Why It Matters               |
+| ----------- | ----------------- | ---------------------------- |
+| **Topic 1** | Brief description | How it helps in real work    |
+| **Topic 2** | Brief description | Practical applications       |
 | **Topic 3** | Brief description | Integration with other tools |
 
 ### 🎓 Learning Objectives
@@ -82,7 +82,7 @@ opencode --version
 # Should output: opencode 1.0+
 
 # Check previous module knowledge
-opencode bash "echo 'If you completed previous module, you should understand...'"
+echo 'If you completed previous module, you should understand...'
 ```
 
 ### 📚 Required Knowledge
@@ -196,7 +196,7 @@ echo "test content" > example.txt
 
 # Step 2: Execute
 echo "Running command..."
-opencode read example.txt
+opencode run 'Read example.txt and summarize it'
 
 # Step 3: Verify
 echo "Verifying results..."
@@ -373,11 +373,11 @@ Test your understanding:
 
 ### ✅ Skills Acquired
 
-| Skill | Proficiency | Evidence |
-|-------|-------------|----------|
+| Skill       | Proficiency                                | Evidence                  |
+| ----------- | ------------------------------------------ | ------------------------- |
 | **Skill 1** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can perform specific task |
-| **Skill 2** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can apply in context |
-| **Skill 3** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can troubleshoot issues |
+| **Skill 2** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can apply in context      |
+| **Skill 3** | □ Beginner<br>□ Intermediate<br>✅ Advanced | Can troubleshoot issues   |
 
 ### 🏆 Module Completion
 

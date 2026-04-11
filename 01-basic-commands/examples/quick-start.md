@@ -1,184 +1,129 @@
 # Quick Start Examples
 
-These examples demonstrate basic opencode commands to get you started quickly.
+These examples demonstrate how to get started with OpenCode quickly.
 
-## Basic Command Examples
+## Installation
 
 ```bash
-# Check opencode version
+# Install OpenCode
+curl -fsSL https://opencode.ai/install | bash
+
+# Verify installation
 opencode --version
 
 # Get help
 opencode --help
-opencode read --help
-
-# List available tools
-opencode --list-tools
 ```
 
-## File Operations
+## Launching the TUI
 
 ```bash
-# Read current directory
-opencode read .
+# Start OpenCode in the current directory
+opencode
 
-# Read a specific file
-opencode read README.md
-
-# Read with line limit
-opencode read large-file.txt --limit=50
+# Run a one-shot prompt without entering the TUI
+opencode run 'What files are in this project?'
 ```
 
-## Simple Editing
+## First Conversation
 
-```bash
-# Create a test file
-opencode write test.txt --content="Hello World"
+Once inside the TUI, you type natural language. OpenCode's LLM reads files, runs commands, and edits code on your behalf.
 
-# Read the file
-opencode read test.txt
+**Example prompts to try:**
 
-# Edit the file
-opencode edit test.txt --old="Hello" --new="Greetings"
-
-# Verify the change
-opencode read test.txt
-
-# Clean up
-rm test.txt
+```
+Read the README.md and summarize it
 ```
 
-## Search Examples
-
-```bash
-# Find all JavaScript files
-opencode glob "**/*.js"
-
-# Search for TODO comments
-opencode grep "TODO"
-
-# Search in specific file types
-opencode grep "function " --include="*.js"
+```
+List all JavaScript files in this project
 ```
 
-## Bash Integration
-
-```bash
-# Basic system commands
-opencode bash "pwd"
-opencode bash "ls -la"
-opencode bash "date"
-
-# With workdir parameter
-opencode bash "ls" --workdir="/tmp"
+```
+What does the main function do in src/main.ts?
 ```
 
-## Combined Operations
+## Slash Commands
+
+Inside the TUI, type `/` followed by a command:
+
+| Command     | Shortcut | What it does                  |
+| ----------- | -------- | ----------------------------- |
+| `/help`     | Ctrl+X H | Show available commands       |
+| `/new`      | Ctrl+X N | Start a new session           |
+| `/compact`  | Ctrl+X C | Summarize and compact context |
+| `/models`   | Ctrl+X M | Switch LLM model              |
+| `/sessions` | Ctrl+X L | List previous sessions        |
+| `/themes`   | Ctrl+X T | Change color theme            |
+| `/exit`     | Ctrl+X Q | Quit OpenCode                 |
+
+## File References
+
+Use `@` to reference files in your prompts:
+
+```
+Explain @src/main.ts
+```
+
+```
+Compare @config/dev.json and @config/prod.json
+```
+
+## Switching Agents
+
+| Key         | Action                                              |
+| ----------- | --------------------------------------------------- |
+| `Tab`       | Cycle forward through primary agents (Build → Plan) |
+| `Shift+Tab` | Cycle backward through primary agents               |
+
+- **Build** (default): Full access to all tools — reads, writes, runs commands
+- **Plan**: Restricted mode — bash and edit require your approval before executing
+
+## One-Shot CLI Examples
 
 ```bash
-# Chain commands
-opencode bash "cd /tmp && pwd"
+# Ask a question without entering the TUI
+opencode run 'Explain what this project does'
 
-# Use command output
-FILES=$(opencode glob "*.md")
-echo "Found $(echo "$FILES" | wc -l) markdown files"
+# Pipe input and ask about it
+cat error.log | opencode run 'What caused this error?'
 
-# Simple automation
-echo "Project overview:" > overview.txt
-opencode read . >> overview.txt
-echo "JavaScript files:" >> overview.txt
-opencode glob "**/*.js" >> overview.txt
+# Use single quotes to avoid shell interpretation
+opencode run 'Create a .gitignore for a Node.js project'
 ```
 
 ## Practice Exercises
 
-### Exercise 1: Explore Your Environment
+### Exercise 1: Explore Your Project
+
+1. Open a terminal in any project directory
+2. Run `opencode`
+3. Try these prompts:
+   - `What files are in this project?`
+   - `Read package.json and explain the dependencies`
+   - `Find all TODO comments in the codebase`
+
+### Exercise 2: Make an Edit
+
+1. Inside the TUI, ask:
+   - `Add a comment at the top of README.md explaining this project`
+2. OpenCode will show you the proposed edit
+3. Approve or reject the change
+
+### Exercise 3: Use One-Shot Mode
 
 ```bash
-# 1. Check your current directory
-opencode bash "pwd"
-
-# 2. List files in current directory
-opencode read .
-
-# 3. Check for configuration files
-opencode glob "*config*"
-opencode glob "*.json"
-
-# 4. Search for your username
-opencode grep "$USER"
-```
-
-### Exercise 2: Create and Modify Files
-
-```bash
-# 1. Create a practice directory
-mkdir -p practice
-cd practice
-
-# 2. Create several files
-opencode write file1.txt --content="First file"
-opencode write file2.txt --content="Second file"
-opencode write notes.md --content="# Practice Notes\n\n## Today's tasks"
-
-# 3. List created files
-opencode read .
-
-# 4. Edit one file
-opencode edit file1.txt --old="First" --new="Primary"
-
-# 5. Search across all files
-opencode grep "file"
-
-# 6. Clean up
-cd ..
-rm -rf practice
-```
-
-### Exercise 3: Simple Automation Script
-
-Create a file called `project-info.sh`:
-
-```bash
-#!/bin/bash
-# project-info.sh - Gather basic project information
-
-echo "=== Project Information ==="
-echo ""
-
-echo "1. Directory Structure:"
-opencode read . | head -20
-
-echo -e "\n2. File Counts:"
-JS_FILES=$(opencode glob "**/*.js" 2>/dev/null | wc -l)
-PY_FILES=$(opencode glob "**/*.py" 2>/dev/null | wc -l)
-MD_FILES=$(opencode glob "**/*.md" 2>/dev/null | wc -l)
-
-echo "JavaScript files: $JS_FILES"
-echo "Python files: $PY_FILES"
-echo "Markdown files: $MD_FILES"
-
-echo -e "\n3. TODO items:"
-opencode grep "TODO" 2>/dev/null | head -5
-
-echo -e "\n=== End of Report ==="
-```
-
-Make it executable and run it:
-```bash
-chmod +x project-info.sh
-./project-info.sh
+# From your terminal (not inside the TUI)
+opencode run 'List all files larger than 1MB in this directory'
+opencode run 'What Node.js version does this project require?'
 ```
 
 ## Next Steps
 
-After trying these examples:
-
-1. Read the [01-basic-commands README](../README.md) for detailed explanations
-2. Move on to [02-file-reading](../../02-file-reading/README.md) for more advanced file operations
-3. Practice with your own projects to build confidence
-4. Create your own examples and scripts
+- Read the [Module 01 README](../README.md) for detailed explanations
+- Continue to [Module 02: File Operations](../../02-file-operations/README.md)
+- See the [Quick Reference](../../QUICK-REFERENCE.md) for a command cheat sheet
 
 ---
 
-**Tip**: Always test commands in a safe environment before using them on important files. Use temporary directories for practice.
+**Tip**: Always use single quotes around prompts in `opencode run` to prevent your shell from interpreting special characters.

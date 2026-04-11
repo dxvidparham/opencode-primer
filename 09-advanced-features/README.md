@@ -2,14 +2,14 @@
 
 # ⚙️ 09. Advanced Features
 
-**Power user features including plugins and extensibility**
+**Plugins, custom tools, permissions, formatters, LSP, and advanced configuration**
 
 [![Module Level](https://img.shields.io/badge/Level-Advanced-red)]()
 [![Time Required](https://img.shields.io/badge/Time-90_min-yellow)]()
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_08-blue)]()
 [![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-[⬅️ Previous Module](../08-mcp-servers/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../10-openwork/)
+[⬅️ Previous Module](../08-mcp-servers/) • [🏠 Main Menu](../README.md) • [Next Module ➡️](../10-openwork/)
 
 </div>
 
@@ -21,698 +21,827 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🔌 Plugin System](#-plugin-system)
+- [🛠️ Custom Tools](#️-custom-tools)
+- [🔒 Permission Configuration](#-permission-configuration)
+- [🎨 Code Formatters](#-code-formatters)
+- [🧠 LSP Integration](#-lsp-integration)
+- [⏪ Checkpoints & Undo/Redo](#-checkpoints--undoredo)
+- [📝 Advanced Configuration](#-advanced-configuration)
+- [🌐 Environment Variables](#-environment-variables)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
 
 ---
 
+## 🎯 Overview
+
+This module covers OpenCode's advanced customization features for power users.
+
+| Feature           | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| **Plugins**       | Extend OpenCode with event hooks, custom tools, and more |
+| **Custom Tools**  | Define your own tools the LLM can call                   |
+| **Permissions**   | Granular control over what the LLM can do                |
+| **Formatters**    | Auto-format code after edits                             |
+| **LSP**           | Language Server Protocol integration                     |
+| **Checkpoints**   | File snapshots, undo/redo, and conversation compaction   |
+| **Configuration** | Advanced config: variables, precedence, snapshots        |
+
+```mermaid
+flowchart TD
+  subgraph "Extend OpenCode"
+    A["Plugins\n(event hooks)"] --> B["Custom Tools\n(new LLM functions)"]
+    A --> C["Formatters\n(auto-format edits)"]
+  end
+
+  subgraph "Control OpenCode"
+    D["Permissions\n(allow/ask/deny)"]
+    E["LSP\n(code intelligence)"]
+    F["Checkpoints\n(undo/redo snapshots)"]
+  end
+
+  subgraph "Configure OpenCode"
+    G["Config Precedence\n(7 layers)"]
+    H["Environment Variables"]
+    I["TUI Settings"]
+  end
+```
+
 ---
 
+## 🔌 Plugin System
 
-<details>
-<summary>Click to expand/collapse</summary>
+> **Development environment:** Plugins are written in TypeScript. You'll need:
+>
+> - [Bun](https://bun.sh/) installed (OpenCode uses Bun to run plugins; install with `curl -fsSL https://bun.sh/install | bash`)
+> - npm plugins are auto-installed by Bun at startup; local plugins in `.opencode/plugins/` are loaded directly
+> - [Zod](https://zod.dev/) is used for schema validation in custom tools (installed automatically as a dependency of `@opencode-ai/plugin`)
+>
+> If you're not a TypeScript developer, you can still **use** community plugins by listing them in `opencode.json` — writing your own is optional.
 
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
+OpenCode has an extensive plugin ecosystem. Plugins can hook into events, define custom tools, modify behavior, and integrate with external services.
 
-</details>
+### How Plugins Work
 
----
-# 09. Advanced Features & Plugins
+```mermaid
+sequenceDiagram
+  participant OpenCode
+  participant Plugin
+  participant LLM
+  participant Tool
 
-**Location**: `09-advanced-features/`  
-**Level**: Advanced  
-**Time**: 2 hours  
-**Focus**: Advanced configuration, plugin system, and event-driven automation
+  Note over OpenCode: Startup
+  OpenCode->>Plugin: Load plugin (import .ts file)
+  Plugin-->>OpenCode: Register event handlers
 
-## 📚 Overview
+  Note over OpenCode: During a session
+  LLM->>Tool: tool.execute (e.g., edit a file)
+  OpenCode->>Plugin: tool.execute.before event
+  Plugin-->>OpenCode: {allow} or {deny, reason}
+  alt Allowed
+    Tool->>Tool: Execute
+    OpenCode->>Plugin: tool.execute.after event
+  else Denied
+    OpenCode-->>LLM: Tool blocked by plugin
+  end
 
-This module covers opencode's advanced configuration options, plugin system (the equivalent of Claude Code's hooks), and sophisticated customization capabilities. You'll learn how to extend opencode with custom logic, automate workflows through events, and fine-tune behavior for production use.
+  Note over OpenCode: Session idle
+  OpenCode->>Plugin: session.idle event
+  Plugin->>Plugin: Custom action (notification, etc.)
+```
 
-## 🎯 What You'll Learn
+### Plugin Locations
 
-- Configure permissions and formatters
-- Set up and use the plugin system (hooks)
-- Create custom event handlers for automation
-- Use experimental features like LSP integration
-- Manage environment variables and settings
+| Location                         | Scope                         |
+| -------------------------------- | ----------------------------- |
+| `.opencode/plugins/`             | Project-specific plugins      |
+| `~/.config/opencode/plugins/`    | Global plugins (all projects) |
+| `opencode.json` `"plugin"` array | npm plugins (auto-installed)  |
 
-## 🚀 Quick Start
+### Installing npm Plugins
 
-### Permission Configuration
+Add plugins to `opencode.json`:
 
 ```json
-// opencode.json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "opencode-supermemory",
+    "opencode-vibeguard",
+    "@my-org/custom-plugin"
+  ]
+}
+```
+
+npm plugins are auto-installed via Bun at startup and cached in `~/.cache/opencode/node_modules/`.
+
+### Writing a Local Plugin
+
+Create a TypeScript file in `.opencode/plugins/`:
+
+```typescript
+// .opencode/plugins/my-plugin.ts
+import type { Plugin } from "@opencode-ai/plugin"
+
+export default function(ctx: Plugin.Context): Plugin.Handler {
+  return {
+    "tool.execute.before": async (input) => {
+      console.log(`Tool called: ${input.tool}`)
+    },
+    "session.idle": async () => {
+      console.log("Session is idle")
+    },
+  }
+}
+```
+
+### Event Hooks
+
+Plugins can listen to 30+ events:
+
+| Category       | Events                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Tool**       | `tool.execute.before`, `tool.execute.after`                                                                   |
+| **Session**    | `session.created`, `session.idle`, `session.compacted`, `session.deleted`, `session.error`, `session.updated` |
+| **File**       | `file.edited`, `file.watcher.updated`                                                                         |
+| **Permission** | `permission.asked`, `permission.replied`                                                                      |
+| **Message**    | `message.updated`, `message.removed`, `message.part.updated`                                                  |
+| **TUI**        | `tui.prompt.append`, `tui.command.execute`, `tui.toast.show`                                                  |
+| **Shell**      | `shell.env`                                                                                                   |
+| **LSP**        | `lsp.client.diagnostics`, `lsp.updated`                                                                       |
+| **Other**      | `command.executed`, `todo.updated`, `server.connected`                                                        |
+
+### Plugin Context
+
+Plugins receive a context object:
+
+```typescript
+ctx.project   // Current project info
+ctx.client    // OpenCode SDK client
+ctx.$          // Bun shell for running commands
+ctx.directory  // Project directory
+ctx.worktree   // Git worktree root
+```
+
+### Example: Protect .env Files
+
+```typescript
+// .opencode/plugins/env-guard.ts
+import type { Plugin } from "@opencode-ai/plugin"
+
+export default function(ctx: Plugin.Context): Plugin.Handler {
+  return {
+    "tool.execute.before": async (input) => {
+      if (input.tool === "read" && input.args.filePath?.includes(".env")) {
+        return { deny: true, reason: "Reading .env files is blocked" }
+      }
+    },
+  }
+}
+```
+
+### Example: Notification on Completion
+
+```typescript
+// .opencode/plugins/notify.ts
+import type { Plugin } from "@opencode-ai/plugin"
+
+export default function(ctx: Plugin.Context): Plugin.Handler {
+  return {
+    "session.idle": async () => {
+      await ctx.$`osascript -e 'display notification "Task complete" with title "OpenCode"'`
+    },
+  }
+}
+```
+
+### Popular Community Plugins
+
+| Plugin                       | Description                        |
+| ---------------------------- | ---------------------------------- |
+| `opencode-supermemory`       | Persistent memory across sessions  |
+| `opencode-vibeguard`         | Prevent accidental secret exposure |
+| `opencode-background-agents` | Run agents in the background       |
+| `opencode-worktree`          | Git worktree-based parallel work   |
+| `opencode-firecrawl`         | Web crawling integration           |
+| `oh-my-opencode`             | Collection of useful utilities     |
+| `opencode-helicone-session`  | Helicone observability tracking    |
+| `opencode-gitlab-plugin`     | GitLab MR, issues, and pipelines   |
+
+Browse 30+ plugins at [opencode.ai/docs/ecosystem#plugins](https://opencode.ai/docs/ecosystem#plugins).
+
+---
+
+## 🛠️ Custom Tools
+
+Define your own tools that the LLM can call. Custom tools are TypeScript/JavaScript files in `.opencode/tools/` or `~/.config/opencode/tools/`.
+
+### Creating a Custom Tool
+
+```typescript
+// .opencode/tools/deploy.ts
+import { tool } from "@opencode-ai/plugin"
+import { z } from "zod"
+
+export default tool({
+  name: "deploy",
+  description: "Deploy the application to a specified environment",
+  schema: z.object({
+    environment: z.string().describe("Target environment: staging or production"),
+    version: z.string().describe("Version tag to deploy"),
+  }),
+  async execute(input, ctx) {
+    const { environment, version } = input
+    return `Deployed version ${version} to ${environment}`
+  },
+})
+```
+
+### Tool Features
+
+- **Zod schemas** for argument validation with `.describe()` for LLM context
+- **Multiple tools per file** — export several tools, named `<filename>_<export>`
+- **Override built-in tools** by matching the name of an existing tool
+- **Any language** — wrap Python or other scripts via shell execution
+- **Dependencies** — add a `package.json` in `.opencode/` for npm dependencies
+
+### Wrapping Other Languages
+
+```typescript
+// .opencode/tools/analyze.ts
+import { tool } from "@opencode-ai/plugin"
+import { z } from "zod"
+import { $ } from "bun"
+
+export default tool({
+  name: "analyze",
+  description: "Run Python analysis script",
+  schema: z.object({
+    file: z.string().describe("File to analyze"),
+  }),
+  async execute(input) {
+    const result = await $`python3 scripts/analyze.py ${input.file}`.text()
+    return result
+  },
+})
+```
+
+---
+
+## 🔒 Permission Configuration
+
+### Permission Levels
+
+| Level     | Behavior                                |
+| --------- | --------------------------------------- |
+| `"allow"` | LLM can use the tool without asking     |
+| `"ask"`   | LLM must get user approval before using |
+| `"deny"`  | LLM cannot use the tool at all          |
+
+### Basic Configuration
+
+```json
 {
   "$schema": "https://opencode.ai/config.json",
   "permission": {
-    "edit": "ask",
-    "bash": "allow",
-    "webfetch": "deny",
-    "websearch": "ask"
+    "read": "allow",
+    "edit": "allow",
+    "bash": "ask",
+    "webfetch": "ask",
+    "websearch": "deny"
   }
 }
 ```
 
-### Basic Plugin Setup
+### Granular Rules (Object Syntax)
 
-```bash
-# Create plugin directory
-mkdir -p .opencode/plugins
+For fine-grained control, use an object with glob patterns. The **last matching rule wins**:
 
-# Create a simple plugin
-cat > .opencode/plugins/format-on-save.js << 'EOF'
-export default {
-  name: "format-on-save",
-  description: "Auto-format code after edits",
-  priority: 100,
-  
-  hooks: {
-    async "tool.execute.after"(ctx) {
-      if (ctx.tool === "edit" || ctx.tool === "write") {
-        // Auto-format the edited file
-        await ctx.runFormatter(ctx.filePath);
-      }
+```json
+{
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git *": "allow",
+      "npm *": "allow",
+      "rm *": "deny",
+      "grep *": "allow"
+    },
+    "edit": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny"
     }
   }
 }
-EOF
 ```
 
-## 📖 Detailed Topics
+### Available Permissions
 
-### 1. Plugin System (Hooks)
+| Permission           | Matches                                                        |
+| -------------------- | -------------------------------------------------------------- |
+| `read`               | File path                                                      |
+| `edit`               | File path (covers `edit`, `write`, `apply_patch`, `multiedit`) |
+| `bash`               | Parsed command (e.g., `git status --porcelain`)                |
+| `glob`               | Glob pattern                                                   |
+| `grep`               | Regex pattern                                                  |
+| `list`               | Directory path                                                 |
+| `task`               | Subagent type                                                  |
+| `skill`              | Skill name                                                     |
+| `webfetch`           | URL                                                            |
+| `websearch`          | Query                                                          |
+| `external_directory` | Path outside project (default: `"ask"`)                        |
+| `doom_loop`          | Same tool called 3x identically (default: `"ask"`)             |
 
-OpenCode implements hooks through its plugin system using JavaScript/TypeScript modules placed in:
-- `.opencode/plugins/` (project-specific)
-- `~/.config/opencode/plugins/` (global)
+### External Directory Access
 
-**Plugin Structure:**
-```javascript
-// Example plugin: auto-format on edit
-export default {
-  name: "auto-formatter",
-  description: "Automatically format code after edits",
-  priority: 100, // Lower numbers run first
-  
-  hooks: {
-    // Run before tool execution
-    async "tool.execute.before"(ctx) {
-      const { tool, args } = ctx;
-      
-      // Block .env file reads for security
-      if (tool === "read" && args.filePath?.endsWith('.env')) {
-        throw new Error("Reading .env files is not allowed");
-      }
-      
-      // Require approval for dangerous bash commands
-      if (tool === "bash" && args.command?.includes('rm -rf')) {
-        ctx.requireApproval("This command is potentially destructive");
-      }
-    },
-    
-    // Run after tool execution
-    async "tool.execute.after"(ctx) {
-      const { tool, success, error } = ctx;
-      
-      if (tool === "edit" && success) {
-        // Auto-format edited files
-        await ctx.runFormatter(ctx.filePath);
-      }
-      
-      if (error) {
-        // Log errors to monitoring service
-        console.error(`Tool ${tool} failed:`, error);
-      }
-    },
-    
-    // Session events
-    async "session.created"(ctx) {
-      console.log(`New session started: ${ctx.sessionId}`);
-    },
-    
-    async "session.updated"(ctx) {
-      // Notify on session status changes
-      if (ctx.status === "error") {
-        await sendNotification(`Session error: ${ctx.error}`);
-      }
-    },
-    
-    // File events
-    async "file.edited"(ctx) {
-      const { filePath, oldContent, newContent } = ctx;
-      console.log(`File edited: ${filePath}`);
-      
-      // Validate file changes
-      if (filePath.endsWith('.json')) {
-        try {
-          JSON.parse(newContent);
-        } catch (e) {
-          throw new Error("Invalid JSON after edit");
+Allow the LLM to access files outside your project:
+
+```json
+{
+  "permission": {
+    "external_directory": {
+      "~/projects/shared-lib/**": "allow"
+    }
+  }
+}
+```
+
+### Per-Agent Permission Overrides
+
+Override permissions for specific agents:
+
+```json
+{
+  "permission": {
+    "bash": "ask"
+  },
+  "agent": {
+    "build": {
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git push *": "deny"
         }
       }
-    },
-    
-    // Permission events
-    async "permission.asked"(ctx) {
-      const { tool, reason } = ctx;
-      
-      // Custom permission logic
-      if (tool === "webfetch" && reason.includes("github.com")) {
-        return "allow"; // Auto-allow GitHub fetches
-      }
-      
-      return "ask"; // Default to asking user
     }
-  }
-};
-```
-
-**Available Hook Events (30+):**
-- `tool.execute.before/after` - Pre/post tool execution
-- `tool.execute.failure` - Tool execution failed
-- `session.created/updated/destroyed` - Session lifecycle
-- `session.error` - Session errors
-- `file.edited/created/deleted` - File operations
-- `permission.asked` - Permission requests
-- `lsp.client.*` - LSP server events
-- `command.executed` - Slash command execution
-- `agent.*` - Agent-related events
-- `mcp.*` - MCP server events
-
-### 2. Plugin Configuration
-
-**Loading Order:**
-1. Config-defined plugins (highest priority)
-2. Global plugins (`~/.config/opencode/plugins/`)
-3. Project plugins (`.opencode/plugins/`)
-
-**Package.json Support:**
-```json
-{
-  "name": "my-opencode-plugin",
-  "version": "1.0.0",
-  "dependencies": {
-    "axios": "^1.0.0",
-    "zod": "^3.0.0"
   }
 }
 ```
 
-**SDK Access:**
-Plugins have access to opencode's SDK for:
-- Logging and debugging
-- Running commands
-- File system operations
-- Configuration access
-- Tool execution
+### What "Ask" Does
 
-### 3. Community Plugins
+When the LLM triggers an "ask" permission, you see three options:
 
-**opencode-claude-hooks:**
-```bash
-# Install compatibility plugin
-npm install opencode-claude-hooks
+- **once** — approve just this request
+- **always** — approve matching patterns for the rest of the session
+- **reject** — deny the request
 
-# Configuration automatically loads Claude-style hooks
-# Provides ~80% compatibility with Claude configs
-```
+### Defaults
 
-**Example community plugins:**
-- `opencode-security` - Security scanning and validation
-- `opencode-formatters` - Multi-language code formatting
-- `opencode-notifications` - Slack/Discord/email notifications
-- `opencode-git` - Git automation and validation
-- `opencode-ci` - CI/CD integration
+Most permissions default to `"allow"`. Exceptions:
 
-### 4. Custom Tools via Plugins
+- `doom_loop`: `"ask"`
+- `external_directory`: `"ask"`
+- `read` for `.env` files: `"deny"` by default
 
-Plugins can define custom tools with Zod schemas:
+---
 
-```javascript
-import { z } from 'zod';
+## 🎨 Code Formatters
 
-export default {
-  name: "custom-tools",
-  
-  tools: {
-    // Custom tool with validation
-    calculate: {
-      schema: z.object({
-        expression: z.string().describe("Mathematical expression"),
-        precision: z.number().optional().default(2)
-      }),
-      
-      async execute({ expression, precision }) {
-        // Safe evaluation
-        const result = safeEval(expression);
-        return `Result: ${result.toFixed(precision)}`;
-      }
+### Configuration
+
+Define formatters in `opencode.json` under the `"formatter"` key:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "formatter": {
+    "prettier": {
+      "disabled": true
     },
-    
-    // API integration tool
-    fetchWeather: {
-      schema: z.object({
-        city: z.string(),
-        units: z.enum(["metric", "imperial"]).default("metric")
-      }),
-      
-      async execute({ city, units }) {
-        const response = await fetch(
-          `https://api.weather.com/${city}?units=${units}`
-        );
-        return response.json();
-      }
-    }
-  },
-  
-  hooks: {
-    // Register custom tools on session start
-    async "session.created"(ctx) {
-      await ctx.registerTools(this.tools);
+    "custom-prettier": {
+      "command": ["npx", "prettier", "--write", "$FILE"],
+      "environment": {
+        "NODE_ENV": "development"
+      },
+      "extensions": [".js", ".ts", ".jsx", ".tsx"]
     }
   }
-};
+}
 ```
 
-### 5. Advanced Configuration
+### How It Works
 
-**Environment Variables:**
+When the LLM edits or writes a file, OpenCode automatically runs the matching formatter. This ensures all LLM-generated code follows your project's style.
+
+### Disabling a Built-In Formatter
+
+```json
+{
+  "formatter": {
+    "prettier": { "disabled": true }
+  }
+}
+```
+
+---
+
+## 🧠 LSP Integration
+
+OpenCode integrates with Language Server Protocol servers to provide code intelligence to the LLM. It comes with **30+ built-in language servers** that auto-install when relevant files are detected.
+
+### Built-In Servers (Partial List)
+
+| Language      | Server                     | Auto-installs?                   |
+| ------------- | -------------------------- | -------------------------------- |
+| TypeScript/JS | typescript-language-server | Yes (if `typescript` in project) |
+| Python        | pyright                    | Yes (if `pyright` in project)    |
+| Go            | gopls                      | If `go` available                |
+| Rust          | rust-analyzer              | If `rust-analyzer` available     |
+| C/C++         | clangd                     | Yes                              |
+| PHP           | intelephense               | Yes                              |
+| Ruby          | ruby-lsp                   | If `ruby` available              |
+| Svelte        | svelte-language-server     | Yes                              |
+| Vue           | vue-language-server        | Yes                              |
+
+### LSP Tool (Experimental)
+
+Enable the LLM to query LSP directly:
+
 ```bash
-# Enable experimental features
-OPENCODE_EXPERIMENTAL=true opencode
-
-# Enable LSP tool
 OPENCODE_EXPERIMENTAL_LSP_TOOL=true opencode
-
-# Enable websearch
-OPENCODE_ENABLE_EXA=1 opencode
-
-# Server authentication
-OPENCODE_SERVER_PASSWORD=secret123
-OPENCODE_SERVER_USERNAME=admin
 ```
 
-**Code Formatters:**
-```json
-{
-  "formatters": {
-    "*.js": "prettier --write",
-    "*.py": "black",
-    "*.rs": "rustfmt",
-    "*.go": "gofmt"
-  }
-}
-```
+Supported operations: `goToDefinition`, `findReferences`, `hover`, `documentSymbol`, `workspaceSymbol`, `goToImplementation`, `prepareCallHierarchy`, `incomingCalls`, `outgoingCalls`.
 
-**LSP Server Configuration:**
+### Custom LSP Servers
+
 ```json
 {
   "lsp": {
-    "typescript": {
-      "command": "typescript-language-server",
-      "args": ["--stdio"],
-      "filetypes": ["typescript", "javascript"]
-    },
-    "python": {
-      "command": "pylsp",
-      "filetypes": ["python"]
+    "custom-lsp": {
+      "command": ["custom-lsp-server", "--stdio"],
+      "extensions": [".custom"]
     }
   }
 }
 ```
 
-## 🧪 Hands-on Exercises
+### Disabling LSP
 
-### Exercise 1: Security Plugin
-
-```javascript
-// .opencode/plugins/security.js
-export default {
-  name: "security",
-  priority: 1000, // High priority - runs first
-  
-  hooks: {
-    async "tool.execute.before"(ctx) {
-      const { tool, args } = ctx;
-      
-      // Block sensitive file operations
-      const sensitiveFiles = ['.env', 'config/secrets.', 'private-key'];
-      if (tool === "read" || tool === "edit") {
-        const filePath = args.filePath || args.path;
-        if (sensitiveFiles.some(pattern => filePath?.includes(pattern))) {
-          throw new Error(`Access to ${filePath} is restricted for security`);
-        }
-      }
-      
-      // Block dangerous bash commands
-      if (tool === "bash") {
-        const dangerous = ['rm -rf', 'format c:', 'dd if=', ':(){:|:&};:'];
-        if (dangerous.some(cmd => args.command?.includes(cmd))) {
-          ctx.requireApproval("This command appears dangerous");
-        }
-      }
-    },
-    
-    async "file.edited"(ctx) {
-      // Check for hardcoded secrets
-      const secretPatterns = [
-        /password\s*=\s*['"][^'"]{8,}['"]/i,
-        /api[_-]key\s*=\s*['"][^'"]{10,}['"]/i,
-        /token\s*=\s*['"][^'"]{10,}['"]/i
-      ];
-      
-      for (const pattern of secretPatterns) {
-        if (pattern.test(ctx.newContent)) {
-          console.warn(`Potential secret found in ${ctx.filePath}`);
-        }
-      }
-    }
-  }
-};
+```json
+{ "lsp": false }
 ```
 
-### Exercise 2: Auto-Formatter Plugin
+Or disable a specific server:
 
-```javascript
-// .opencode/plugins/auto-format.js
-export default {
-  name: "auto-format",
-  
-  hooks: {
-    async "tool.execute.after"(ctx) {
-      if (!ctx.success) return;
-      
-      const { tool } = ctx;
-      const filePath = ctx.filePath || ctx.args?.filePath;
-      
-      // Format after edits
-      if ((tool === "edit" || tool === "write") && filePath) {
-        await this.formatFile(filePath);
-      }
-    }
-  },
-  
-  methods: {
-    async formatFile(filePath) {
-      const ext = filePath.split('.').pop();
-      
-      switch (ext) {
-        case 'js':
-        case 'jsx':
-        case 'ts':
-        case 'tsx':
-          await this.runCommand(`npx prettier --write "${filePath}"`);
-          break;
-        case 'py':
-          await this.runCommand(`black "${filePath}"`);
-          break;
-        case 'rs':
-          await this.runCommand(`rustfmt "${filePath}"`);
-          break;
-        // Add more formatters as needed
-      }
-    },
-    
-    async runCommand(cmd) {
-      // Use opencode's bash tool to run formatter
-      try {
-        await opencode.bash(cmd);
-      } catch (error) {
-        console.warn(`Formatter failed: ${error.message}`);
-      }
-    }
-  }
-};
-```
-
-### Exercise 3: Notification Plugin
-
-```javascript
-// .opencode/plugins/notifications.js
-import axios from 'axios';
-
-export default {
-  name: "notifications",
-  
-  config: {
-    webhookUrl: process.env.SLACK_WEBHOOK_URL,
-    notifyOn: ['error', 'session.created', 'file.edited']
-  },
-  
-  hooks: {
-    async "session.error"(ctx) {
-      if (this.config.notifyOn.includes('error')) {
-        await this.sendNotification({
-          title: "OpenCode Session Error",
-          message: ctx.error.message,
-          sessionId: ctx.sessionId
-        });
-      }
-    },
-    
-    async "session.created"(ctx) {
-      if (this.config.notifyOn.includes('session.created')) {
-        await this.sendNotification({
-          title: "New OpenCode Session",
-          message: `Session ${ctx.sessionId} started`,
-          level: "info"
-        });
-      }
-    },
-    
-    async "file.edited"(ctx) {
-      if (this.config.notifyOn.includes('file.edited')) {
-        await this.sendNotification({
-          title: "File Edited",
-          message: `${ctx.filePath} was modified`,
-          diff: ctx.diff // If available
-        });
-      }
-    }
-  },
-  
-  methods: {
-    async sendNotification(data) {
-      if (!this.config.webhookUrl) return;
-      
-      try {
-        await axios.post(this.config.webhookUrl, {
-          text: `${data.title}: ${data.message}`,
-          attachments: data.diff ? [{
-            text: "```diff\n" + data.diff + "\n```"
-          }] : []
-        });
-      } catch (error) {
-        console.error("Notification failed:", error.message);
-      }
-    }
-  }
-};
-```
-
-### Exercise 4: Claude Hooks Compatibility
-
-```bash
-# Install compatibility layer
-npm install opencode-claude-hooks
-
-# Convert Claude config to opencode plugin
-npx opencode-claude-hooks convert .claude/settings.json
-
-# Generated plugin will be in .opencode/plugins/claude-compat.js
-```
-
-## 📋 Best Practices
-
-### ✅ Do
-
-- **Start with simple plugins** before complex ones
-- **Use proper error handling** in all hooks
-- **Test plugins in isolation** before deploying
-- **Consider plugin priority** for execution order
-- **Use environment variables** for configuration
-- **Document plugin behavior** with clear descriptions
-
-### ❌ Don't
-
-- **Don't create blocking plugins** that slow down opencode
-- **Don't ignore error cases** in event handlers
-- **Don't hardcode sensitive data** in plugins
-- **Don't create conflicting plugins** with same hooks
-- **Don't forget about plugin loading order**
-- **Don't skip testing** with different scenarios
-
-## 🔧 Common Use Cases
-
-### 1. Security Enforcement
-
-```javascript
-// Block specific patterns
-hooks: {
-  async "tool.execute.before"(ctx) {
-    // Block eval in bash
-    if (ctx.tool === "bash" && ctx.args.command?.includes('eval(')) {
-      throw new Error("eval() is not allowed for security");
-    }
-    
-    // Block .env reads
-    if (ctx.tool === "read" && ctx.args.filePath?.endsWith('.env')) {
-      throw new Error(".env files cannot be read directly");
-    }
+```json
+{
+  "lsp": {
+    "typescript": { "disabled": true }
   }
 }
 ```
-
-### 2. Quality Assurance
-
-```javascript
-// Enforce coding standards
-hooks: {
-  async "file.edited"(ctx) {
-    // Check for TODO comments in production code
-    if (ctx.filePath.includes('src/') && ctx.newContent.includes('TODO')) {
-      console.warn(`TODO found in ${ctx.filePath}`);
-    }
-    
-    // Check for console.log in production
-    if (!ctx.filePath.includes('test') && ctx.newContent.includes('console.log')) {
-      console.warn(`console.log in production code: ${ctx.filePath}`);
-    }
-  }
-}
-```
-
-### 3. Workflow Automation
-
-```javascript
-// Auto-run tests after changes
-hooks: {
-  async "tool.execute.after"(ctx) {
-    if (ctx.tool === "edit" && ctx.filePath?.includes('src/')) {
-      // Run tests related to changed file
-      const testFile = ctx.filePath.replace('src/', 'tests/').replace('.js', '.test.js');
-      await opencode.bash(`npm test -- ${testFile}`);
-    }
-  }
-}
-```
-
-### 4. Team Collaboration
-
-```javascript
-// Notify team of changes
-hooks: {
-  async "session.created"(ctx) {
-    const user = process.env.USER || "unknown";
-    await this.sendToSlack(`User ${user} started session ${ctx.sessionId}`);
-  },
-  
-  async "file.edited"(ctx) {
-    await this.sendToSlack(`File edited: ${ctx.filePath}`, ctx.diff);
-  }
-}
-```
-
-## 🚨 Troubleshooting
-
-### Plugin Not Loading
-
-```bash
-# Check plugin directory
-ls -la .opencode/plugins/
-
-# Check for syntax errors
-node -c .opencode/plugins/my-plugin.js
-
-# Enable debug logging
-OPENCODE_LOG_LEVEL=DEBUG opencode
-```
-
-### Hook Not Firing
-
-```javascript
-// Check event name is correct
-// Available events: tool.execute.before, tool.execute.after, file.edited, etc.
-
-// Check priority
-// Lower priority numbers run first, ensure your plugin has appropriate priority
-
-// Check for errors in hook
-try {
-  // Your hook logic
-} catch (error) {
-  console.error("Hook error:", error);
-}
-```
-
-### Performance Issues
-
-```javascript
-// Optimize heavy operations
-hooks: {
-  async "tool.execute.before"(ctx) {
-    // Use early returns for irrelevant events
-    if (ctx.tool !== "edit") return;
-    
-    // Defer non-critical operations
-    setTimeout(() => {
-      this.logOperation(ctx);
-    }, 0);
-    
-    // Keep synchronous operations fast
-    const shouldBlock = this.checkSecurity(ctx);
-    if (shouldBlock) {
-      throw new Error("Operation blocked");
-    }
-  }
-}
-```
-
-## 📚 Additional Resources
-
-- [OpenCode Plugins Documentation](https://opencode.ai/docs/plugins)
-- [Plugin SDK Reference](https://opencode.ai/docs/sdk)
-- [Available Hook Events](https://opencode.ai/docs/plugins#events)
-- [Community Plugins](https://github.com/anomalyco/opencode-plugins)
-- [opencode-claude-hooks](https://github.com/community/opencode-claude-hooks)
-
-## 🎓 Next Steps
-
-Once you're comfortable with advanced features and plugins, proceed to:
-
-1. **[10-openwork](10-openwork)**: Set up team collaboration with OpenWork
-2. **Create custom plugins** for your team's specific workflows
-3. **Contribute to community plugins** to help others
-4. **Explore experimental features** as they become available
 
 ---
 
-**Ready to extend opencode?** Start by creating a simple plugin that solves one specific problem in your workflow, then gradually add more features as you become comfortable with the plugin system.
+## ⏪ Checkpoints & Undo/Redo
 
-[← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Previous: MCP Servers ←](08-mcp-servers/README.md) | [Next: OpenWork Integration →](10-openwork/README.md)
+OpenCode tracks every file change using a snapshot system, giving you full undo/redo capability.
+
+### How Checkpoints Work
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant LLM
+  participant Snapshot Engine
+  participant Filesystem
+
+  Note over Snapshot Engine: Snapshot #0: Original state
+
+  LLM->>Filesystem: edit(config.ts, change port)
+  Snapshot Engine->>Snapshot Engine: Snapshot #1 saved
+  LLM->>Filesystem: write(logger.ts, new file)
+  Snapshot Engine->>Snapshot Engine: Snapshot #2 saved
+  LLM->>Filesystem: edit(app.ts, add import)
+  Snapshot Engine->>Snapshot Engine: Snapshot #3 saved
+
+  You->>Snapshot Engine: /undo
+  Snapshot Engine->>Filesystem: Revert to Snapshot #2
+  Note over Filesystem: app.ts restored to before edit
+
+  You->>Snapshot Engine: /undo
+  Snapshot Engine->>Filesystem: Revert to Snapshot #1
+  Note over Filesystem: logger.ts deleted
+
+  You->>Snapshot Engine: /redo
+  Snapshot Engine->>Filesystem: Restore Snapshot #2
+  Note over Filesystem: logger.ts recreated
+```
+
+### Commands
+
+| Command / Keybind | Action                          |
+| ----------------- | ------------------------------- |
+| `/undo`           | Revert the last file change     |
+| `/redo`           | Re-apply the last undone change |
+| `Ctrl+X u`        | Keyboard shortcut for undo      |
+
+Each `/undo` reverts **one tool call** — if the LLM edited 3 files in one step, `/undo` reverts all 3.
+
+### What Gets Snapshotted
+
+- File creates (`write` tool)
+- File edits (`edit`, `apply_patch` tools)
+- File deletions (via `bash rm` or write tool)
+
+**Not snapshotted:**
+
+- Shell commands and their side effects (e.g., `npm install` modifying `node_modules`)
+- Database changes
+- External API calls
+
+### Snapshot Configuration
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "snapshot": true
+}
+```
+
+Disable snapshots for very large repos where tracking overhead is noticeable:
+
+```json
+{ "snapshot": false }
+```
+
+### Conversation Compaction
+
+When conversations get long, the context window fills up. OpenCode handles this with **automatic compaction** — summarizing older messages to free up space.
+
+```mermaid
+flowchart LR
+  A["Long conversation\n(many messages)"] --> B{"Context window\ngetting full?"}
+  B -->|"Yes"| C["Compaction agent\nsummarizes old messages"]
+  C --> D["Summary replaces\nolder messages"]
+  D --> E["More room for\nnew work"]
+  B -->|"No"| F["Continue normally"]
+```
+
+**Compaction configuration:**
+
+```json
+{
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  }
+}
+```
+
+| Option     | Description                                                              |
+| ---------- | ------------------------------------------------------------------------ |
+| `auto`     | Enable automatic compaction when context is filling up (default: `true`) |
+| `prune`    | Remove old messages after compaction (default: `true`)                   |
+| `reserved` | Token budget reserved for compaction summary (default: `10000`)          |
+
+**Manual compaction:** Type `/compact` in the TUI to force compaction at any time.
+
+**What compaction preserves:**
+
+- The current task and its context
+- Active todo list
+- Recent file changes
+- Key decisions and answers from the question tool
+
+**What compaction summarizes:**
+
+- Older conversation turns
+- Previous tool call details
+- Historical exploration that's no longer relevant
 
 ---
 
+## 📝 Advanced Configuration
+
+### Config Precedence
+
+Configuration sources are merged in this order (later overrides earlier):
+
+```mermaid
+flowchart TB
+  A["1. Remote config\n(.well-known/opencode)"] --> B["2. Global config\n(~/.config/opencode/opencode.json)"]
+  B --> C["3. Custom config\n(OPENCODE_CONFIG env var)"]
+  C --> D["4. Project config\n(opencode.json in project root)"]
+  D --> E["5. .opencode/ directories\n(agents, commands, plugins)"]
+  E --> F["6. Inline config\n(OPENCODE_CONFIG_CONTENT env var)"]
+  F --> G["7. Managed config\n(/etc/opencode/ — highest priority)"]
+  style G fill:#f96,stroke:#333
+```
+
+Each layer merges with the previous — values in higher-priority sources override lower ones.
+
+### Variable Substitution
+
+Use `{env:VAR}` for environment variables and `{file:path}` for file contents:
+
+```json
+{
+  "provider": {
+    "anthropic": {
+      "options": {
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
+      }
+    }
+  },
+  "instructions": ["./custom-instructions.md"]
+}
+```
+
+### Snapshots
+
+OpenCode tracks file changes using snapshots, enabling `/undo` and `/redo`. Disable for large repos:
+
+```json
+{ "snapshot": false }
+```
+
+### Compaction
+
+Control automatic context compaction when conversations get long:
+
+```json
+{
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  }
+}
+```
+
+### File Watcher
+
+Ignore noisy directories from file watching:
+
+```json
+{
+  "watcher": {
+    "ignore": ["node_modules/**", "dist/**", ".git/**"]
+  }
+}
+```
+
+### Sharing
+
+Control session sharing:
+
+```json
+{ "share": "manual" }
+```
+
+Options: `"manual"` (default), `"auto"`, `"disabled"`.
+
+### TUI Configuration
+
+TUI settings go in a separate `tui.json` file:
+
+```json
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "tokyonight",
+  "scroll_speed": 3,
+  "scroll_acceleration": { "enabled": true },
+  "diff_style": "auto",
+  "mouse": true
+}
+```
+
+---
+
+## 🌐 Environment Variables
+
+### Core Variables
+
+| Variable                      | Description                                    |
+| ----------------------------- | ---------------------------------------------- |
+| `OPENCODE_CONFIG`             | Path to custom config file                     |
+| `OPENCODE_CONFIG_DIR`         | Path to custom config directory                |
+| `OPENCODE_CONFIG_CONTENT`     | Inline JSON config content                     |
+| `OPENCODE_TUI_CONFIG`         | Path to custom TUI config file                 |
+| `OPENCODE_SERVER_PASSWORD`    | Password for `opencode serve`/`web`            |
+| `OPENCODE_SERVER_USERNAME`    | Username for server auth (default: `opencode`) |
+| `OPENCODE_PERMISSION`         | Inline JSON permissions config                 |
+| `OPENCODE_DISABLE_AUTOUPDATE` | Disable automatic updates                      |
+
+### Compatibility Variables
+
+| Variable                              | Description                                      |
+| ------------------------------------- | ------------------------------------------------ |
+| `OPENCODE_DISABLE_CLAUDE_CODE`        | Disable reading from `.claude` (prompt + skills) |
+| `OPENCODE_DISABLE_CLAUDE_CODE_PROMPT` | Disable reading `~/.claude/CLAUDE.md`            |
+| `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS` | Disable loading `.claude/skills`                 |
+
+### Experimental Variables
+
+| Variable                                        | Description                         |
+| ----------------------------------------------- | ----------------------------------- |
+| `OPENCODE_EXPERIMENTAL`                         | Enable all experimental features    |
+| `OPENCODE_EXPERIMENTAL_LSP_TOOL`                | Enable experimental LSP tool        |
+| `OPENCODE_ENABLE_EXA`                           | Enable Exa web search tool          |
+| `OPENCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` | Default timeout for bash commands   |
+| `OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX`        | Max output tokens for LLM responses |
+
+---
+
+## 🧪 Practice Exercises
+
+### Exercise 1: Plugin Setup
+
+Install a community plugin:
+
+```json
+{
+  "plugin": ["opencode-supermemory"]
+}
+```
+
+Restart OpenCode and verify the plugin loaded.
+
+### Exercise 2: Custom Tool
+
+Create `.opencode/tools/hello.ts`:
+
+```typescript
+import { tool } from "@opencode-ai/plugin"
+import { z } from "zod"
+
+export default tool({
+  name: "hello",
+  description: "Say hello to someone",
+  schema: z.object({ name: z.string() }),
+  async execute(input) {
+    return `Hello, ${input.name}!`
+  },
+})
+```
+
+Ask: "Use the hello tool to greet Alice"
+
+### Exercise 3: Granular Permissions
+
+Configure bash permissions with patterns:
+
+```json
+{
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git status *": "allow",
+      "git log *": "allow",
+      "rm *": "deny"
+    }
+  }
+}
+```
+
+### Exercise 4: AGENTS.md with /init
+
+Run `/init` in the TUI to auto-generate an `AGENTS.md` for your project.
+
+---
+
+## ❓ Common Questions
+
+**Q: Does OpenCode have a plugin/hooks system?**
+Yes. OpenCode has an extensive plugin system with 30+ event hooks. Plugins can be local TypeScript files in `.opencode/plugins/` or npm packages listed in `opencode.json`. See the [Plugin System](#-plugin-system) section above.
+
+**Q: What's the equivalent of Claude Code's hooks?**
+OpenCode's plugin event hooks serve the same purpose. Hooks like `tool.execute.before`, `tool.execute.after`, `session.idle`, and `file.edited` let you intercept and modify behavior at every stage.
+
+**Q: Where do AGENTS.md rules come from?**
+OpenCode reads rules from: project `AGENTS.md` > global `~/.config/opencode/AGENTS.md` > `CLAUDE.md` fallback (disable with `OPENCODE_DISABLE_CLAUDE_CODE=1`). You can also add `"instructions"` in `opencode.json` pointing to files, globs, or remote URLs.
+
+**Q: Can I use my Claude Code CLAUDE.md?**
+Yes. OpenCode reads `CLAUDE.md` and `~/.claude/CLAUDE.md` as fallbacks if no `AGENTS.md` exists.
+
+**Q: What's the difference between plugins and custom tools?**
+Plugins hook into events and modify OpenCode's behavior. Custom tools define new functions the LLM can call during conversations.
+
+---
+
+## 🚶 Next Steps
+
+Continue to **[Module 10: OpenWork](../10-openwork/)** to learn about multi-agent orchestration.
 
 ---
 
@@ -722,8 +851,9 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **License:** MIT - See [LICENSE](../LICENSE) for details.
 
-**Last Updated:** April 2026  
+[⬆ Back to top](#️-09-advanced-features)
+
+**Last Updated:** April 2026
 **OpenCode Version:** 1.0+ compatible
 
 ---
-

@@ -9,7 +9,7 @@
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_02-blue)]()
 [![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-[⬅️ Previous Module](../02-file-operations/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../04-bash-integration/)
+[⬅️ Previous Module](../02-file-operations/) • [🏠 Main Menu](../README.md) • [Next Module ➡️](../04-bash-integration/)
 
 </div>
 
@@ -25,51 +25,6 @@
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
-
----
-
----
-
-
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
-
----
-
----
-
-
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
@@ -82,492 +37,460 @@
 
 ## 🎯 Overview
 
-
 ### 📝 What This Module Covers
 
-| Topic | Description | Why It Matters |
-|-------|-------------|----------------|
-| **glob** | Find files by pattern | Navigate large codebases efficiently |
-| **grep** | Search file contents | Find specific code, functions, patterns |
-| **list** | Directory listing | Understand project structure |
-| **Combined Searches** | Chain search operations | Complex queries across files and content |
-| **Search Patterns** | Regex and wildcards | Flexible, powerful searching |
+| Tool       | Description                             | Why It Matters                          |
+| ---------- | --------------------------------------- | --------------------------------------- |
+| **`glob`** | Find files by pattern (e.g., `**/*.js`) | Navigate large codebases efficiently    |
+| **`grep`** | Search file contents using regex        | Find specific code, functions, patterns |
+| **`list`** | List directory contents                 | Understand project structure            |
 
 ### 🎓 Learning Objectives
 
-By the end of this module, you'll be able to:
+- ✅ **Understand** how `glob`, `grep`, and `list` work as LLM-internal tools
+- ✅ **Ask OpenCode** to find files and search content via natural language
+- ✅ **Use shell equivalents** when you need direct command-line searching
+- ✅ **Combine search operations** for complex code analysis
 
-- ✅ **Find files efficiently** using `glob` patterns
-- ✅ **Search file contents** with `grep` and regex
-- ✅ **Navigate directories** using `list` tool
-- ✅ **Combine search operations** for complex queries
-- ✅ **Apply search patterns** to real development tasks
-- List directory contents with `list`
-- Combine search operations for complex queries
-- Use include/exclude patterns and filtering options
+> **Important**: `glob`, `grep`, and `list` are internal tools the LLM uses — **not** CLI commands. There is no `opencode glob` or `opencode grep` command. You trigger these by asking the LLM in the TUI.
 
-## 🚀 Quick Start
+---
 
-### Finding Files with `glob`
+## ✅ Prerequisites
 
 ```bash
-# Find all JavaScript files
-opencode glob "**/*.js"
-
-# Find TypeScript files in src directory
-opencode glob "src/**/*.ts"
-
-# Find multiple file types
-opencode glob "**/*.{js,ts,jsx,tsx}"
-
-# Find files with specific names
-opencode glob "**/package.json"
-opencode glob "**/README.md"
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
 ```
 
-### Searching Content with `grep`
+- [x] Completed [Module 02: File Operations](../02-file-operations/)
+
+---
+
+## ⚡ Quick Start
+
+### Finding Files (glob)
+
+In the TUI, ask the LLM:
+
+```
+Find all JavaScript files in this project
+```
+
+The LLM internally runs its `glob` tool with a pattern like `**/*.js` and returns the results.
+
+### Searching Content (grep)
+
+```
+Search for all TODO and FIXME comments in the codebase
+```
+
+The LLM internally uses its `grep` tool with a regex like `TODO|FIXME`.
+
+### Listing Directories (list)
+
+```
+Show me the contents of the src/ directory
+```
+
+The LLM uses its `list` tool to show directory contents.
+
+### Shell Equivalents
+
+You can always use standard shell commands directly:
 
 ```bash
-# Search for TODO comments
-opencode grep "TODO|FIXME"
+# Find files by pattern
+find . -name '*.js' -not -path './node_modules/*'
 
-# Search for function definitions
-opencode grep "function " --include="*.js"
+# Search file contents
+grep -rn 'TODO\|FIXME' --include='*.js' .
 
-# Search for imports
-opencode grep "import " --include="*.{js,ts}"
-
-# Case-insensitive search
-opencode grep -i "error" --include="*.log"
+# List directory contents
+ls -la src/
 ```
 
-### Listing Directories with `list`
+---
+
+## 📚 Core Concepts
+
+### How Search Tools Work
+
+These are **LLM-internal tools**. When you ask OpenCode to find or search for something, the LLM decides which tool to use:
+
+```mermaid
+flowchart LR
+  A["Your prompt"] --> B{"LLM picks\na tool"}
+  B -->|"Find files…"| C["**glob**\nPattern-match filenames"]
+  B -->|"Search for text…"| D["**grep**\nRegex search contents"]
+  B -->|"What's in folder…"| E["**list**\nDirectory listing"]
+  C --> F["List of matching\nfile paths"]
+  D --> G["Matching lines\nwith file + line #"]
+  E --> H["Files & folders\nin that directory"]
+```
+
+| Your Prompt                            | LLM Tool Used | What Happens                                 |
+| -------------------------------------- | ------------- | -------------------------------------------- |
+| "Find all .ts files"                   | `glob`        | Pattern-matches filenames across the project |
+| "Search for 'useState' in React files" | `grep`        | Regex search across file contents            |
+| "What's in the tests/ folder?"         | `list`        | Lists directory contents                     |
+
+### The `glob` Tool
+
+Pattern-based file finding. The LLM supplies a glob pattern and gets back a list of matching file paths.
+
+**Common patterns the LLM uses:**
+
+| Pattern                 | Matches                |
+| ----------------------- | ---------------------- |
+| `**/*.js`               | All JS files anywhere  |
+| `src/**/*.ts`           | TS files under src/    |
+| `**/*.{js,ts,jsx,tsx}`  | All JS/TS files        |
+| `**/package.json`       | All package.json files |
+| `test/*.{test,spec}.js` | Test files in test/    |
+
+**How glob actually works:**
+
+1. The LLM decides it needs to find files and calls `glob` with a pattern
+2. OpenCode walks the project tree, respecting `.gitignore` rules
+3. Matching paths are returned to the LLM context
+4. The LLM can then read, edit, or grep those files
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant LLM
+  participant Glob Tool
+  participant Filesystem
+
+  You->>LLM: "Find all TypeScript files"
+  LLM->>Glob Tool: glob("**/*.ts")
+  Glob Tool->>Filesystem: Walk tree, match pattern
+  Note over Glob Tool,Filesystem: Skips .gitignore'd paths<br/>(node_modules, dist, etc.)
+  Filesystem-->>Glob Tool: [src/index.ts, src/utils.ts, ...]
+  Glob Tool-->>LLM: 12 files found
+  LLM-->>You: "Found 12 TypeScript files: ..."
+```
+
+### The `grep` Tool
+
+Content search with regex support. The LLM can search with:
+
+- **Simple text**: `TODO`, `console.log`
+- **Regex**: `function.*\(`, `import.*from`
+- **Alternation**: `TODO|FIXME|HACK`
+- **Case-insensitive matching**
+- **File type filtering** via an include pattern
+
+**How grep works internally:**
+
+1. The LLM calls `grep` with a regex pattern (and optionally a file glob to narrow scope)
+2. OpenCode scans file contents, returning matching lines with file paths and line numbers
+3. Results go back to the LLM context for analysis
+
+**Example of what the LLM sees when it runs grep:**
+
+```
+src/auth.ts:15: // TODO: add rate limiting
+src/api.ts:42: // FIXME: handle edge case
+src/utils.ts:8: // HACK: temporary workaround
+```
+
+### The `list` Tool
+
+Directory listing with optional filtering. Shows file and folder names in a given path. Unlike `glob`, it doesn't recurse — it lists one level.
+
+### Tool Chaining — How the LLM Combines Search Tools
+
+The real power comes from chaining tools together. When you ask a complex question, the LLM orchestrates multiple tools:
+
+```mermaid
+flowchart TD
+  A["'Find all TODO comments\nin TypeScript files'"] --> B["glob('**/*.ts')\n→ list of .ts files"]
+  B --> C["grep('TODO', include='**/*.ts')\n→ matching lines"]
+  C --> D["read(file, lines)\n→ surrounding context"]
+  D --> E["LLM summarizes findings"]
+```
+
+**Example: "Find all files that use deprecated APIs and suggest replacements"**
+
+The LLM will:
+
+1. `grep` for `@deprecated` or known deprecated function names
+2. `read` each matching file to understand the context
+3. Use its knowledge to suggest modern replacements
+4. Optionally `edit` each file to apply the fix
+
+---
+
+## 🔧 Examples & Patterns
+
+### Pattern 1: Code Exploration
+
+In the TUI:
+
+```
+Find all TypeScript files in this project and show me how many there are
+```
+
+**Expected interaction:**
+
+```
+LLM uses glob("**/*.ts") → finds 23 files
+LLM: "Found 23 TypeScript files across these directories:
+      src/ (15 files), tests/ (6 files), scripts/ (2 files)"
+```
+
+### Pattern 2: Finding TODOs and Issues
+
+```
+Search the entire codebase for TODO, FIXME, and HACK comments.
+Show me each one with the file name and line number.
+```
+
+**Expected interaction:**
+
+```
+LLM uses grep("TODO|FIXME|HACK") → finds 8 matches
+LLM: "Found 8 items:
+      src/auth.ts:15     TODO: add rate limiting
+      src/api.ts:42      FIXME: handle timeout edge case
+      src/utils.ts:8     HACK: workaround for upstream bug
+      ..."
+```
+
+### Pattern 3: Dependency Analysis
+
+```
+Find all files that import from the 'lodash' package
+```
+
+**Expected interaction:**
+
+```
+LLM uses grep("from 'lodash'|require.*lodash") → finds imports
+LLM: "4 files import lodash:
+      src/utils.ts:1     import { debounce } from 'lodash'
+      src/format.ts:2    import { capitalize } from 'lodash'
+      ..."
+```
+
+### Pattern 4: Architecture Discovery
+
+```
+List all top-level directories and describe what each one contains
+```
+
+### Pattern 5: Security Scanning
+
+```
+Search for any hardcoded passwords, API keys, or secrets in the source code
+```
+
+### Pattern 6: Search → Read → Edit Pipeline
+
+The most common compound workflow:
+
+```mermaid
+flowchart LR
+  A["grep: find the code"] --> B["read: understand context"] --> C["edit: make the change"]
+```
+
+**Example:**
+
+```
+Find all console.log statements in the codebase,
+show me each one, then replace them with proper logger calls
+```
+
+The LLM will:
+
+1. `grep("console\\.log")` — find all occurrences
+2. `read` each file around the match to understand context
+3. `edit` each file to replace `console.log(...)` with `logger.info(...)`
+
+### Shell-Based Search Scripts
+
+For searches outside of OpenCode, use standard tools:
 
 ```bash
-# List current directory
-opencode list "."
+#!/bin/bash
+# find-todos.sh - Find all TODO items in source code
 
-# List with filtering
-opencode list "src/" --include="*.js"
-opencode list "tests/" --exclude="*.snap"
+echo "=== TODO Items ==="
+grep -rn 'TODO\|FIXME' --include='*.js' --include='*.ts' .
 
-# List with pattern
-opencode list "docs/" --pattern="*.md"
+echo ""
+echo "=== Console.log Statements ==="
+grep -rn 'console\.log' --include='*.js' --include='*.ts' src/
+
+echo ""
+echo "=== Potential Secrets ==="
+grep -rni 'password\|secret\|api.key\|token' \
+  --include='*.js' --include='*.ts' --include='*.json' \
+  --exclude-dir=node_modules .
 ```
 
-## 📖 Detailed Topics
-
-### 1. The `glob` Tool
-
-The `glob` tool finds files using pattern matching:
-
-**Basic Patterns:**
-```bash
-# Single asterisk matches within directory
-opencode glob "*.js"           # JS files in current directory
-opencode glob "src/*.js"       # JS files in src directory
-
-# Double asterisk matches across directories
-opencode glob "**/*.js"        # JS files anywhere in project
-opencode glob "src/**/*.js"     # JS files anywhere under src
-
-# Character sets and alternatives
-opencode glob "**/*.{js,ts}"          # JS or TS files
-opencode glob "**/*.{md,mdx,txt}"     # Documentation files
-opencode glob "test/*.{test,spec}.js" # Test files
-```
-
-**Advanced Patterns:**
-```bash
-# Exclude patterns
-opencode glob "**/*.js" --exclude="node_modules/**"
-
-# Multiple patterns
-opencode glob "src/**/*.js" "tests/**/*.js"
-
-# Combining with other tools
-FILES=$(opencode glob "**/*.js")
-for file in $FILES; do
-  opencode read "$file" --limit=5
-done
-```
-
-### 2. The `grep` Tool
-
-The `grep` tool searches file contents using regular expressions:
-
-**Basic Search:**
-```bash
-# Simple text search
-opencode grep "TODO"
-opencode grep "FIXME"
-opencode grep "console.log"
-
-# Regex patterns
-opencode grep "function.*\("            # Function definitions
-opencode grep "const.*=.*=>"            # Arrow functions
-opencode grep "export.*default.*from"  # Default exports
-opencode grep "^#.*" --include="*.md"   # Markdown headers
-```
-
-**Options and Filters:**
-```bash
-# Case-insensitive
-opencode grep -i "error"
-
-# File type filtering
-opencode grep "import " --include="*.{js,ts}"
-opencode grep "class " --include="*.py"
-opencode grep "# " --include="*.{md,mdx,txt}"
-
-# Path filtering
-opencode grep "config" --path="src/"
-opencode grep "test" --path="tests/"
-
-# Line numbers
-opencode grep -n "TODO" --include="*.js"
-```
-
-**Complex Patterns:**
-```bash
-# Multiple patterns
-opencode grep "TODO|FIXME|BUG|HACK"
-
-# Word boundaries
-opencode grep "\bvar\b" --include="*.js"  # Exact word "var"
-
-# Character classes
-opencode grep "error[0-9]"                # error1, error2, etc.
-opencode grep "[A-Z][a-z]+Error"          # Capitalized Error names
-```
-
-### 3. The `list` Tool
-
-The `list` tool shows directory contents with filtering:
+### Non-Interactive Search
 
 ```bash
-# Basic listing
-opencode list "."
-opencode list "src/"
-opencode list "node_modules/"
-
-# With filtering
-opencode list "src/" --include="*.js"
-opencode list "tests/" --exclude="*.snap"
-opencode list "docs/" --pattern="*.md"
-
-# Recursive listing
-opencode list "src/" --recursive
-opencode list "." --recursive --include="*.json"
+# Use opencode run for scripted searches
+opencode run 'Find all JavaScript files that contain async functions'
+opencode run 'Search for deprecated API calls in the src/ directory'
 ```
 
-### 4. Combining Search Tools
+### Built-in Tools vs Shell: When to Use Each
 
-```bash
-# Find then search
-for file in $(opencode glob "**/*.js"); do
-  opencode grep "TODO" --path="$file"
-done
+| Scenario                                    | Use Built-in Tools               | Use Shell Commands               |
+| ------------------------------------------- | -------------------------------- | -------------------------------- |
+| Quick exploration                           | ✅ Ask in natural language        | ❌ Slower to type                 |
+| Complex regex                               | ✅ LLM builds the regex for you   | ✅ If you know regex well         |
+| Piping results to other tools               | ❌ Not supported directly         | ✅ `grep … \| sort \| uniq -c`    |
+| Searching ignored files (node_modules, etc) | ❌ Built-in tools skip .gitignore | ✅ Shell grep searches everything |
+| Follow-up actions (read/edit found files)   | ✅ LLM chains tools automatically | ❌ Manual multi-step              |
+| Scripting / CI pipelines                    | ❌ Not available outside the TUI  | ✅ Standard Unix tools            |
 
-# Search across found files
-JS_FILES=$(opencode glob "**/*.js")
-opencode grep "function " --path="$JS_FILES"
+---
 
-# Complex workflow: Find todos in source files
-for file in $(opencode glob "src/**/*.{js,ts}"); do
-  if opencode grep -q "TODO" --path="$file"; then
-    echo "TODO found in $file:"
-    opencode grep -n "TODO" --path="$file"
-  fi
-done
-```
+## 🧪 Practice Exercises
 
-## 🧪 Hands-on Exercises
+> **Use the practice project** from [Module 01](../01-basic-commands/#-set-up-a-practice-project), or any real project you have.
 
 ### Exercise 1: Project Exploration
 
-```bash
-# 1. Find all source files
-opencode glob "src/**/*.{js,ts,jsx,tsx}"
+Start OpenCode in a project and try these prompts:
 
-# 2. Find configuration files
-opencode glob "**/*.{json,yaml,yml,toml}"
-
-# 3. Find documentation
-opencode glob "**/*.{md,mdx,txt}"
-
-# 4. Find test files
-opencode glob "**/*.{test,spec}.{js,ts}"
 ```
+1. "Find all source files (JS, TS, JSX, TSX) in this project"
+2. "Find all configuration files (JSON, YAML, TOML)"
+3. "Find all test files"
+4. "List the top-level directory structure"
+```
+
+**Expected results:**
+
+- Step 1: LLM uses `glob("**/*.{js,ts,jsx,tsx}")` — returns a file list
+- Step 2: LLM uses `glob("**/*.{json,yaml,yml,toml}")` — returns config files
+- Step 3: LLM uses `glob("**/*.{test,spec}.{js,ts}")` — returns test files
+- Step 4: LLM uses `list(".")` — returns top-level files and folders
 
 ### Exercise 2: Code Analysis
 
-```bash
-# 1. Find TODO items
-opencode grep "TODO" --include="*.{js,ts}"
-
-# 2. Find function definitions
-opencode grep "function " --include="*.js"
-opencode grep "const.*=.*=>" --include="*.js"
-
-# 3. Find imports/exports
-opencode grep "import " --include="*.{js,ts}"
-opencode grep "export " --include="*.{js,ts}"
-
-# 4. Find error handling
-opencode grep -i "error\|exception\|catch\|throw" --include="*.{js,ts,py}"
+```
+1. "Search for all TODO comments in source files"
+2. "Find all function definitions in the JavaScript files"
+3. "Find all import statements in TypeScript files"
+4. "Search for error handling patterns (try/catch blocks)"
 ```
 
-### Exercise 3: Security and Quality Checks
+**Expected results:**
+
+- Step 1: LLM uses `grep("TODO")` — returns matching lines with file:line format
+- Step 2: LLM uses `grep("function\\s+\\w+")` — finds named functions
+- Step 3: LLM uses `grep("^import")` — finds import statements
+- Step 4: LLM uses `grep("try\\s*{")` — finds try/catch blocks
+
+### Exercise 3: Shell Equivalents
+
+Practice the same searches with standard shell commands:
 
 ```bash
-# 1. Find potential secrets
-opencode grep "password\|secret\|key\|token\|api[_-]key" --include="*.{js,ts,py,json,yml,yaml}"
+# Find JavaScript files
+find . -name '*.js' -not -path './node_modules/*'
 
-# 2. Find debug statements
-opencode grep "console\.log\|debugger\|alert" --include="*.js"
+# Search for TODOs
+grep -rn 'TODO' --include='*.js' --include='*.ts' .
 
-# 3. Find hardcoded values
-opencode grep "\"localhost\|127\.0\.0\.1\|0\.0\.0\.0\"" --include="*.{js,ts,py}"
+# Find function definitions
+grep -rn 'function ' --include='*.js' .
 
-# 4. Find deprecated patterns
-opencode grep "var \|\.bind(\|jQuery\|\.live(\|\.delegate(" --include="*.js"
+# List directory
+ls -la src/
 ```
 
-### Exercise 4: Refactoring Preparation
+**Expected:** Your shell results should closely match what the LLM returned (minus `.gitignore`'d files that the built-in tools skip).
 
-```bash
-# 1. Find all occurrences of old name
-opencode grep "oldFunctionName\|oldVariableName\|OldClassName" --include="*.{js,ts}"
+### Exercise 4: Combined Workflows
 
-# 2. List files containing the old name
-for file in $(opencode glob "**/*.{js,ts}"); do
-  if opencode grep -q "oldFunctionName" --path="$file"; then
-    echo "$file contains oldFunctionName"
-    opencode grep -n "oldFunctionName" --path="$file"
-  fi
-done
+In the TUI:
 
-# 3. Check for dependencies
-opencode grep "from.*oldModule\|require.*oldModule" --include="*.{js,ts}"
+```
+1. "Find all TypeScript files that contain the word 'deprecated'"
+2. "For each file found, show me the deprecated code"
+3. "Suggest replacements for the deprecated patterns"
 ```
 
-## 📋 Best Practices
+**Expected results:**
 
-### ✅ Do
+- Step 1: LLM chains `grep("deprecated", include="**/*.ts")` — finds affected files
+- Step 2: LLM reads surrounding context for each match
+- Step 3: LLM suggests modern alternatives based on its knowledge
 
-- **Use specific patterns** to reduce false positives
-- **Combine `glob` and `grep`** for targeted searches
-- **Use `--include`/`--exclude`** to filter by file type
-- **Check regex patterns** with simple tests first
-.
-### ❌ Don't
+### Exercise 5: Search-Driven Refactoring
 
--, **Don't use overly broad patterns** like `.*` without filtering
--, **Don't search binary files** with text tools
--, **Don't ignore `.gitignore`** - it affects search results
--, **Don't run destructive operations** without confirming matches
--, **Don't forget about permissions** when accessing protected files
-
-## 🔧 Common Use Cases
-
-### 1. Code Review Preparation
-
-```bash
-#!/bin/bash
-# prepare-review.sh
-
-echo "=== Code Review Preparation ==="
-echo
-
-# Find todos
-echo "1. TODO/FIXME items:"
-opencode grep "TODO|FIXME" --include="*.{js,ts,py}" | head -20
-echo
-
-# Find console logs
-echo "2. Console logs in source files:"
-opencode grep "console\." --include="src/**/*.js" | head -10
-echo
-
-# Find error handling
-echo "3. Error handling patterns:"
-opencode grep -i "catch\|throw\|error" --include="src/**/*.js" | head -10
-echo
-
-# Find hardcoded values
-echo "4. Potentially hardcoded values:"
-opencode grep "\"localhost\|127\.0\.0\.1\|test\|example\"" --include="src/**/*.js" | head -10
+```
+"Find all files that use console.log, show me each one,
+ then replace them all with a proper logger"
 ```
 
-### 2. Migration Scanning
+**Expected results:**
 
-```bash
-#!/bin/bash
-# migration-scan.sh
-
-OLD_PATTERN="$1"
-NEW_PATTERN="$2"
-
-echo "Scanning for migration from $OLD_PATTERN to $NEW_PATTERN"
-echo "======================================================"
-echo
-
-# Count occurrences
-COUNT=$(opencode grep -c "$OLD_PATTERN" --include="*.{js,ts}")
-echo "Found $COUNT occurrences of '$OLD_PATTERN'"
-echo
-
-# Show locations
-echo "File locations:"
-opencode grep -l "$OLD_PATTERN" --include="*.{js,ts}"
-echo
-
-# Show context
-echo "Sample occurrences with context:"
-opencode grep -n "$OLD_PATTERN" --include="*.{js,ts}" | head -20
-```
-
-### 3. Security Audit
-
-```bash
-#!/bin/bash
-# security-scan.sh
-
-echo "=== Security Scan ==="
-echo
-
-# Search for potential secrets
-echo "1. Potential secrets:"
-PATTERNS=("password" "secret" "key" "token" "api[_-]key" "auth" "credential")
-for pattern in "${PATTERNS[@]}"; do
-  echo "  Searching for: $pattern"
-  opencode grep -i "$pattern" --include="*.{js,ts,py,json,yml,yaml}" 2>/dev/null | head -3
-done
-echo
-
-# Search for debug statements
-echo "2. Debug statements in production code:"
-opencode grep "console\.log\|debugger" --include="src/**/*.js" 2>/dev/null | head -10
-echo
-
-# Search for eval and unsafe patterns
-echo "3. Potentially unsafe patterns:"
-opencode grep "eval(\|Function(\|innerHTML\|innerText\|outerHTML" --include="*.js" 2>/dev/null | head -10
-```
-
-### 4. Documentation Generation
-
-```bash
-#!/bin/bash
-# generate-api-docs.sh
-
-echo "Generating API documentation..."
-echo
-
-# Find all function definitions
-echo "# Function Definitions" > API-DOCS.md
-opencode grep "function " --include="src/**/*.js" >> API-DOCS.md
-echo >> API-DOCS.md
-
-# Find all class definitions
-echo "# Class Definitions" >> API-DOCS.md
-opencode grep "class " --include="src/**/*.js" >> API-DOCS.md
-echo >> API-DOCS.md
-
-# Find all export statements
-echo "# Exports" >> API-DOCS.md
-opencode grep "export " --include="src/**/*.js" >> API-DOCS.md
-
-echo "Documentation generated: API-DOCS.md"
-```
-
-## 🚨 Troubleshooting
-
-### Search Too Slow or No Results
-
-```bash
-# Check search scope
-opencode glob "*"  # Test basic pattern
-
-# Check ignore patterns
-opencode bash "cat .gitignore"  # Check what's ignored
-
-# Use more specific patterns
-# Instead of: opencode grep "a"
-# Try: opencode grep "function a" --include="*.js"
-
-# Limit search depth
-opencode grep "pattern" --path="src/"  # Limit to src directory
-```
-
-### Regex Not Working as Expected
-
-```bash
-# Test regex with simple file
-echo "test pattern" > test.txt
-opencode grep "pattern" --path="test.txt"
-
-# Check regex syntax
-# Use \ for special characters: \. for literal dot, \| for OR
-# Use ^ for start of line, $ for end of line
-# Use [] for character classes, () for groups
-
-# Use literal string search first
-opencode grep -F "exact.text" --include="*.js"
-```
-
-### Too Many Results
-
-```bash
-# Add file type filters
-opencode grep "pattern" --include="*.js"
-
-# Add path restrictions
-opencode grep "pattern" --path="src/"
-
-# Use more specific patterns
-opencode grep "function specificName(" --include="*.js"
-
-# Use line count to estimate
-opencode grep -c "pattern" --include="*.js"
-```
-
-### Permission Issues
-
-```bash
-# Check file permissions
-opencode bash "ls -la /path/to/search"
-
-# Try with appropriate permissions
-sudo opencode grep "pattern" --path="/protected/path"  # If needed and safe
-
-# Search in accessible directories first
-opencode grep "pattern" --path="$HOME"
-```
-
-## 📚 Additional Resources
-
-? [OpenCode grep Tool](https://opencode.ai/docs/tools#grep)
-? [OpenCode glob Tool](https://opencode.ai/docs/tools#glob)
-? [Regular Expressions Guide](https://opencode.ai/docs/tools#regex-patterns)
-? [Search Performance Tips](https://opencode.ai/docs/tools#performance)
-
-## 🎓 Next Steps
-
-Once you're comfortable with search tools, proceed to:
-
-1. **[04-bash-integration](04-bash-integration)**: Combine search results with shell commands
-2. **[05-question-todo](05-question-todo)**: Create interactive search workflows
-3. **[07-skills-agents](07-skills-agents)**: Build specialized search agents
+1. `grep("console\\.log")` → finds all occurrences
+2. LLM reads each file for context
+3. LLM creates a `logger.ts` utility if one doesn't exist
+4. LLM edits each file to replace `console.log(...)` with `logger.info(...)`
 
 ---
 
-**Ready for more?** Practice by creating search scripts for your specific project needs and coding standards.
+## ❓ Common Questions
 
-[← Back to Learning Roadmap](../LEARNING-ROADMAP.md) | [Previous: File Operations ←](02-file-operations/README.md) | [Next: Bash Integration →](04-bash-integration/README.md)
+**Q: Can I type `opencode grep "pattern"` on the command line?**
+No. `grep` is an internal LLM tool. Use `grep -rn "pattern" .` for shell searching, or ask in the TUI.
+
+**Q: What's the difference between OpenCode's grep and regular grep?**
+OpenCode's grep tool is used by the LLM and understands project context (respects .gitignore, etc.). Regular `grep` is a standard Unix tool you run directly.
+
+**Q: How do I search in specific file types only?**
+Ask the LLM: "Search for X only in TypeScript files." It will use glob to filter, then grep to search.
+
+**Q: Can I combine multiple search operations?**
+Yes — describe what you want in one prompt and the LLM will chain glob + grep + read as needed.
+
 ---
 
+## 🐛 Troubleshooting
+
+### No Results Found
+
+- Check if files are ignored by `.gitignore` — OpenCode respects ignore patterns
+- Try broader search terms
+- Verify the directory you're searching in
+
+### Search Too Slow
+
+- Be more specific about which directories to search
+- Limit file types: "Search only in .ts files under src/"
+- Use shell `grep` directly for very large codebases
+
+### Different Results from Shell grep
+
+OpenCode's grep tool may filter differently than shell grep (e.g., respecting .gitignore by default). For exact parity, use shell commands directly.
+
+---
+
+## 📈 What You've Learned
+
+- ✅ `glob`, `grep`, and `list` are **LLM-internal tools**, not CLI commands
+- ✅ Trigger them via **natural language prompts** in the TUI
+- ✅ Use **shell equivalents** (`find`, `grep`, `ls`) for direct command-line searches
+- ✅ Combine search operations for powerful code analysis
+
+---
+
+## 🚶 Next Steps
+
+Continue to **[Module 04: Bash Integration](../04-bash-integration/)** to learn how OpenCode executes shell commands.
 
 ---
 
@@ -577,8 +500,9 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **License:** MIT - See [LICENSE](../LICENSE) for details.
 
-**Last Updated:** April 2026  
+[⬆ Back to top](#-03-search-tools)
+
+**Last Updated:** April 2026
 **OpenCode Version:** 1.0+ compatible
 
 ---
-

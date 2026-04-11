@@ -21,11 +21,11 @@ Not everyone starts from the same place. Take this quick self-assessment to find
 
 **Your Level:**
 
-| Checks | Level | Start At | Time to Complete |
-|--------|-------|----------|------------------|
-| 0-2 | **Level 1: Beginner** — Getting Started | [Milestone 1A](#milestone-1a-basic-commands--file-reading) | ~2 hours |
-| 3-5 | **Level 2: Intermediate** — Building Workflows | [Milestone 2A](#milestone-2a-file-operations--search-tools) | ~3 hours |
-| 6-8 | **Level 3: Advanced** — Power User & Automation | [Milestone 3A](#milestone-3a-automation--workflows) | ~4 hours |
+| Checks | Level                                           | Start At                                          | Time to Complete |
+| ------ | ----------------------------------------------- | ------------------------------------------------- | ---------------- |
+| 0-2    | **Level 1: Beginner** — Getting Started         | [Milestone 1A](#milestone-1a-basic-commands--tui) | ~2 hours         |
+| 3-5    | **Level 2: Intermediate** — Building Workflows  | [Milestone 2A](#milestone-2a-search-tools)        | ~3 hours         |
+| 6-8    | **Level 3: Advanced** — Power User & Automation | [Milestone 3A](#milestone-3a-skills--mcp-servers) | ~4 hours         |
 
 > **Tip**: If you're unsure, start one level lower. It's better to review familiar material quickly than to miss foundational concepts.
 
@@ -89,18 +89,18 @@ graph TD
 
 ## 📊 Complete Roadmap Table
 
-| Step | Module | Complexity | Time | Level | Tools Covered | Why Learn This | Key Benefits |
-|------|--------|------------|------|-------|---------------|----------------|--------------|
-| **1** | [Basic Commands & TUI](01-basic-commands) | ⭐ Beginner | 30 min | Level 1 | TUI interface, `/` commands | Core opencode usage | Understand interface fundamentals |
-| **2** | [File Operations](02-file-operations) | ⭐ Beginner+ | 45 min | Level 1 | `read`, `edit`, `write` | Work with code files | Read, edit, and create files |
-| **3** | [Search Tools](03-search-tools) | ⭐⭐ Intermediate | 45 min | Level 2 | `glob`, `grep`, `list` | Navigate codebases | Find files and content efficiently |
-| **4** | [Bash Integration](04-bash-integration) | ⭐⭐ Intermediate | 1 hour | Level 2 | `bash` | System operations | Execute shell commands |
-| **5** | [Question & Todo Tools](05-question-todo) | ⭐⭐ Intermediate | 45 min | Level 2 | `question`, `todowrite` | Interactive workflows | Gather input and track tasks |
-| **6** | [Web Tools](06-web-tools) | ⭐⭐ Intermediate | 45 min | Level 2 | `webfetch`, `websearch` | Research capabilities | Fetch web content and search online |
-| **7** | [Skills & Agents](07-skills-agents) | ⭐⭐⭐ Intermediate+ | 1 hour | Level 3 | `skill`, agent configuration | Custom capabilities | Create reusable skills and agents |
-| **8** | [MCP Servers](08-mcp-servers) | ⭐⭐⭐ Intermediate+ | 1 hour | Level 3 | MCP integration | External tool access | Connect to databases, APIs, services |
-| **9** | [Advanced Features](09-advanced-features) | ⭐⭐⭐⭐ Advanced | 1.5 hours | Level 3 | Permissions, formatters, LSP | Power user configuration | Fine-tune opencode behavior |
-| **10** | [OpenWork Integration](10-openwork) | ⭐⭐⭐⭐ Advanced | 1 hour | Level 3 | OpenWork platform | Team collaboration | Remote workspaces and shared agents |
+| Step   | Module                                    | Complexity        | Time      | Level   | Tools Covered               | Why Learn This        | Key Benefits                          |
+| ------ | ----------------------------------------- | ----------------- | --------- | ------- | --------------------------- | --------------------- | ------------------------------------- |
+| **1**  | [Basic Commands & TUI](01-basic-commands) | ⭐ Beginner        | 30 min    | Level 1 | TUI interface, `/` commands | Core opencode usage   | Understand interface fundamentals     |
+| **2**  | [File Operations](02-file-operations)     | ⭐ Beginner+       | 45 min    | Level 1 | `read`, `edit`, `write`     | Work with code files  | Read, edit, and create files          |
+| **3**  | [Search Tools](03-search-tools)           | ⭐⭐ Intermediate   | 45 min    | Level 2 | `glob`, `grep`, `list`      | Navigate codebases    | Find files and content efficiently    |
+| **4**  | [Bash Integration](04-bash-integration)   | ⭐⭐ Intermediate   | 1 hour    | Level 2 | `bash`                      | System operations     | Execute shell commands                |
+| **5**  | [Question & Todo Tools](05-question-todo) | ⭐⭐ Intermediate   | 20 min    | Level 2 | `question`, `todowrite`     | Interactive workflows | Gather input and track tasks          |
+| **6**  | [Web Tools](06-web-tools)                 | ⭐⭐ Intermediate   | 45 min    | Level 2 | `webfetch`, `websearch`     | Research capabilities | Fetch web content and search online   |
+| **7**  | [Skills & Agents](07-skills-agents)       | ⭐⭐⭐ Intermediate+ | 1 hour    | Level 3 | Skills, agents, commands    | Custom capabilities   | Skills, agents, commands, @-mentions  |
+| **8**  | [MCP Servers](08-mcp-servers)             | ⭐⭐⭐ Intermediate+ | 1 hour    | Level 3 | Local/remote MCP, OAuth     | External tool access  | Connect to databases, APIs, services  |
+| **9**  | [Advanced Features](09-advanced-features) | ⭐⭐⭐⭐ Advanced     | 1.5 hours | Level 3 | Plugins, tools, permissions | Power user config     | Plugins, custom tools, granular perms |
+| **10** | [OpenWork Integration](10-openwork)       | ⭐⭐⭐⭐ Advanced     | 1 hour    | Level 3 | OpenWork platform           | Team collaboration    | Remote workspaces and shared agents   |
 
 **Total Learning Time**: ~8-10 hours (or jump to your level and save time)
 
@@ -154,6 +154,7 @@ Look at the authentication code in @src/auth.js
 #### Next Steps
 
 Once comfortable, read:
+
 - [01-basic-commands/README.md](01-basic-commands/README.md)
 
 ---
@@ -175,19 +176,26 @@ Once comfortable, read:
 #### Hands-on Exercises
 
 ```bash
-# Exercise 1: Read files and directories
-opencode read .
-opencode read package.json
-opencode read src/ --limit=20
+# Exercise 1: Explore files using the TUI
+# Start opencode and ask it to read files
+opencode
+# In the TUI, type:
+# "Show me the project structure"
+# "Read @package.json"
+# "Show the first 20 lines of @src/index.ts"
 
-# Exercise 2: Edit a file
-opencode edit config.json --old='"port": 3000' --new='"port": 8080'
+# Exercise 2: Edit a file via the TUI
+# In the TUI, type:
+# "Change the port from 3000 to 8080 in @config.json"
 
-# Exercise 3: Batch edit with replaceAll
-opencode edit src/*.js --old="var " --new="const " --replaceAll
+# Exercise 3: Batch edit via the TUI
+# "Replace all 'var' with 'const' in the src/ directory"
 
-# Exercise 4: Create a new file
-opencode write new-component.jsx --content='import React from "react";\n\nexport default function Component() {\n  return <div>Hello</div>;\n}'
+# Exercise 4: Create a new file via the TUI
+# "Create a new React component file called NewComponent.jsx"
+
+# Or use non-interactive mode:
+opencode run 'Show me the contents of package.json'
 ```
 
 #### Success Criteria
@@ -240,24 +248,33 @@ Before starting Level 2, make sure you're comfortable with these Level 1 concept
 
 ```bash
 # Exercise 1: Find files by pattern
-opencode glob "**/*.js"
-opencode glob "src/**/*.{ts,tsx}"
-opencode glob "*.{md,mdx}"
+# These are tools the LLM uses inside the TUI. Try them via prompts:
+opencode run 'Find all JavaScript files in this project'
+opencode run 'Find all TypeScript files under src/'
+opencode run 'List all markdown files in the root'
+
+# Or use standard shell commands:
+find . -name '*.js'
+find src/ -name '*.ts' -o -name '*.tsx'
+find . -maxdepth 1 -name '*.md'
 
 # Exercise 2: Search file contents
-opencode grep "TODO|FIXME"
-opencode grep "function " --include="*.js"
-opencode grep "error" --path="src/utils/"
+# Via opencode TUI:
+# "Search for TODO and FIXME comments in the codebase"
+# "Find all function declarations in JavaScript files"
+
+# Or use standard shell:
+grep -rn 'TODO\|FIXME' --include='*.js' .
+grep -rn 'function ' --include='*.js' .
 
 # Exercise 3: List directory contents
-opencode list "."
-opencode list "src/" --include="*.js"
-opencode list "tests/" --exclude="*.snap"
+ls -la src/
+find tests/ -name '*.js'
 
 # Exercise 4: Combine search operations
 # Find TypeScript files containing interfaces
-for file in $(opencode glob "**/*.ts"); do
-  opencode grep "interface " --path="$file"
+for file in $(find . -name '*.ts'); do
+  grep -l 'interface ' "$file" 2>/dev/null
 done
 ```
 
@@ -293,30 +310,35 @@ done
 
 ```bash
 # Exercise 1: Execute shell commands
-opencode bash "npm install"
-opencode bash "git status"
-opencode bash "docker-compose up -d"
+# In the opencode TUI, the LLM uses the bash tool when you ask it to:
+# "Run npm install"
+# "Show me the git status"
+# "Start docker compose"
+
+# You can also prefix with ! in the TUI to run commands directly:
+# !npm install
+# !git status
+# !docker-compose up -d
+
+# Or use non-interactive mode:
+opencode run 'Run npm install and show me the output'
 
 # Exercise 2: Ask user questions
-# (This would be used in a conversation with opencode)
-# opencode will use the question tool to ask:
+# The question tool is used by the LLM automatically when it needs input.
+# In the TUI, the LLM might ask:
 # "Which environment should we deploy to: development or production?"
 
 # Exercise 3: Track tasks with todo lists
-# opencode will use todowrite to create task lists like:
+# The todowrite tool is used by the LLM to organize complex work.
+# It will create and track tasks like:
 # - [ ] Set up database connection
 # - [ ] Implement authentication
 # - [ ] Write tests
 
 # Exercise 4: Combined workflow example
-# 1. Check system status
-opencode bash "node --version && npm --version"
-# 2. Ask for deployment confirmation
-# (opencode would use question tool here)
-# 3. Execute deployment
-opencode bash "npm run build && npm run deploy"
-# 4. Track deployment tasks
-# (opencode would use todowrite to update task list)
+# In the TUI, type a comprehensive prompt:
+# "Check our Node and npm versions, then build and deploy the project.
+#  Ask me which environment to deploy to before proceeding."
 ```
 
 #### Success Criteria
@@ -362,32 +384,49 @@ Before starting Level 3, make sure you're comfortable with these Level 2 concept
 
 #### What You'll Achieve
 
-✅ Create and use skills with `skill` tool  
-✅ Configure custom agents  
-✅ Integrate MCP servers for external tool access  
+✅ Create and use skills with YAML frontmatter  
+✅ Configure custom agents via Markdown and JSON  
+✅ Create custom slash commands with template variables  
+✅ Integrate local and remote MCP servers  
+✅ Use @-mentions to direct subagents  
 ✅ Use web tools for research (`webfetch`, `websearch`)
 
 #### Hands-on Exercises
 
 ```bash
-# Exercise 1: Use the skill tool
-# opencode will load a SKILL.md file to add specialized knowledge
-# Example skill: code-review-skill.md with review guidelines
+# Exercise 1: Create a skill with frontmatter
+# Create .opencode/skills/review.md with YAML frontmatter:
+# ---
+# name: review
+# description: Code review guidelines
+# ---
 
-# Exercise 2: Configure custom agents
-# Create AGENTS.md file with agent configurations:
-# - Code review agent with specific permissions
-# - Security scanning agent with read-only access
-# - Deployment agent with bash permissions
+# Exercise 2: Create a custom agent
+# Create .opencode/agents/security.md with Markdown frontmatter:
+# ---
+# description: Security auditor
+# mode: subagent
+# temperature: 0.1
+# permission:
+#   bash: deny
+#   edit: deny
+# ---
 
-# Exercise 3: Integrate MCP servers
-opencode mcp add  # Add GitHub MCP server
-opencode mcp add  # Add database MCP server
-# Now opencode can query GitHub issues or database records
+# Exercise 3: Create a custom command
+# Create .opencode/commands/review.md:
+# ---
+# description: Review code
+# agent: explore
+# ---
+# Review $ARGUMENTS for security and quality.
+# Then use: /review src/auth.ts
 
-# Exercise 4: Use web tools
-# opencode can fetch documentation with webfetch
-# opencode can search for solutions with websearch
+# Exercise 4: @-mention subagents
+# In the TUI: @explore analyze the project architecture
+
+# Exercise 5: Integrate MCP servers
+opencode mcp add  # Add local or remote server
+opencode mcp list # Verify configuration
 ```
 
 #### Success Criteria
@@ -415,41 +454,44 @@ opencode mcp add  # Add database MCP server
 
 #### What You'll Achieve
 
-✅ Configure permissions and formatters  
-✅ Use experimental features like LSP integration  
-✅ Set up OpenWork for remote collaboration  
-✅ Implement production-ready workflows
+✅ Install and write plugins with event hooks  
+✅ Create custom tools with TypeScript and Zod schemas  
+✅ Configure granular permissions with glob patterns  
+✅ Set up code formatters and LSP integration  
+✅ Understand config precedence and variable substitution  
+✅ Set up OpenWork for team collaboration
 
 #### Hands-on Exercises
 
 ```bash
-# Exercise 1: Configure permissions
-# Create opencode.json with tool permissions:
-# - Allow read, grep, glob for all agents
-# - Require approval for edit and bash
-# - Deny webfetch for security
+# Exercise 1: Install a plugin
+# Add to opencode.json: "plugin": ["opencode-supermemory"]
+# Restart OpenCode and verify it loaded
 
-# Exercise 2: Configure code formatters
-# Set up Prettier, Black, or other formatters
-# opencode will auto-format code after edits
+# Exercise 2: Create a custom tool
+# Create .opencode/tools/hello.ts using tool() helper
+# with Zod schema and execute function
 
-# Exercise 3: Set up OpenWork remote workspace
+# Exercise 3: Configure granular permissions
+# In opencode.json, use object syntax:
+# "bash": { "*": "ask", "git *": "allow", "rm *": "deny" }
+
+# Exercise 4: Set up OpenWork
 openwork start --workspace /path/to/project --approval auto
 # Connect from desktop app with URL and token
 
-# Exercise 4: Production workflow example
-# 1. Use plan mode (Tab key) to design feature
-# 2. Switch to build mode and implement
-# 3. Use permissions to control tool access
-# 4. Share conversation with team (/share)
+# Exercise 5: Share and collaborate
+/share   # Share session (returns opncd.ai URL)
+opencode web  # Start web interface for browser access
 ```
 
 #### Success Criteria
 
-- Can configure tool permissions for security
-- Understand how to set up code formatters
-- Know how to use OpenWork for remote collaboration
-- Can create production-ready workflows with proper controls
+- Can install and create plugins with event hooks
+- Can create custom tools the LLM can call
+- Can configure granular permissions with command patterns
+- Know how to use OpenWork for team collaboration
+- Can set up sharing and web interface for collaboration
 
 #### Next Steps
 
@@ -464,14 +506,15 @@ openwork start --workspace /path/to/project --approval auto
 
 This repository includes quizzes you can use to evaluate your understanding:
 
-| Quiz | Purpose |
-|------|---------|
-| **Basic Commands Quiz** | Test your understanding of core opencode operations |
-| **File Operations Quiz** | Evaluate your file editing and writing skills |
-| **Search Tools Quiz** | Test your ability to find files and content |
-| **Automation Quiz** | Evaluate your workflow creation skills |
+| Quiz                     | Purpose                                             |
+| ------------------------ | --------------------------------------------------- |
+| **Basic Commands Quiz**  | Test your understanding of core opencode operations |
+| **File Operations Quiz** | Evaluate your file editing and writing skills       |
+| **Search Tools Quiz**    | Test your ability to find files and content         |
+| **Automation Quiz**      | Evaluate your workflow creation skills              |
 
 **Examples:**
+
 - Take the Basic Commands Quiz after completing Level 1
 - Take the Automation Quiz after completing Level 3
 - Use quizzes to identify gaps in your knowledge
@@ -507,15 +550,18 @@ This repository includes quizzes you can use to evaluate your understanding:
 **Goal**: Become proficient with opencode
 
 **Saturday Morning** (3 hours):
+
 - Complete Milestone 1A: Basic Commands & TUI
 - Complete Milestone 1B: File Operations
 - Complete Milestone 2A: Search Tools
 
 **Saturday Afternoon** (3 hours):
+
 - Complete Milestone 2B: Bash & Interactive Tools
 - Complete Milestone 3A: Skills & MCP Servers
 
 **Sunday** (3 hours):
+
 - Complete Milestone 3B: Advanced Integration
 - Configure opencode for your specific workflow
 - Create custom skills or agents for your team

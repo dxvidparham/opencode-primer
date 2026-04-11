@@ -2,14 +2,14 @@
 
 # 🌐 06. Web Tools
 
-**Research and data collection with web fetching and searching**
+**Web fetching, searching, sharing, web UI, and IDE integration**
 
 [![Module Level](https://img.shields.io/badge/Level-Intermediate-orange)]()
 [![Time Required](https://img.shields.io/badge/Time-45_min-yellow)]()
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module_05-blue)]()
 [![OpenCode Version](https://img.shields.io/badge/OpenCode-1.0+-purple)]()
 
-[⬅️ Previous Module](../05-question-todo/)] • [🏠 Main Menu](../README.md) • [Next Module ➡️](../07-skills-agents/)
+[⬅️ Previous Module](../05-question-todo/) • [🏠 Main Menu](../README.md) • [Next Module ➡️](../07-skills-agents/)
 
 </div>
 
@@ -21,480 +21,457 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
+- [🔗 Session Sharing](#-session-sharing)
+- [🖥️ Web Interface](#️-web-interface)
+- [💻 IDE Integration](#-ide-integration)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
 
 ---
 
----
+## 🎯 Overview
 
+| Tool            | Description                 | Permission Required             |
+| --------------- | --------------------------- | ------------------------------- |
+| **`webfetch`**  | Fetch content from a URL    | `webfetch` permission           |
+| **`websearch`** | Search the web (via Exa AI) | `OPENCODE_ENABLE_EXA=1` env var |
 
-<details>
-<summary>Click to expand/collapse</summary>
-
-- [🎯 Overview](#-overview)
-- [✅ Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [📚 Core Concepts](#-core-concepts)
-- [🔧 Examples & Patterns](#-examples--patterns)
-- [🏗️ Real-World Workflows](#️-real-world-workflows)
-- [🧪 Practice Exercises](#-practice-exercises)
-- [❓ Common Questions](#-common-questions)
-- [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
-- [🚶 Next Steps](#-next-steps)
-
-</details>
+Both are **LLM-internal tools** — the AI agent uses them when you ask for web-based research. They are NOT CLI commands.
 
 ---
-# 06 Web Tools
 
-The `webfetch` and `websearch` tools allow opencode to retrieve information from the web, enabling research, documentation gathering, and real-time data access.
+## ⚡ Quick Start
 
-## webfetch Tool
+### Fetching Web Content
 
-The `webfetch` tool downloads content from URLs and converts it to various formats for analysis and use within opencode sessions.
+In the TUI:
 
-### Basic Usage
-
-```bash
-# Fetch a webpage as markdown
-Fetch https://opencode.ai/docs
-
-# Fetch as plain text  
-Fetch https://example.com with format: text
-
-# Fetch HTML content
-Fetch https://example.com with format: html
+```
+Fetch the OpenCode documentation from https://opencode.ai/docs
 ```
 
-### Parameters
+The LLM uses its `webfetch` tool to download and convert the page to markdown.
 
-```javascript
-// Example webfetch structure
+### Searching the Web
+
+```
+Search for best practices for React state management in 2025
+```
+
+The LLM uses its `websearch` tool (if enabled) to find relevant results.
+
+### Permission Setup
+
+Web tools require explicit permission. In `opencode.json`:
+
+```json
 {
-  url: "https://opencode.ai/docs",
-  format: "markdown",  // Options: markdown, text, html
-  timeout: 30          // Timeout in seconds (max 120)
+  "permission": {
+    "webfetch": "ask",
+    "websearch": "ask"
+  }
 }
 ```
 
-### Format Differences
-
-1. **markdown** (default)
-   - Best for documentation, blogs, articles
-   - Clean structure, preserves links and formatting
-   - Easy to read and process
-
-2. **text**
-   - Raw text extraction
-   - Removes HTML tags and formatting
-   - Useful for data scraping
-
-3. **html**
-   - Raw HTML source
-   - For custom parsing or analysis
-   - Preserves original structure
-
-### Common Use Cases
-
-#### 1. Documentation Research
-```bash
-# Fetch API documentation
-Fetch https://developer.github.com/v3/
-
-# Get library documentation  
-Fetch https://reactjs.org/docs/getting-started.html
-
-# Read specification documents
-Fetch https://json-schema.org/learn/
-```
-
-#### 2. Data Collection
-```bash
-# Get current data (weather, stocks, etc.)
-Fetch https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41
-
-# Download configuration templates
-Fetch https://raw.githubusercontent.com/example/configs/main/docker-compose.yml
-
-# Retrieve data sets
-Fetch https://data.example.com/dataset.csv
-```
-
-#### 3. Content Analysis
-```bash
-# Compare documentation versions
-Fetch https://docs.python.org/3.8/
-Fetch https://docs.python.org/3.12/
-
-# Analyze blog content
-Fetch https://example.com/blog/2024/best-practices
-
-# Get competitor information
-Fetch https://competitor.com/products
-```
-
-### Best Practices
-
-1. **Check URL validity** before fetching
-2. **Use appropriate format** for your needs
-3. **Set reasonable timeout** for large pages
-4. **Handle rate limits** on APIs
-5. **Respect robots.txt** and terms of service
-
-### Error Handling
+To enable websearch, set the environment variable before starting OpenCode:
 
 ```bash
-# Timeout handling
-Fetch https://slow-api.example.com with timeout: 10
+# Environment variables are settings you pass to a program.
+# This one tells OpenCode to enable web search.
+# Set it in your terminal before running opencode:
+OPENCODE_ENABLE_EXA=1 opencode
 
-# Invalid URLs will fail gracefully
-Fetch https://nonexistent.example.com
-
-# Permission issues
-Fetch https://private.example.com/secret-data
+# Or add it permanently to your shell config:
+echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.bashrc  # or ~/.zshrc
+source ~/.bashrc
 ```
-
-## websearch Tool
-
-The `websearch` tool performs web searches to find relevant information, resources, and answers.
-
-### Basic Usage
-
-```bash
-# Simple search
-Search: "opencode tutorial"
-
-# Technical search
-Search: "React useState hook examples"
-
-# Problem-solving search
-Search: "How to fix 'Module not found' error in Node.js"
-```
-
-### Search Patterns
-
-1. **Documentation Searches**
-   ```bash
-   Search: "Python argparse documentation"
-   Search: "Next.js API routes examples"
-   Search: "Docker compose file reference"
-   ```
-
-2. **Error Resolution**
-   ```bash
-   Search: "TypeError: Cannot read property of undefined"
-   Search: "ERR_SSL_PROTOCOL_ERROR Node.js"
-   Search: "HTTP 429 rate limit exceeded"
-   ```
-
-3. **Best Practices**
-   ```bash
-   Search: "JavaScript async await best practices"
-   Search: "React component testing patterns"
-   Search: "REST API design principles"
-   ```
-
-4. **Technology Comparisons**
-   ```bash
-   Search: "MongoDB vs PostgreSQL comparison 2024"
-   Search: "React vs Vue vs Svelte benchmarks"
-   Search: "AWS Lambda vs Azure Functions"
-   ```
-
-### Integration Examples
-
-#### Example 1: Research-Based Development
-
-```bash
-# User: "Create a weather dashboard"
-
-# opencode might:
-1. Search: "weather API free tier 2024"
-2. Fetch: https://openweathermap.org/api
-3. Search: "weather dashboard React components"
-4. Fetch: https://github.com/react-weather-components
-5. Search: "chart libraries for weather data"
-```
-
-#### Example 2: Problem Solving
-
-```bash
-# Error encountered: "Uncaught ReferenceError: require is not defined"
-1. Search: "require is not defined browser fix"
-2. Fetch relevant Stack Overflow answer
-3. Search: "ES6 module imports vs CommonJS"
-4. Fetch documentation on module systems
-5. Apply fix based on findings
-```
-
-#### Example 3: Learning New Technology
-
-```bash
-# User: "Teach me about GraphQL"
-
-1. Search: "GraphQL tutorial beginners 2024"
-2. Fetch: https://graphql.org/learn/
-3. Search: "GraphQL vs REST comparison"
-4. Fetch: https://www.apollographql.com/blog/graphql/basics/graphql-vs-rest/
-5. Search: "GraphQL implementation examples"
-```
-
-### Search Strategies
-
-1. **Start Broad, Then Narrow**
-   ```bash
-   # Initial broad search
-   Search: "authentication systems"
-   
-   # Narrow down based on findings
-   Search: "JWT authentication Node.js"
-   
-   # Specific implementation
-   Search: "passport-jwt strategy examples"
-   ```
-
-2. **Use Specific Keywords**
-   ```bash
-   # Vague search
-   Search: "how to make website faster"
-   
-   # Specific search
-   Search: "website performance optimization lighthouse scores"
-   ```
-
-3. **Include Version Numbers**
-   ```bash
-   # Without version (might be outdated)
-   Search: "React hooks tutorial"
-   
-   # With version (current)
-   Search: "React 18 hooks tutorial"
-   ```
-
-4. **Check Multiple Sources**
-   ```bash
-   # Official docs
-   Search: "site:reactjs.org useEffect cleanup"
-   
-   # Community resources
-   Search: "useEffect cleanup function examples"
-   
-   # Video tutorials
-   Search: "useEffect cleanup YouTube"
-   ```
-
-## Real-world Workflows
-
-### Workflow 1: Building a Feature with Research
-
-```bash
-# Task: "Add OAuth authentication"
-1. Question: "Which OAuth providers should we support?"
-   - Google
-   - GitHub
-   - Facebook
-   - Custom OAuth2 server
-2. Based on selection, search for implementation guides
-3. Fetch relevant documentation
-4. Create implementation todo list
-```
-
-### Workflow 2: Debugging Complex Issues
-
-```bash
-# Error: "Maximum call stack size exceeded"
-1. Search: "maximum call stack size error JavaScript"
-2. Identify common causes:
-   - Infinite recursion
-   - Large data structures
-   - Circular dependencies
-3. Search: "debug recursion JavaScript Chrome DevTools"
-4. Apply debugging techniques
-5. Test and verify fixes
-```
-
-### Workflow 3: Technology Evaluation
-
-```bash
-# Decision: "Choose a database for new project"
-1. Search: "database comparison 2024 web applications"
-2. Fetch comparison articles
-3. Search: "MongoDB vs PostgreSQL vs MySQL benchmarks"
-4. Search: "database scaling strategies"
-5. Search: "ORM libraries for each database"
-6. Make informed decision based on research
-```
-
-## Advanced Techniques
-
-### Chaining Web Operations
-
-```bash
-# Multi-step research process
-1. Search: "best React state management libraries"
-2. Fetch top 3 library documentations
-3. Search: "Redux vs Zustand vs Recoil comparison"
-4. Fetch benchmark results
-5. Search: "migration guides between state libraries"
-```
-
-### Caching and Reuse
-
-```bash
-# Common searches to cache:
-Search: "Node.js version compatibility matrix"
-Search: "JavaScript ES2024 features"
-Search: "CSS Grid vs Flexbox cheatsheet"
-Search: "common HTTP status codes"
-```
-
-### Rate Limit Management
-
-```bash
-# When doing multiple searches/fetches:
-1. Space out requests with delays
-2. Cache results locally when possible
-3. Use search engines that allow API access
-4. Respect website terms of service
-```
-
-## Security Considerations
-
-1. **URL Validation**
-   - Verify URLs before fetching
-   - Avoid malicious or suspicious domains
-   - Check for HTTPS when dealing with sensitive data
-
-2. **Content Safety**
-   - Be cautious with user-generated content URLs
-   - Sanitize fetched content when displaying
-   - Avoid executing code from fetched sources
-
-3. **API Keys and Secrets**
-   - Never hardcode API keys in search queries
-   - Use environment variables for sensitive data
-   - Rotate credentials regularly
-
-## Performance Tips
-
-1. **Limit Content Size**
-   ```bash
-   # For large pages, fetch only what you need
-   Search for specific sections instead of entire sites
-   ```
-
-2. **Parallel Operations**
-   ```bash
-   # When researching multiple topics
-   Search: "React performance optimizations"
-   Search: "React bundle size reduction"
-   Fetch both sets of results in parallel
-   ```
-
-3. **Local Storage**
-   ```bash
-   # Cache frequently accessed information
-   Store API documentation locally
-   Keep reference materials in the project
-   ```
-
-## Integration with Other Tools
-
-### With question Tool
-```bash
-# Research before asking questions
-1. Search: "popular authentication methods 2024"
-2. Fetch results
-3. Question: "Based on current trends, which authentication method should we use?"
-   Options populated from research
-```
-
-### With todowrite Tool
-```bash
-# Research-based task planning
-1. Search: "microservices architecture patterns"
-2. Fetch architecture guides
-3. Create todo list for implementing patterns
-```
-
-### With bash Tool
-```bash
-# Download and process web content
-1. Fetch: https://raw.githubusercontent.com/example/data.json
-2. Use bash to parse and analyze data
-3. Generate reports or visualizations
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Network Timeouts**
-   - Increase timeout parameter
-   - Check network connectivity
-   - Try alternative URLs
-
-2. **Content Format Issues**
-   - Try different format (markdown/text/html)
-   - Clean HTML with preprocessing
-   - Use custom parsers for complex pages
-
-3. **Rate Limiting**
-   - Implement delays between requests
-   - Use cached results when available
-   - Contact API providers for higher limits
-
-4. **Blocked Content**
-   - Check robots.txt restrictions
-   - Use official APIs when available
-   - Respect website terms of service
-
-### Debug Commands
-
-```bash
-# Test connectivity
-Search: "test connectivity"
-Fetch: https://httpbin.org/get
-
-# Verify formatting
-Fetch: https://example.com with format: markdown
-Fetch: https://example.com with format: text
-Fetch: https://example.com with format: html
-
-# Check response times
-Search with timeout: 5  # Quick timeout for testing
-```
-
-## Examples Directory
-
-See `/examples/` for practical implementations:
-- API integration workflows
-- Data collection pipelines
-- Documentation generators
-- Research automation scripts
-
-## Next Steps
-
-After mastering web tools, proceed to:
-- **Module 07**: Skills and agents for specialized automation
-- **Module 08**: MCP server integration for extended capabilities
-- **Module 09**: Advanced features including plugins
-- **Module 10**: OpenWork collaboration platform
 
 ---
 
+## 📚 Core Concepts
+
+### The `webfetch` Tool
+
+Fetches content from a URL and converts it to readable format:
+
+- **Markdown** (default): Best for docs, articles, blogs
+- **Text**: Raw text extraction
+- **HTML**: Original source
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant LLM
+  participant webfetch
+  participant Website
+
+  You->>LLM: "Fetch the Express.js docs"
+  LLM->>webfetch: fetch("https://expressjs.com/...")
+  webfetch->>Website: HTTP GET
+  Website-->>webfetch: HTML response
+  webfetch->>webfetch: Convert HTML → Markdown
+  webfetch-->>LLM: Clean markdown text
+  LLM-->>You: "Here's a summary of the Express.js API..."
+```
+
+**What webfetch does with the HTML:**
+
+1. Strips navigation, ads, and boilerplate
+2. Converts to clean Markdown (headings, code blocks, tables preserved)
+3. Returns the text to the LLM's context window
+
+### The `websearch` Tool
+
+Searches the web using Exa AI to find relevant information:
+
+- Technical documentation
+- Error solutions (Stack Overflow, GitHub Issues)
+- Best practices and tutorials
+- Library comparisons
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant LLM
+  participant websearch
+  participant Exa AI
+
+  You->>LLM: "How do I fix CORS errors?"
+  LLM->>websearch: search("fix CORS errors Node.js")
+  websearch->>Exa AI: Search query
+  Exa AI-->>websearch: Top results with snippets
+  websearch-->>LLM: Ranked results + URLs
+  LLM-->>You: "Based on multiple sources, here's how to fix CORS..."
+  Note over LLM: May follow up with webfetch<br/>to read the best result in full
+```
+
+### How to Trigger Them
+
+| Your Prompt                        | Tool Used   |
+| ---------------------------------- | ----------- |
+| "Fetch the docs at https://..."    | `webfetch`  |
+| "Read this article: https://..."   | `webfetch`  |
+| "Search for how to fix error X"    | `websearch` |
+| "Look up React 18 migration guide" | `websearch` |
+
+### websearch → webfetch Pipeline
+
+Often the LLM chains both tools: search for a topic, then fetch the most relevant result:
+
+```mermaid
+flowchart LR
+  A["websearch:\n'React 18 migration'"] --> B["Top results\nwith URLs"]
+  B --> C["webfetch:\nFetch best URL"]
+  C --> D["Full article\nin context"]
+  D --> E["LLM applies\nthe advice"]
+```
+
+---
+
+## 🔧 Examples & Patterns
+
+### Pattern 1: Documentation Research
+
+```
+Fetch the Express.js API documentation and show me how to set up middleware
+```
+
+**Expected interaction:**
+
+```
+LLM: [uses webfetch to download https://expressjs.com/en/guide/using-middleware.html]
+     "Here's how Express middleware works:
+      1. Application-level: app.use(myMiddleware)
+      2. Router-level: router.use(authMiddleware)
+      3. Error-handling: app.use((err, req, res, next) => {...})
+      ..."
+```
+
+### Pattern 2: Error Resolution
+
+```
+I'm getting "TypeError: Cannot read property of undefined" in my React app.
+Search for common causes and solutions.
+```
+
+**Expected interaction:**
+
+```
+LLM: [uses websearch to find solutions]
+     "Based on multiple sources, the most common causes are:
+      1. Accessing state before it's initialized
+      2. Missing null checks on API responses
+      3. Incorrect prop passing to child components
+      Let me check your code for these patterns..."
+```
+
+### Pattern 3: Technology Comparison
+
+```
+Search for a comparison of MongoDB vs PostgreSQL for web applications
+```
+
+### Pattern 4: Fetch + Apply
+
+The most powerful pattern — research, then implement:
+
+```
+Fetch the official TypeScript migration guide from
+https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
+then apply the recommended changes to our project
+```
+
+**What happens:**
+
+1. `webfetch` downloads and converts the guide to Markdown
+2. LLM reads and understands the migration steps
+3. LLM applies the steps to your project using `edit`, `write`, and `bash` tools
+
+### Pattern 5: Research-Driven Development
+
+```
+I want to add OAuth2 authentication. Search for the best library for Node.js,
+fetch its documentation, then implement it in @src/auth.ts
+```
+
+```mermaid
+flowchart TD
+  A["websearch:\n'best Node.js OAuth2 library 2025'"] --> B["Results: passport.js, arctic, oslo"]
+  B --> C["webfetch:\nFetch arctic documentation"]
+  C --> D["LLM reads docs,\nunderstands the API"]
+  D --> E["write: Create src/auth.ts\nwith OAuth2 implementation"]
+  E --> F["edit: Update routes\nto use new auth"]
+  F --> G["bash: npm install arctic\n+ run tests"]
+```
+
+### Pattern 6: Staying Updated
+
+```
+Search for "what's new in Node.js 22" and tell me which features
+I should adopt in this project
+```
+
+---
+
+## 🔗 Session Sharing
+
+Share your OpenCode sessions as read-only web pages.
+
+### Sharing Modes
+
+Configure in `opencode.json`:
+
+```json
+{ "share": "manual" }
+```
+
+| Mode         | Description                                |
+| ------------ | ------------------------------------------ |
+| `"manual"`   | Share only when you run `/share` (default) |
+| `"auto"`     | Automatically share every session          |
+| `"disabled"` | Disable sharing entirely                   |
+
+### Using Share
+
+In the TUI:
+
+```
+/share       # Share current session — returns a URL
+/unshare     # Remove shared session
+```
+
+Shared sessions are viewable at `opncd.ai/s/<id>`.
+
+> **Privacy**: Shared sessions are read-only but publicly accessible via the URL. Don't share sessions containing secrets or sensitive information.
+
+---
+
+## 🖥️ Web Interface
+
+OpenCode includes a browser-based UI as an alternative to the TUI.
+
+### Starting the Web UI
+
+```bash
+opencode web
+```
+
+Options:
+
+```bash
+# Custom port and hostname
+opencode web --port 8080 --hostname 0.0.0.0
+
+# Disable authentication
+opencode web --no-auth
+```
+
+### Web UI Features
+
+- Full session management (create, resume, delete)
+- Same capabilities as the TUI
+- Server status monitoring
+- Accessible from any browser on the network
+
+### Authentication
+
+The web interface requires a password by default. Set it via:
+
+```bash
+export OPENCODE_SERVER_PASSWORD='your-password'
+opencode web
+```
+
+### Terminal Attachment
+
+Attach to a running OpenCode instance from another terminal:
+
+```bash
+opencode attach
+```
+
+---
+
+## 💻 IDE Integration
+
+OpenCode has a VS Code extension that works with VS Code, Cursor, Windsurf, and VSCodium.
+
+### Installation
+
+The extension auto-installs when you run `opencode` in the IDE's integrated terminal. No manual setup required.
+
+### How It Works
+
+```mermaid
+flowchart LR
+  A["VS Code\nIntegrated Terminal"] --> B["opencode starts"]
+  B --> C["Extension auto-installs"]
+  C --> D["Sidebar panel\n+ keybinds active"]
+  D --> E["Context-aware:\nknows open files"]
+```
+
+When the extension is active:
+
+1. OpenCode knows which files you have open in the editor
+2. You can add file references with a keystroke
+3. Session management lives in the sidebar
+4. Inline suggestions appear as you work
+
+### Keybinds
+
+| Keybind                            | Action              |
+| ---------------------------------- | ------------------- |
+| `Cmd+Esc` / `Ctrl+Esc`             | Open OpenCode panel |
+| `Cmd+Shift+Esc` / `Ctrl+Shift+Esc` | New session         |
+| `Cmd+Option+K` / `Ctrl+Alt+K`      | Add file reference  |
+
+### Features
+
+| Feature                  | Description                                      |
+| ------------------------ | ------------------------------------------------ |
+| Context awareness        | Knows which files you have open in the editor    |
+| File reference shortcuts | Add `@file` refs with `Ctrl+Alt+K`               |
+| Inline suggestions       | AI suggestions appear during editing             |
+| Session management       | Create, resume, and delete sessions from sidebar |
+| Terminal integration     | Full TUI in the integrated terminal              |
+
+### TUI vs Web UI vs IDE Extension
+
+| Feature          | TUI (Terminal)        | Web UI                   | IDE Extension              |
+| ---------------- | --------------------- | ------------------------ | -------------------------- |
+| **Start**        | `opencode`            | `opencode web`           | `opencode` in IDE terminal |
+| **Interface**    | Terminal-based        | Browser-based            | Editor sidebar             |
+| **Best for**     | SSH, headless servers | Sharing, remote access   | Daily development          |
+| **File context** | `@file` references    | `@file` references       | Auto-detects open files    |
+| **Requirements** | Terminal only         | Browser + password setup | VS Code/Cursor/Windsurf    |
+
+---
+
+## 🧪 Practice Exercises
+
+### Exercise 1: Fetching Documentation
+
+```
+1. "Fetch https://opencode.ai/docs and summarize the main features"
+2. "Fetch the README from a popular GitHub repository"
+```
+
+**Expected:**
+
+- Step 1: LLM fetches the page, converts to markdown, and gives a bullet-point summary
+- Step 2: LLM fetches the raw README content and describes the project
+
+### Exercise 2: Problem Solving
+
+```
+1. "I'm seeing CORS errors in my API. Search for solutions."
+2. "Search for how to optimize Docker image size for Node.js"
+```
+
+**Expected:**
+
+- Step 1: LLM finds Stack Overflow answers and MDN docs about CORS headers, suggests `cors` npm package or manual header setup
+- Step 2: LLM returns multi-stage build strategies and `.dockerignore` best practices
+
+### Exercise 3: Combined Workflow
+
+```
+"Search for the best CSS-in-JS library for React in 2025,
+ fetch the top result's documentation,
+ and create a basic setup in our project"
+```
+
+**Expected:**
+
+1. LLM searches and finds top libraries (e.g., Panda CSS, Pigment CSS, styled-components)
+2. Fetches the documentation of the recommended one
+3. Creates a config file and example component using that library
+
+### Exercise 4: Session Sharing
+
+Try the sharing workflow:
+
+```
+1. Have a conversation about your project architecture
+2. Type /share
+3. Open the returned URL in a browser
+```
+
+**Expected:** You get a `opncd.ai/s/<id>` URL. Opening it shows a read-only view of your conversation that anyone with the URL can see.
+
+---
+
+## ❓ Common Questions
+
+**Q: Are `webfetch` and `websearch` CLI commands?**
+No. They are internal LLM tools triggered by natural language prompts.
+
+**Q: Why won't websearch work?**
+Websearch requires `OPENCODE_ENABLE_EXA=1` environment variable. Set it before starting OpenCode.
+
+**Q: Can I restrict web access?**
+Yes. Set `"webfetch": "deny"` or `"websearch": "deny"` in `opencode.json` permissions.
+
+**Q: What's the difference between webfetch and websearch?**
+`webfetch` downloads a specific URL. `websearch` searches the web for relevant results.
+
+**Q: Are shared sessions private?**
+No — anyone with the URL can view them. Don't share sessions containing secrets.
+
+**Q: Can I use the web UI remotely?**
+Yes. Run `opencode web --hostname 0.0.0.0` and set `OPENCODE_SERVER_PASSWORD` for auth. Access from any browser on the network.
+
+---
+
+## 🚶 Next Steps
+
+Continue to **[Module 07: Skills & Agents](../07-skills-agents/)** to learn about custom automation and agent configuration.
 
 ---
 
@@ -504,8 +481,9 @@ This module is part of the [OpenCode Primer](../README.md).
 
 **License:** MIT - See [LICENSE](../LICENSE) for details.
 
-**Last Updated:** April 2026  
+[⬆ Back to top](#-06-web-tools)
+
+**Last Updated:** April 2026
 **OpenCode Version:** 1.0+ compatible
 
 ---
-

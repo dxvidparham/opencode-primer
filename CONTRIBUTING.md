@@ -121,7 +121,8 @@ Before starting work:
 - **Use fenced code blocks** with language specification:
   ````bash
   ```bash
-  opencode read file.txt
+  # Ask the LLM to read a file in the TUI
+  # "Show me the contents of file.txt"
   ```
   ````
 
@@ -131,7 +132,11 @@ All examples should follow this structure:
 
 ```bash
 # Description of what the example does
-opencode command --option="value" argument
+# In the TUI, type your request as a natural language prompt
+# "Explain the structure of this project"
+
+# Or use non-interactive mode:
+opencode run 'Explain the structure of this project'
 
 # Expected output (if applicable)
 # Output line 1
