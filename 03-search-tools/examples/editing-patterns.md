@@ -148,7 +148,7 @@ Inside the TUI, prefix shell commands with `!`:
 - **Be specific** about what to change: "Change port 3000 to 8080 in src/config.ts" is better than "change the port"
 - **Reference files with `@`**: `Update the version in @package.json` helps the LLM find the right file
 - **Review before approving**: OpenCode shows you diffs before applying edits — read them carefully
-- **Use Plan mode** (press Tab) if you want to review every bash command and edit before it runs
+- **Use the Plan agent** (press Tab) if you want to review every bash command and edit before it runs
 
 ## Next Steps
 

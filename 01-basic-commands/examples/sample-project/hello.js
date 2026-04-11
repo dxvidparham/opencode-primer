@@ -16,7 +16,7 @@ users.forEach(user => {
 const data = {
   version: "1.0.0",
   author: "OpenCode User",
-  features: ["TUI", "Plan Mode", "Build Mode", "Plugins"]
+  features: ["TUI", "Plan Agent", "Build Agent", "Plugins"]
 };
 
 console.log(JSON.stringify(data, null, 2));

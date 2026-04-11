@@ -62,9 +62,9 @@ flowchart TD
   subgraph "Agent System"
     direction TB
     A["Primary Agents"] --> B["Build\n(full access)"]
-    A --> C["Plan\n(bash/edit = ask)"]
+    A --> C["Plan\n(edit = deny)"]
     D["Subagents"] --> E["General\n(full - todowrite)"]
-    D --> F["Explore\n(read-only)"]
+    D --> F["Explore\n(read-only + web + codesearch)"]
   end
 
   subgraph "Skills"
@@ -101,7 +101,7 @@ In the TUI, press **Tab** to cycle between primary agents:
 | Agent               | Default Behavior                    | When to Use                         |
 | ------------------- | ----------------------------------- | ----------------------------------- |
 | **Build** (default) | Full tool access, executes changes  | Normal development                  |
-| **Plan**            | `bash` and `edit` set to "ask" mode | Planning, reviewing before changing |
+| **Plan**            | Edit tools denied (read-only + plans) | Planning, reviewing before changing |
 
 Press **Shift+Tab** to cycle in reverse.
 
@@ -112,7 +112,7 @@ The primary agent can launch **subagents** for specific tasks:
 | Subagent    | Access Level                       | Purpose                        |
 | ----------- | ---------------------------------- | ------------------------------ |
 | **General** | Full tools (except todowrite)      | Complex research and execution |
-| **Explore** | Read-only (read, glob, grep, list) | Safe codebase exploration      |
+| **Explore** | Read-only (read, glob, grep, list, bash, webfetch, websearch, codesearch) | Safe codebase exploration      |
 
 You can request a specific subagent or **@-mention** one:
 
@@ -120,6 +120,8 @@ You can request a specific subagent or **@-mention** one:
 @explore map out the project architecture
 @general research and implement the auth flow
 ```
+
+The primary agent can also spawn subagents automatically via the `task` tool when it decides parallel work would be beneficial.
 
 ---
 
@@ -132,7 +134,7 @@ OpenCode ships with 7 agents:
 | Agent          | Type              | Purpose                                |
 | -------------- | ----------------- | -------------------------------------- |
 | **Build**      | Primary (default) | Full-access development agent          |
-| **Plan**       | Primary           | Review-first agent (bash/edit = "ask") |
+| **Plan**       | Primary           | Review-first agent (edit tools denied) |
 | **General**    | Subagent          | Multi-step research and implementation |
 | **Explore**    | Subagent          | Read-only codebase exploration         |
 | **Compaction** | Hidden            | Auto-compacts long conversations       |
@@ -141,11 +143,11 @@ OpenCode ships with 7 agents:
 
 ### Build Agent (Default Primary)
 
-The Build agent has full access to all tools: `read`, `edit`, `write`, `bash`, `glob`, `grep`, `list`, `webfetch`, `websearch`, `question`, `todowrite`, `skill`.
+The Build agent has full access to all tools: `read`, `edit`, `multiedit`, `write`, `apply_patch`, `bash`, `glob`, `grep`, `codesearch`, `list`, `webfetch`, `websearch`, `question`, `todowrite`, `task`, `skill`, `plan_enter`, `lsp`.
 
 ### Plan Agent (Restricted Primary)
 
-Same tools as Build but with `bash` and `edit` set to `"ask"`. It shows you what it wants to run/edit before doing it — useful for reviewing changes before they're applied.
+All edit tools (`edit`, `write`, `multiedit`, `apply_patch`) are set to `"deny"`. The Plan agent can read, search, and think — but cannot modify your files. The exception: it can write plan files to `.opencode/plans/*.md`. Use the Plan agent when you want strategy without side effects, then switch to Build to execute.
 
 ### General Subagent
 
@@ -153,7 +155,9 @@ Launched by the primary agent for complex multi-step tasks. Has full tool access
 
 ### Explore Subagent
 
-A fast, read-only subagent. Can only use `read`, `glob`, `grep`, `list`. Safe for architecture discovery and code analysis.
+A fast, read-only subagent. Can use `read`, `glob`, `grep`, `list`, `bash`, `webfetch`, `websearch`, and `codesearch`. Safe for architecture discovery and code analysis — no edit tools.
+
+Explore accepts a **thoroughness** parameter: `"quick"`, `"medium"`, or `"very thorough"` — controlling how deeply it investigates.
 
 ### Session Navigation
 
@@ -509,7 +513,7 @@ Run the command as a subagent instead of the current agent:
 2. You start in **Build** agent by default
 3. Press **Tab** to switch to **Plan** agent
 4. Type: `Add a new function to @src/utils.js`
-5. **Expected:** Plan agent describes the change but asks for approval before editing
+5. **Expected:** Plan agent describes what it would change but cannot edit the file (edit tools denied)
 6. Press **Tab** to switch back to Build
 7. Type: `Add a new function to @src/utils.js`
 8. **Expected:** Build agent edits the file directly

@@ -39,20 +39,21 @@
 
 ### 📝 What This Module Covers
 
-| Tool       | Description                             | Why It Matters                          |
-| ---------- | --------------------------------------- | --------------------------------------- |
-| **`glob`** | Find files by pattern (e.g., `**/*.js`) | Navigate large codebases efficiently    |
-| **`grep`** | Search file contents using regex        | Find specific code, functions, patterns |
-| **`list`** | List directory contents                 | Understand project structure            |
+| Tool             | Description                             | Why It Matters                          |
+| ---------------- | --------------------------------------- | --------------------------------------- |
+| **`glob`**       | Find files by pattern (e.g., `**/*.js`) | Navigate large codebases efficiently    |
+| **`grep`**       | Search file contents using regex        | Find specific code, functions, patterns |
+| **`codesearch`** | Semantic code search across codebase    | Find code by meaning, not just text     |
+| **`list`**       | List directory contents                 | Understand project structure            |
 
 ### 🎓 Learning Objectives
 
-- ✅ **Understand** how `glob`, `grep`, and `list` work as LLM-internal tools
+- ✅ **Understand** how `glob`, `grep`, `codesearch`, and `list` work as LLM-internal tools
 - ✅ **Ask OpenCode** to find files and search content via natural language
 - ✅ **Use shell equivalents** when you need direct command-line searching
 - ✅ **Combine search operations** for complex code analysis
 
-> **Important**: `glob`, `grep`, and `list` are internal tools the LLM uses — **not** CLI commands. There is no `opencode glob` or `opencode grep` command. You trigger these by asking the LLM in the TUI.
+> **Important**: `glob`, `grep`, `codesearch`, and `list` are internal tools the LLM uses — **not** CLI commands. There is no `opencode glob` or `opencode grep` command. You trigger these by asking the LLM in the TUI.
 
 ---
 
@@ -200,6 +201,26 @@ src/utils.ts:8: // HACK: temporary workaround
 ### The `list` Tool
 
 Directory listing with optional filtering. Shows file and folder names in a given path. Unlike `glob`, it doesn't recurse — it lists one level.
+
+### The `codesearch` Tool
+
+Semantic code search that finds code by meaning rather than exact text. While `grep` matches literal strings and regex patterns, `codesearch` understands code semantics:
+
+```
+# grep: exact text match
+Search for "handleAuth" in the codebase
+
+# codesearch: semantic match — finds code related to the concept
+Find the code that handles user authentication and session management
+```
+
+`codesearch` is especially useful when:
+
+- You don't know the exact function/variable names
+- You want to find code related to a concept (e.g., "error handling", "database connection pooling")
+- You're exploring an unfamiliar codebase and need to understand where functionality lives
+
+The Explore subagent has access to `codesearch`, making it ideal for semantic code discovery.
 
 ### Tool Chaining — How the LLM Combines Search Tools
 

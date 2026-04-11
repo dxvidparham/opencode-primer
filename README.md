@@ -11,7 +11,7 @@
 [![10 Learning Modules](https://img.shields.io/badge/Modules-10-orange.svg)]()
 [![Total Time](https://img.shields.io/badge/Time~Estimate-10_hrs-purple.svg)]()
 
-**[Get Started in 15 Minutes](#-get-started-in-15-minutes)** • **[Find Your Level](#-find-your-level)** • **[Browse Modules](#-learning-modules)** • **[Quick Reference](QUICK-REFERENCE.md)**
+**[Get Started in 15 Minutes](#-get-started-in-15-minutes)** • **[Find Your Level](#-1-find-your-level)** • **[Browse Modules](#-learning-modules)** • **[Quick Reference](QUICK-REFERENCE.md)**
 
 </div>
 
@@ -51,7 +51,7 @@ graph TD
 
 </div>
 
-### The Core Issues:
+### The Core Issues
 
 | Problem                                    | Impact                                           | Solution in This Guide                                   |
 | ------------------------------------------ | ------------------------------------------------ | -------------------------------------------------------- |
@@ -86,7 +86,7 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 
 </div>
 
-### 🎁 What You Get:
+### 🎁 What You Get
 
 <details>
 <summary><strong>📦 Complete Learning Package</strong> (Click to expand)</summary>
@@ -129,21 +129,27 @@ graph LR
 </div>
 
 ### 🎯 1. Find Your Level
+
 Take the [self-assessment quiz](LEARNING-ROADMAP.md#-find-your-level). Get a personalized roadmap based on what you already know.
 
 ### 📚 2. Follow the Guided Path  
+
 Work through **10 modules in order** — each builds on the last. Apply templates directly to your projects as you learn.
 
 ### ⚡ 3. Apply Templates Immediately
+
 Copy-paste workflows into your projects. No abstract theory — just practical, working code.
 
 ### 🔄 4. Combine Features into Workflows
+
 The real power is in **combining features**. Learn to wire bash + file operations + search + editing into automated pipelines.
 
 ### 🧪 5. Test Your Understanding
+
 Take **quizzes after each module** to pinpoint what you missed and fill gaps fast.
 
 ### 🏆 6. Master OpenCode
+
 Become a power user who can automate complex development workflows with confidence.
 
 **[⚡ Get Started in 15 Minutes](#-get-started-in-15-minutes)**
@@ -276,24 +282,28 @@ cd ~/opencode-practice && bash -c "echo 'Testing bash integration'"
 <summary><strong>Check Your Setup</strong> (Click to expand)</summary>
 
 1. **Verify OpenCode Installation:**
+
    ```bash
    opencode --version
    # Should output: opencode 1.0+ (or similar)
    ```
 
 2. **Test Basic Command:**
+
    ```bash
    opencode
    # Should open the TUI interface
    ```
 
 3. **Check File Operations:**
+
    ```bash
    ls -la 01-basic-commands/examples/
    # Should show sample files
    ```
 
 4. **Validate Quick Reference:**
+
    ```bash
    head -20 QUICK-REFERENCE.md
    # Should show quick reference table
@@ -304,6 +314,7 @@ cd ~/opencode-practice && bash -c "echo 'Testing bash integration'"
 ### 🎯 15-Minute Achievement
 
 By the end of 15 minutes, you should be able to:
+
 - ✅ Navigate the primer structure
 - ✅ Run basic opencode commands
 - ✅ Access the quick reference
@@ -360,6 +371,7 @@ sequenceDiagram
 ```
 
 **Implementation:**
+
 ```bash
 #!/bin/bash
 # Code Review Automation Script
@@ -404,12 +416,15 @@ echo "Code Review Complete" > review_report.md
 <summary><strong>General Questions</strong></summary>
 
 ### 🤔 Is this free?
+
 **Yes!** MIT licensed, free forever. Use it in personal projects, at work, in your team — no restrictions beyond including the license notice.
 
 ### 🔄 Is this maintained?
+
 **Yes!** The primer is updated regularly with new opencode features and best practices. Last updated: April 2026.
 
 ### 📚 How is this different from official docs?
+
 The official docs are a **feature reference**. This primer is a **tutorial** with examples, production-ready templates, and a progressive learning path. They complement each other — start here to learn, reference the docs when you need specifics.
 
 </details>
@@ -418,17 +433,20 @@ The official docs are a **feature reference**. This primer is a **tutorial** wit
 <summary><strong>Learning & Usage</strong></summary>
 
 ### ⏱️ How long does it take?
+
 - **Quick start:** 15 minutes (get value immediately)
 - **Full path:** 10-12 hours (become proficient)
 - **Module average:** 45-60 minutes each
 
 ### 🎯 Who is this for?
+
 - **Developers** new to opencode
 - **Teams** adopting AI coding agents
 - **DevOps engineers** building automation
 - **Anyone** wanting to improve coding productivity
 
 ### 💻 What do I need to start?
+
 - OpenCode installed (version 1.0+)
 - Basic terminal knowledge
 - A code editor
@@ -440,16 +458,20 @@ The official docs are a **feature reference**. This primer is a **tutorial** wit
 <summary><strong>Contribution & Support</strong></summary>
 
 ### 🤝 Can I contribute?
+
 **Absolutely!** See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. We welcome:
+
 - New examples and templates
 - Bug fixes and improvements
 - Documentation enhancements
 - Community workflows
 
 ### 📖 Can I read this offline?
+
 **Yes!** All content is available as Markdown files you can read locally. No internet required after cloning.
 
 ### 🆘 Where can I get help?
+
 - **Issues:** GitHub Issues for bugs
 - **Discussions:** Community forums (coming soon)
 - **Contributing:** PRs for improvements
@@ -461,17 +483,33 @@ The official docs are a **feature reference**. This primer is a **tutorial** wit
 <summary><strong>Technical Details</strong></summary>
 
 ### 🔧 What OpenCode version is required?
+
 **OpenCode 1.0 or higher.** Some advanced features may require newer versions.
 
 ### 🖥️ What platforms are supported?
+
 - **Linux** (primary development platform)
 - **macOS** (fully compatible)
-- **Windows** (WSL2 recommended)
+- **Windows** (WSL2 recommended for TUI; native support via Scoop/Chocolatey)
+- **Desktop App (BETA):** A native desktop app is available for macOS, Windows, and Linux at [opencode.ai/download](https://opencode.ai/download)
 
-### 📦 Is there a package/docker version?
-Not currently, but you can clone and use immediately. Docker support is planned for future releases.
+### 📦 How do I install OpenCode?
+
+Multiple options — pick whichever fits your environment:
+
+- **curl:** `curl -fsSL https://opencode.ai/install | bash`
+- **npm:** `npm i -g opencode-ai@latest`
+- **Homebrew:** `brew install anomalyco/tap/opencode`
+- **Scoop (Windows):** `scoop install opencode`
+- **Chocolatey (Windows):** `choco install opencode`
+- **Arch Linux:** `pacman -S opencode` or `paru -S opencode`
+- **Nix:** `nix profile install nixpkgs#opencode-ai`
+- **mise:** `mise use -g opencode-ai`
+
+See [Module 01](01-basic-commands/) for the full setup guide.
 
 ### 🔄 How often is this updated?
+
 Regularly! We track OpenCode releases and update examples and best practices accordingly.
 
 </details>

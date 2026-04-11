@@ -52,7 +52,7 @@
 | **TUI Navigation**    | Terminal User Interface basics      | Foundation for all opencode interactions |
 | **Slash Commands**    | `/help`, `/undo`, `/redo`, `/share` | Essential productivity shortcuts         |
 | **File References**   | `@filename` syntax                  | Context management for AI assistance     |
-| **Plan/Build Modes**  | Tab key toggle                      | Different thinking vs execution modes    |
+| **Plan/Build Agents** | Tab key to cycle agents             | Different thinking vs execution agents   |
 | **Conversation Flow** | Effective AI dialogue patterns      | Maximize coding assistance value         |
 
 ### 🎓 Learning Objectives
@@ -62,7 +62,7 @@ By the end of this module, you'll be able to:
 - ✅ **Start and navigate** the opencode TUI confidently
 - ✅ **Use essential slash commands** for productivity
 - ✅ **Reference files** with `@` symbol for context
-- ✅ **Toggle between Plan and Build modes** effectively
+- ✅ **Switch between Plan and Build agents** effectively
 - ✅ **Manage conversation flow** for optimal AI assistance
 
 ## ✅ Prerequisites
@@ -92,10 +92,40 @@ rm test.txt
 
 ### 🛠️ Required Tools
 
-- [ ] OpenCode 1.0+ installed
+- [ ] OpenCode 1.0+ installed (see below)
 - [ ] Terminal/Command Line access
 - [ ] A project directory to work in
 - [ ] Example files from `/examples/` folder
+
+### 📦 Installation Methods
+
+```bash
+# curl (Linux/macOS)
+curl -fsSL https://opencode.ai/install | bash
+
+# npm
+npm i -g opencode-ai@latest
+
+# Homebrew (macOS/Linux)
+brew install anomalyco/tap/opencode
+
+# Arch Linux
+pacman -S opencode  # or: paru -S opencode
+
+# Windows (Scoop)
+scoop install opencode
+
+# Windows (Chocolatey)
+choco install opencode
+
+# Nix
+nix profile install nixpkgs#opencode-ai
+
+# mise
+mise use -g opencode-ai
+```
+
+**Desktop App (BETA):** OpenCode also offers a native desktop app for macOS, Windows, and Linux. Download from the [releases page](https://github.com/anomalyco/opencode/releases) or [opencode.ai/download](https://opencode.ai/download).
 
 ---
 
@@ -124,6 +154,9 @@ cd ~/opencode-practice
 
 # Start the TUI (interactive mode)
 opencode
+
+# Or start TUI in a specific directory without cd:
+opencode ~/opencode-practice
 ```
 
 Or use CLI mode for one-off prompts:
@@ -135,11 +168,13 @@ opencode run "Explain this project's structure"
 
 ### 🖥️ TUI Interface Overview
 
-Once opencode starts, you'll see a full-screen terminal interface (built with Bubble Tea). The exact appearance depends on your terminal and theme, but the key areas are:
+Once opencode starts, you'll see a full-screen terminal interface (built with SolidJS and [opentui](https://github.com/sst/opentui)). The layout from top to bottom:
 
-- **Conversation area** (top) — Shows your messages and the AI's responses
-- **Status bar** (middle) — Shows the current agent (Build/Plan), model name, and session info
-- **Input area** (bottom) — Where you type prompts, slash commands, or `@` file references
+- **Conversation area** (main area) — Shows the OpenCode ASCII logo on a fresh start; fills with your messages and AI responses during a session
+- **Input box** (center) — Where you type prompts, slash commands, or `@` file references
+- **Status line** (below input) — Shows the current agent (`Build`/`Plan`), model name (e.g. `DeepSeek V3.2`), and provider (e.g. `OpenRouter`)
+- **Keyboard hints** (below status) — Shows `tab agents` and `ctrl+p commands`
+- **Footer** (bottom edge) — Working directory on the left, OpenCode version on the right
 
 > **What you'll actually see:** The TUI fills your entire terminal window. It's not a simple text box — it's a full interactive interface with scrolling, syntax highlighting, and live tool execution output. The layout may differ slightly between versions.
 
@@ -221,9 +256,10 @@ OpenCode's Terminal User Interface (TUI) provides a conversational interface for
 opencode
 
 # The TUI fills your terminal window with:
-# - Conversation area (top): shows messages and AI responses
-# - Status bar (middle): current agent, model, session
-# - Input prompt (bottom): where you type
+# - Conversation/logo area (main): messages and AI responses
+# - Input box (center): where you type prompts
+# - Status line (below input): agent, model, provider
+# - Footer (bottom): working directory + version
 ```
 
 **Key Features:**
@@ -275,6 +311,18 @@ Quick keyboard shortcuts for common functions, starting with `/`.
 | `/details`  | Toggle tool execution details   | `ctrl+x d` | Debugging tool calls                  |
 | `/thinking` | Toggle reasoning visibility     | —          | Seeing model's thought process        |
 
+**Additional Keyboard Shortcuts (no slash command equivalent):**
+
+| Keybind        | Action                         |
+| -------------- | ------------------------------ |
+| `ctrl+x g`     | Show session timeline          |
+| `ctrl+x b`     | Toggle sidebar                 |
+| `ctrl+x a`     | List agents                    |
+| `f2`           | Cycle recently used models     |
+| `ctrl+t`       | Cycle model variants           |
+| `ctrl+r`       | Rename current session         |
+| `ctrl+x h`     | Toggle tips/hint visibility    |
+
 **When to use them:**
 
 - Quick actions without typing full prompts
@@ -313,45 +361,45 @@ The `@` symbol allows you to reference specific files or code sections in your p
 - Asking about particular files or sections
 - Directing OpenCode's attention precisely
 
-### 🧠 Concept 4: Plan Mode vs Build Mode
+### 🧠 Concept 4: Plan Agent vs Build Agent
 
 **What it is:**
-Two different interaction modes toggleable with the **Tab** key.
+Two built-in agents you cycle between with the **Tab** key. (The TUI shows `tab agents` at the bottom as a reminder.)
 
 **How it works:**
 
 ```bash
-# Build mode is the DEFAULT — full tool access
-[Build] Mode: OpenCode can execute tools and modify files
+# Build agent is the DEFAULT — full tool access
+[Build] Agent: OpenCode can execute tools and modify files
 
-# Press Tab to switch to Plan mode
-[Plan] Mode: OpenCode suggests plans without making changes
+# Press Tab to switch to Plan agent
+[Plan] Agent: edit tools denied — can only read, search, and write plans to .opencode/plans/
 
-# Press Tab again to switch back
-[Build] Mode
+# Press Tab again to switch back (Shift+Tab cycles in reverse)
+[Build] Agent
 ```
 
-**Mode Comparison:**
+**Agent Comparison:**
 
-| Aspect           | Build Mode (Default)       | Plan Mode                        |
+| Aspect           | Build Agent (Default)      | Plan Agent                       |
 | ---------------- | -------------------------- | -------------------------------- |
 | **Purpose**      | Execution & implementation | Strategy & planning              |
-| **File Changes** | Can read/write/edit files  | Requires approval (ask)          |
-| **Tool Usage**   | Full tool access           | Limited — bash/edit set to "ask" |
+| **File Changes** | Can read/write/edit files  | Edit tools denied (read-only + plans)  |
+| **Tool Usage**   | Full tool access           | Edit/write/patch/multiedit all denied  |
 | **When to Use**  | Implementing, testing      | Brainstorming, planning          |
 
 **Recommended Workflow:**
 
-1. **Switch to Plan Mode** (press Tab) for complex requests
+1. **Switch to Plan agent** (press Tab) for complex requests
 2. **Review the plan** - OpenCode outlines approach
-3. **Switch to Build Mode** (press Tab again)
+3. **Switch to Build agent** (press Tab again)
 4. **Execute the plan** - OpenCode implements changes
 5. **Review results** - Verify implementation matches plan
 
 **When to use each:**
 
-- **Plan Mode**: Brainstorming, architectural decisions, complex refactors
-- **Build Mode**: Implementation, testing, file operations, automation
+- **Plan agent**: Brainstorming, architectural decisions, complex refactors
+- **Build agent**: Implementation, testing, file operations, automation
 
 ### 🧠 Concept 5: Conversation Management
 
@@ -417,11 +465,11 @@ You: What dependencies are in @package.json?
 ### 📖 Example 2: Plan → Build Workflow
 
 ```
-1. Start in Build mode (default)
-2. Press Tab to switch to Plan mode
+1. Start in Build agent (default)
+2. Press Tab to switch to Plan agent
 3. Type: "Create a utility function to calculate factorial"
    → OpenCode outlines an approach WITHOUT creating any files
-4. Press Tab to switch back to Build mode
+4. Press Tab to switch back to Build agent
 5. Type: "Go ahead and implement it"
    → OpenCode creates the file
 6. Type: "Show me what you created @src/factorial.js"
@@ -447,12 +495,12 @@ You: What dependencies are in @package.json?
 ### 🔄 Workflow 2: Planning a Feature
 
 ```
-1. Press Tab to switch to Plan mode
+1. Press Tab to switch to Plan agent
 2. "I want to add user authentication to this project"
    → OpenCode outlines the approach without changing files
 3. "What about security considerations?"
 4. "Create an implementation checklist"
-5. Press Tab to switch to Build mode
+5. Press Tab to switch to Build agent
 6. "Implement step 1 from the checklist"
 ```
 
@@ -482,27 +530,27 @@ You: What dependencies are in @package.json?
 - Step 3: Shows the JSON contents of package.json
 - Step 4: Shows available slash commands
 
-### 🎯 Exercise 2: Plan vs Build Mode
+### 🎯 Exercise 2: Plan vs Build Agents
 
-**Task:** Experience the difference between Plan and Build modes.
+**Task:** Experience the difference between Plan and Build agents.
 
 ```
 1. cd ~/opencode-practice && opencode
 2. Type: Add a function called multiply to @src/utils.js
-   (Build mode — OpenCode edits the file directly)
+   (Build agent — OpenCode edits the file directly)
 3. Type: /undo
    (Reverts the change)
-4. Press Tab to switch to Plan mode
+4. Press Tab to switch to Plan agent
 5. Type: Add a function called divide to @src/utils.js
-   (Plan mode — OpenCode shows you what it would do)
-6. Press Tab to switch back to Build mode
+   (Plan agent — OpenCode shows you what it would do)
+6. Press Tab to switch back to Build agent
 ```
 
 **Expected results:**
 
 - Step 2: OpenCode adds the `multiply` function to `src/utils.js` and shows you the change
 - Step 3: The change is reverted (file goes back to original)
-- Step 5: OpenCode describes the plan but asks for approval before editing
+- Step 5: OpenCode describes the plan but cannot edit files (edit tools are denied)
 
 ### 🎯 Exercise 3: File References
 
@@ -534,21 +582,21 @@ You: What dependencies are in @package.json?
 **Use CLI for:** Quick one-off prompts, scripting, automation (via `opencode run`).  
 **Use TUI for:** Complex tasks, planning, multi-step workflows, using slash commands.
 
-### 🤔 When should I use Plan mode vs Build mode?
+### 🤔 When should I use the Plan agent vs the Build agent?
 
-**Plan Mode:** For brainstorming, design discussions, complex planning. OpenCode won't make changes.  
-**Build Mode:** For implementation, testing, file operations. OpenCode can execute tools.  
+**Plan agent:** For brainstorming, design discussions, complex planning. Edit tools are denied — OpenCode can only read and plan, not modify files. Plans can be saved to `.opencode/plans/`.  
+**Build agent:** For implementation, testing, file operations. OpenCode can execute tools freely.  
 **Rule of thumb:** Start in Plan for anything complex, switch to Build when ready to implement.
 
 ### 🤔 How do file references with @ actually work?
 
-OpenCode reads the referenced files and includes them in the context for the AI. This helps it understand specific code you're asking about. The AI can see the file contents but won't modify them unless you're in Build mode and explicitly ask for changes.
+OpenCode reads the referenced files and includes them in the context for the AI. This helps it understand specific code you're asking about. The AI can see the file contents but won't modify them unless you're using the Build agent and explicitly ask for changes.
 
 ### 🤔 Can I use OpenCode without internet?
 
 **Partial functionality:** Basic file operations and already-downloaded models work offline.  
 **Full AI features:** Require internet connection for cloud-based AI models.  
-**Check:** `opencode --version` shows if you're using local or cloud models.
+**Check your provider:** Look at the status line in the TUI — it shows your model and provider (e.g. `DeepSeek V3.2 OpenRouter`). Cloud providers like OpenRouter require internet; local providers like Ollama do not.
 
 ### 🤔 How do I exit OpenCode TUI?
 
@@ -556,7 +604,7 @@ OpenCode reads the referenced files and includes them in the context for the AI.
 - **Ctrl+X then Q** - Exit via keybind (leader key + q)
 - **/exit** or **/quit** or **/q** - Slash command to exit
 - **Close terminal** - Last resort
-Your conversation is automatically saved and can be resumed with `/sessions`.
+  Your conversation is automatically saved and can be resumed with `/sessions`.
 
 </details>
 
@@ -650,39 +698,39 @@ ls -la src/file.js
 
 Test your understanding:
 
-1. **What key do you press to toggle between Plan and Build modes?**
-   - [ ] Ctrl+P
-   - [ ] Spacebar
-   - [x] Tab ✓
-   - [ ] Enter
+1. **What key do you press to cycle between agents?**
+    - [ ] Ctrl+P
+    - [ ] Spacebar
+    - [x] Tab ✓
+    - [ ] Enter
 
 2. **How do you reference a specific file in a prompt?**
-   - [ ] #filename
-   - [x] @filename ✓
-   - [ ] $filename
-   - [ ] %filename
+    - [ ] #filename
+    - [x] @filename ✓
+    - [ ] $filename
+    - [ ] %filename
 
-3. **Which mode allows OpenCode to make file changes?**
-   - [ ] Plan Mode
-   - [x] Build Mode ✓
-   - [ ] Both modes
-   - [ ] Neither mode
+3. **Which agent allows OpenCode to make file changes freely?**
+    - [ ] Plan agent
+    - [x] Build agent ✓
+    - [ ] Both agents
+    - [ ] Neither agent
 
 4. **What does `/undo` do?**
-   - [ ] Undoes your last typed command
-   - [x] Undoes OpenCode's last change ✓
-   - [ ] Clears the conversation
-   - [ ] Exits OpenCode
+    - [ ] Undoes your last typed command
+    - [x] Undoes OpenCode's last change ✓
+    - [ ] Clears the conversation
+    - [ ] Exits OpenCode
 
 ### ✅ Skills Acquired
 
-| Skill                 | Proficiency                                | Evidence                                |
-| --------------------- | ------------------------------------------ | --------------------------------------- |
-| **TUI Navigation**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can start, navigate, and exit TUI       |
-| **Slash Commands**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can use /help, /undo, /redo effectively |
-| **File References**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can reference files with @ symbol       |
-| **Mode Management**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can toggle between Plan and Build modes |
-| **Conversation Flow** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can maintain effective AI dialogue      |
+| Skill                 | Proficiency                                 | Evidence                                 |
+| --------------------- | ------------------------------------------- | ---------------------------------------- |
+| **TUI Navigation**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can start, navigate, and exit TUI        |
+| **Slash Commands**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can use /help, /undo, /redo effectively  |
+| **File References**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can reference files with @ symbol        |
+| **Agent Switching**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can switch between Plan and Build agents |
+| **Conversation Flow** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can maintain effective AI dialogue       |
 
 ### 🏆 Module Completion
 
@@ -690,13 +738,14 @@ Mark your progress! Copy this when you complete the module:
 
 ```bash
 echo "✅ Completed Module 01: Basic Commands & TUI on $(date)"
-echo "🎯 Skills gained: TUI navigation, slash commands, file references, mode switching"
+echo "🎯 Skills gained: TUI navigation, slash commands, file references, agent switching"
 echo "📚 Next: Module 02 - File Operations"
 ```
 
 Or use this badge in your README:
 
 ```markdown
+
 ```
 
 ---
@@ -712,13 +761,14 @@ Or use this badge in your README:
 ### 🔧 Apply to Your Projects
 
 **Beginner Project:** Explore your current project with OpenCode. Document key files and architecture.  
-**Intermediate Project:** Plan a small feature using Plan mode, then implement with Build mode.  
+**Intermediate Project:** Plan a small feature using the Plan agent, then implement with the Build agent.  
 **Advanced Project:** Create a complete project exploration workflow combining all TUI features.
 
 ### 🤝 Share Your Progress
 
 ```markdown
 # My OpenCode Learning Journey
+
 - ✅ Module 01: Basic Commands & TUI
 - □ Module 02: File Operations
 - □ Module 03: Search Tools

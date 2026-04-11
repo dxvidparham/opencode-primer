@@ -40,12 +40,14 @@
 
 ### 📝 What This Module Covers
 
-| Topic               | Description                     | Why It Matters                          |
-| ------------------- | ------------------------------- | --------------------------------------- |
-| **`read` tool**     | Reading files and directories   | Understand codebases quickly            |
-| **`edit` tool**     | Modifying existing files        | Make precise code changes               |
-| **`write` tool**    | Creating new files              | Generate boilerplate and new components |
-| **File references** | Using `@file` syntax in prompts | Give the LLM direct file context        |
+| Topic                  | Description                          | Why It Matters                          |
+| ---------------------- | ------------------------------------ | --------------------------------------- |
+| **`read` tool**        | Reading files and directories        | Understand codebases quickly            |
+| **`edit` tool**        | Modifying existing files             | Make precise code changes               |
+| **`multiedit` tool**   | Editing multiple files at once       | Batch changes across a codebase         |
+| **`write` tool**       | Creating new files                   | Generate boilerplate and new components |
+| **`apply_patch` tool** | Applying unified diffs               | Multi-region edits in one operation     |
+| **File references**    | Using `@file` syntax in prompts      | Give the LLM direct file context        |
 
 ### 🎓 Learning Objectives
 
@@ -181,6 +183,7 @@ Remove the console.log statements from @src/handlers.ts
 ```
 
 **Key behavior:**
+
 - The `edit` tool does **exact string matching** — the old text must appear verbatim in the file
 - The LLM finds the old text, then produces new text to replace it
 - You can `/undo` any edit
@@ -215,6 +218,10 @@ The edit tool doesn't use line numbers or regex — it searches for the **litera
 **The `apply_patch` alternative:**
 
 For larger multi-region edits, the LLM may use `apply_patch` instead of `edit`. This tool applies unified-diff patches to make several changes in a single operation. Both are covered by the `"edit"` permission.
+
+**The `multiedit` tool:**
+
+For editing multiple files in a single operation, the LLM uses `multiedit`. This is more efficient than calling `edit` on each file separately — it batches all changes and applies them atomically. Also covered by the `"edit"` permission.
 
 ### The `write` Tool
 
@@ -327,6 +334,7 @@ opencode run 'Add a license header to all .ts files in src/'
 ### Workflow 1: Code Review Preparation
 
 In the TUI:
+
 ```
 1. "Show me all files changed in the last commit"
 2. "Read @src/auth.ts and explain the authentication flow"
@@ -365,6 +373,7 @@ flowchart TD
 ```
 
 **Example conversation:**
+
 ```
 You: "I'm getting TypeError: Cannot read property 'id' of undefined
       at src/handler.ts:42. Show me that file and fix the bug."
@@ -381,6 +390,7 @@ LLM: [reads src/handler.ts]
 ## 🧪 Practice Exercises
 
 > **Use the practice project** from [Module 01](../01-basic-commands/#-set-up-a-practice-project). If you haven't created it yet, run:
+>
 > ```bash
 > mkdir -p ~/opencode-practice/src && cd ~/opencode-practice
 > echo '{"name": "practice-app", "version": "1.0.0"}' > package.json
@@ -390,6 +400,7 @@ LLM: [reads src/handler.ts]
 ### Exercise 1: Reading and Understanding
 
 Start OpenCode in the practice project and try:
+
 ```
 1. "Show me the project structure"
 2. "Read @package.json and list all dependencies"
@@ -397,6 +408,7 @@ Start OpenCode in the practice project and try:
 ```
 
 **Expected results:**
+
 - Step 1: Lists `package.json`, `README.md`, and `src/` directory contents
 - Step 2: Shows the JSON and notes there are no dependencies
 - Step 3: Explains the `add` function
@@ -409,6 +421,7 @@ Start OpenCode in the practice project and try:
 ```
 
 **Expected results:**
+
 - Step 1: OpenCode edits README.md (verify with `cat README.md`)
 - Step 2: Version changes from "1.0.0" to "2.0.0" (verify with `cat package.json`)
 - Type `/undo` after each edit to revert, then `/redo` to reapply
@@ -421,6 +434,7 @@ Start OpenCode in the practice project and try:
 ```
 
 **Expected results:**
+
 - Step 1: New file `CHANGELOG.md` appears in project root
 - Step 2: New file `src/multiply.js` with an exported function
 - Verify: `ls` to see new files, `cat CHANGELOG.md` to see contents
@@ -435,6 +449,7 @@ Start OpenCode in the practice project and try:
 ```
 
 **Expected results:**
+
 - Step 3: `src/utils.js` now has both `add` and `subtract` functions
 - Step 4: New test file with at least 2 test cases
 
@@ -470,6 +485,7 @@ Yes — configure permissions in `opencode.json` under the `"permission"` key.
 ### Permission Denied
 
 Check your `opencode.json` permission settings:
+
 ```json
 {
   "permission": {

@@ -5,27 +5,32 @@
 | Command                      | Description                             |
 | ---------------------------- | --------------------------------------- |
 | `opencode`                   | Launch the TUI in the current directory |
+| `opencode <directory>`       | Launch the TUI in a specific directory  |
 | `opencode run 'prompt'`      | Run a one-shot prompt without the TUI   |
 | `opencode agent list`        | List available agents                   |
 | `opencode agent create`      | Create a custom agent                   |
-| `opencode auth login`        | Authenticate with a provider            |
-| `opencode auth list`         | List authenticated providers            |
-| `opencode auth logout`       | Log out of a provider                   |
+| `opencode account login`     | Authenticate with a provider            |
+| `opencode account list`      | List authenticated providers            |
+| `opencode account logout`    | Log out of a provider                   |
 | `opencode mcp add <name>`    | Add an MCP server                       |
 | `opencode mcp list`          | List configured MCP servers             |
 | `opencode mcp auth`          | Authenticate an MCP server              |
 | `opencode mcp debug`         | Debug MCP server connection             |
 | `opencode mcp logout`        | Remove MCP server auth                  |
 | `opencode models [provider]` | List available models                   |
+| `opencode providers`         | List configured providers               |
 | `opencode session list`      | List previous sessions                  |
 | `opencode stats`             | Show usage statistics                   |
 | `opencode export [id]`       | Export a session                        |
 | `opencode import <file>`     | Import a session                        |
-| `opencode serve`             | Start API server mode                   |
-| `opencode web`               | Open the web interface                  |
-| `opencode attach`            | Attach to running OpenCode instance     |
+| `opencode serve`             | Start headless API server (port 4096)   |
+| `opencode web`               | Start server + open web interface       |
+| `opencode attach`            | Attach TUI to a running server          |
+| `opencode pr`                | Pull request operations                 |
 | `opencode github install`    | Install GitHub integration              |
 | `opencode github run`        | Run GitHub Actions locally              |
+| `opencode generate`          | Generate config or scaffold files       |
+| `opencode db`                | Database management commands            |
 | `opencode acp`               | Start ACP server for IDE integration    |
 | `opencode upgrade [target]`  | Upgrade OpenCode                        |
 | `opencode uninstall`         | Uninstall OpenCode                      |
@@ -54,14 +59,30 @@
 | `/thinking` |          | Toggle thinking display       |
 | `/unshare`  |          | Unshare current session       |
 
+## Additional Keyboard Shortcuts
+
+| Keybind         | Action                      |
+| --------------- | --------------------------- |
+| `Tab`           | Cycle agents (Build ↔ Plan) |
+| `Shift+Tab`     | Cycle agents (reverse)      |
+| `Ctrl+X G`      | Show session timeline       |
+| `Ctrl+X B`      | Toggle sidebar              |
+| `Ctrl+X A`      | List agents                 |
+| `F2`            | Cycle recently used models  |
+| `Ctrl+T`        | Cycle model variants        |
+| `Ctrl+R`        | Rename session              |
+| `Ctrl+X H`      | Toggle tips/hints           |
+| `Escape`        | Interrupt current request   |
+| `Ctrl+C`        | Clear input                 |
+
 ## Agents
 
 | Agent       | Type              | Description                                  |
 | ----------- | ----------------- | -------------------------------------------- |
 | **Build**   | Primary (default) | Full access to all tools                     |
-| **Plan**    | Primary           | Restricted — bash/edit require approval      |
+| **Plan**    | Primary           | Edit tools denied — read-only + plan files   |
 | **General** | Subagent          | Full tools (except todo), spawned by primary |
-| **Explore** | Subagent          | Read-only, spawned by primary for research   |
+| **Explore** | Subagent          | Read-only (read, search, bash, web), spawned for research |
 
 - `Tab` — Cycle forward through primary agents (Build ↔ Plan)
 - `Shift+Tab` — Cycle backward
@@ -70,22 +91,27 @@
 
 > These are NOT CLI commands. The LLM calls them automatically when you ask it to do things.
 
-| Tool          | Purpose                                |
-| ------------- | -------------------------------------- |
-| `bash`        | Run shell commands                     |
-| `read`        | Read file or directory contents        |
-| `edit`        | Find-and-replace in files              |
-| `write`       | Create or overwrite files              |
-| `glob`        | Find files by name pattern             |
-| `grep`        | Search file contents                   |
-| `list`        | List directory entries                 |
-| `webfetch`    | Fetch a URL's content                  |
-| `websearch`   | Search the web (requires Exa)          |
-| `question`    | Ask the user a question                |
-| `todowrite`   | Manage a task list                     |
-| `skill`       | Load a SKILL.md workflow               |
-| `apply_patch` | Apply a unified diff                   |
-| `lsp`         | Language server queries (experimental) |
+| Tool          | Purpose                                    |
+| ------------- | ------------------------------------------ |
+| `bash`        | Run shell commands                         |
+| `read`        | Read file or directory contents            |
+| `edit`        | Find-and-replace in files                  |
+| `multiedit`   | Edit multiple files in one operation       |
+| `write`       | Create or overwrite files                  |
+| `apply_patch` | Apply a unified diff                       |
+| `glob`        | Find files by name pattern                 |
+| `grep`        | Search file contents                       |
+| `codesearch`  | Semantic code search across codebase       |
+| `list`        | List directory entries                     |
+| `webfetch`    | Fetch a URL's content                      |
+| `websearch`   | Search the web (requires Exa)              |
+| `question`    | Ask the user a question                    |
+| `todowrite`   | Manage a task list                         |
+| `task`        | Spawn subagent tasks for parallel work     |
+| `skill`       | Load a SKILL.md workflow                   |
+| `plan_enter`  | Switch to Plan agent (from Build)          |
+| `plan_exit`   | Switch to Build agent (from Plan)          |
+| `lsp`         | Language server queries (experimental)     |
 
 ## File References
 
@@ -100,13 +126,18 @@ Use `@` in prompts to reference files:
 
 ## Configuration
 
-| File                  | Purpose                                |
-| --------------------- | -------------------------------------- |
-| `.opencode/`          | Project config directory               |
-| `opencode.json`       | Main configuration file                |
-| `AGENTS.md`           | Project-level instructions for the LLM |
-| `.opencode/tui.json`  | TUI appearance settings                |
-| `.opencode/commands/` | Custom slash commands                  |
+| File                   | Purpose                                          |
+| ---------------------- | ------------------------------------------------ |
+| `.opencode/`           | Project config directory                         |
+| `opencode.json`        | Main configuration file (JSONC comments allowed) |
+| `AGENTS.md`            | Project-level instructions for the LLM           |
+| `.opencode/tui.json`   | TUI appearance settings                          |
+| `.opencode/commands/`  | Custom slash commands                            |
+| `.opencode/agents/`    | Custom agent definitions                         |
+| `.opencode/skills/`    | Project-specific skills                          |
+| `.opencode/plugins/`   | Project-specific plugins                         |
+| `.opencode/tools/`     | Custom tools (TypeScript/JS)                     |
+| `.opencode/plans/`     | Plan files written by the Plan agent             |
 
 ## Key Environment Variables
 
@@ -156,6 +187,7 @@ Use `@` in prompts to reference files:
 ## Common Workflows
 
 ### 1. Explore and Edit
+
 ```
 1. Ask: "What files are in this project?"
 2. Ask: "Explain @src/main.ts"
@@ -164,6 +196,7 @@ Use `@` in prompts to reference files:
 ```
 
 ### 2. Code Search
+
 ```
 1. Ask: "Find all TypeScript files"
 2. Ask: "Search for TODO comments across the codebase"
@@ -172,6 +205,7 @@ Use `@` in prompts to reference files:
 ```
 
 ### 3. One-Shot from Terminal
+
 ```bash
 opencode run 'Explain what this project does'
 opencode run 'Find and fix any TypeScript errors'
@@ -179,6 +213,7 @@ cat error.log | opencode run 'What caused this error?'
 ```
 
 ### 4. MCP Server Setup
+
 ```bash
 opencode mcp add github
 opencode mcp list
@@ -204,7 +239,7 @@ See [openworklabs.com/docs](https://openworklabs.com/docs/get-started) for full 
 
 ## Getting Help
 
-- **Official docs**: https://opencode.ai/docs
-- **OpenWork docs**: https://openworklabs.com/docs
+- **Official docs**: <https://opencode.ai/docs>
+- **OpenWork docs**: <https://openworklabs.com/docs>
 - **`/help`**: Inside the TUI
 - **`opencode --help`**: On the command line

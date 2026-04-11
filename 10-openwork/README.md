@@ -45,7 +45,7 @@
 ```mermaid
 flowchart TD
   subgraph "OpenCode (CLI/TUI)"
-    A["14 built-in tools"]
+    A["19 built-in tools"]
     B["Skills, Agents, Commands"]
     C["MCP Servers"]
     D["Plugin System"]

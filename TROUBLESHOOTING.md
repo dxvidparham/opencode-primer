@@ -5,11 +5,13 @@
 ### 1. Installation Problems
 
 #### Issue: OpenCode not installing
+
 ```
 Command not found after installation
 ```
 
 **Solutions:**
+
 ```bash
 # Install or reinstall
 curl -fsSL https://opencode.ai/install | bash
@@ -20,6 +22,7 @@ opencode --version
 ```
 
 #### Issue: Upgrade fails
+
 ```bash
 # Use the built-in upgrade
 opencode upgrade
@@ -31,11 +34,13 @@ curl -fsSL https://opencode.ai/install | bash
 ### 2. Authentication Problems
 
 #### Issue: Provider not authenticated
+
 ```
 Error connecting to LLM provider
 ```
 
 **Solutions:**
+
 ```bash
 # Check current auth status
 opencode auth list
@@ -53,33 +58,39 @@ opencode auth login
 > Remember: `read`, `edit`, `write`, `glob`, `grep`, `list`, `bash` are LLM-internal tools, not CLI commands you type directly.
 
 #### Issue: Edit tool not finding text
+
 ```
 oldString not found in content
 ```
 
 **Solutions:**
+
 - The LLM needs exact text to match — ask it to read the file first
 - Ask: "Read the file again and try the edit with the exact text"
 - Provide more context: "Edit line 42 of src/main.ts"
 - Use `@` file references for precision: "Fix the bug in @src/main.ts:42"
 
 #### Issue: Permission denied on bash tool
+
 ```
 Bash tool execution denied
 ```
 
 **Solutions:**
-- In **Build mode** (default), bash runs with your user permissions
-- In **Plan mode**, bash requires your approval — look for the approval prompt
+
+- In the **Build agent** (default), bash runs with your user permissions
+- In the **Plan agent**, bash requires your approval — look for the approval prompt
 - Check file permissions: ask "What are the permissions on this file?"
 - The LLM cannot run `sudo` commands by default
 
 #### Issue: File not found
+
 ```
 File or path does not exist
 ```
 
 **Solutions:**
+
 - Use `@` references to help the LLM find the right file
 - Ask: "List the files in this directory" to see what's available
 - Check you're running `opencode` from the correct project directory
@@ -87,6 +98,7 @@ File or path does not exist
 ### 4. TUI Issues
 
 #### Issue: Slash commands not working
+
 Type `/` at the beginning of your message. Available commands:
 
 | Command     | What it does                  |
@@ -101,11 +113,13 @@ Type `/` at the beginning of your message. Available commands:
 | `/exit`     | Quit                          |
 
 #### Issue: Agent not switching
+
 - Press `Tab` to cycle between Build and Plan agents
 - Press `Shift+Tab` to cycle backward
 - The current agent is shown in the TUI interface
 
 #### Issue: Context too long / running out of context
+
 - Use `/compact` to summarize and compress the conversation
 - Start a new session with `/new`
 - Be more specific in your prompts to reduce back-and-forth
@@ -113,6 +127,7 @@ Type `/` at the beginning of your message. Available commands:
 ### 5. MCP Server Issues
 
 #### Issue: Cannot connect to MCP server
+
 ```bash
 # List configured servers
 opencode mcp list
@@ -125,6 +140,7 @@ opencode mcp add <server-name>
 ```
 
 #### Issue: MCP server authentication
+
 ```bash
 # Authenticate a server
 opencode mcp auth
@@ -135,6 +151,7 @@ opencode mcp auth
 ```
 
 #### Issue: MCP server not showing tools
+
 - Use `/connect` in the TUI to connect to a configured server
 - Verify the server is listed in `opencode.json` under `mcpServers`
 - Check that the server process can actually start (test the command manually)
@@ -144,6 +161,7 @@ opencode mcp auth
 #### Issue: Configuration not taking effect
 
 OpenCode configuration lives in:
+
 - **Project level**: `.opencode/` directory and `opencode.json` in your project root
 - **Project instructions**: `AGENTS.md` in your project root
 
@@ -154,13 +172,14 @@ OpenCode configuration lives in:
 ```
 
 #### Issue: Permission configuration
+
 Permissions for tools are set in `opencode.json`:
 
 ```json
 {
   "permissions": {
     "bash": "allow",
-    "edit": "ask",
+    "edit": "deny",
     "write": "ask"
   }
 }
@@ -171,6 +190,7 @@ Values: `"allow"`, `"ask"` (prompt before executing), `"deny"`
 ### 7. Web Tools Issues
 
 #### Issue: websearch not working
+
 Web search requires Exa:
 
 ```bash
@@ -183,6 +203,7 @@ opencode
 ```
 
 #### Issue: webfetch timing out
+
 - Some URLs may be slow or block automated access
 - Ask the LLM to try a different URL or format
 - Check your network connectivity
@@ -190,6 +211,7 @@ opencode
 ### 8. OpenWork Issues
 
 #### Issue: OpenWork not starting
+
 ```bash
 # Install the orchestrator
 npm install -g openwork-orchestrator
@@ -217,6 +239,7 @@ opencode import session-file.json
 ```
 
 Inside the TUI:
+
 - `/sessions` to browse and resume previous sessions
 - `/share` to share the current session
 - `/export` to export the current session
@@ -224,11 +247,13 @@ Inside the TUI:
 ### Debugging Techniques
 
 #### Check OpenCode version
+
 ```bash
 opencode --version
 ```
 
 #### Verify your environment
+
 ```bash
 # Check auth status
 opencode auth list
@@ -241,6 +266,7 @@ opencode models
 ```
 
 #### Start fresh
+
 ```bash
 # Start a new session in the TUI
 /new
@@ -252,13 +278,14 @@ opencode
 
 ### Getting Help
 
-1. **Official docs**: https://opencode.ai/docs
-2. **OpenWork docs**: https://openworklabs.com/docs
+1. **Official docs**: <https://opencode.ai/docs>
+2. **OpenWork docs**: <https://openworklabs.com/docs>
 3. **In the TUI**: Type `/help` for available commands
 4. **On the CLI**: `opencode --help` for command reference
 5. **GitHub**: Report issues at the OpenCode repository
 
 When reporting issues, include:
+
 1. OpenCode version (`opencode --version`)
 2. Operating system
 3. Steps to reproduce

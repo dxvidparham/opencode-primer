@@ -35,17 +35,21 @@ OpenCode provides these core tools that AI agents can use:
 
 - **`read`**: Read file contents and directories
 - **`edit`**: Modify existing files with exact string replacement
+- **`multiedit`**: Edit multiple files in a single operation
 - **`write`**: Create new files or overwrite existing ones
+- **`apply_patch`**: Apply unified-diff patches for multi-region edits
 
 ### Search & Navigation
 
 - **`glob`**: Find files by pattern (e.g., `**/*.js`)
 - **`grep`**: Search file contents using regex
+- **`codesearch`**: Semantic code search across the codebase
 - **`list`**: List directory contents with filtering
 
 ### System Integration
 
 - **`bash`**: Execute shell commands in project environment
+- **`task`**: Spawn subagent tasks for parallel work
 
 ### Interactive Workflows
 
@@ -57,16 +61,17 @@ OpenCode provides these core tools that AI agents can use:
 - **`webfetch`**: Fetch web content (requires permissions)
 - **`websearch`**: Search the web using Exa AI
 
+### Agent Transitions
+
+- **`plan_enter`**: Switch from Build to Plan agent (allowed in Build)
+- **`plan_exit`**: Switch from Plan to Build agent (allowed in Plan)
+
 ### Extensibility
 
 - **`skill`**: Load SKILL.md files for specialized knowledge
+- **`lsp`**: Language Server Protocol queries (experimental)
 - **MCP Servers**: Connect to external tools and services
 - **Custom Agents**: Configure agents via AGENTS.md or opencode.json
-
-### Experimental Features
-
-- **`lsp`**: LSP server integration (experimental)
-- **`apply_patch`**: Apply patch files to codebase
 
 ## 🚀 Quick Start Reference
 
@@ -134,7 +139,7 @@ opencode
 - Starting and navigating the TUI
 - Using slash commands (`/help`, `/undo`, `/redo`, `/share`)
 - File references with `@` symbol
-- Plan mode vs Build mode (Tab key toggle)
+- Plan agent vs Build agent (Tab key to cycle)
 - Conversation flow and context management
 
 **Examples**:
@@ -437,7 +442,7 @@ curl -fsSL https://opencode.ai/install | bash
 ```json
 {
   "permission": {
-    "edit": "ask",
+    "edit": "deny",
     "bash": "allow"
   }
 }

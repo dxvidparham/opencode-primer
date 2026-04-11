@@ -408,7 +408,7 @@ Most permissions default to `"allow"`. Exceptions:
 
 - `doom_loop`: `"ask"`
 - `external_directory`: `"ask"`
-- `read` for `.env` files: `"deny"` by default
+- `read` for `.env` files: `"ask"` by default
 
 ---
 
@@ -649,6 +649,8 @@ flowchart TB
 ```
 
 Each layer merges with the previous — values in higher-priority sources override lower ones.
+
+> **Tip:** Config files support JSONC (JSON with comments). You can use `opencode.jsonc` and include `//` comments in your config for documentation.
 
 ### Variable Substitution
 
