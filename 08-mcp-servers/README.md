@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Local MCP Servers](#-local-mcp-servers)
@@ -46,6 +47,18 @@ MCP (Model Context Protocol) is an open protocol that lets OpenCode connect to e
 - **Tool integration** (GitHub, Sentry, cloud services)
 - **Local and remote servers** with OAuth support
 - **Per-agent control** over which servers are available
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 07: Skills & Agents](../07-skills-agents/)
 
 ---
 

@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [🔌 Plugin System](#-plugin-system)
 - [🛠️ Custom Tools](#️-custom-tools)
 - [🔒 Permission Configuration](#-permission-configuration)
@@ -70,6 +71,18 @@ flowchart TD
     I["TUI Settings"]
   end
 ```
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 08: MCP Servers](../08-mcp-servers/)
 
 ---
 

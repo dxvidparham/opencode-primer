@@ -67,35 +67,11 @@ By the end of this module, you'll be able to:
 
 ## ✅ Prerequisites
 
-### 🔍 Check Your Setup
-
-```bash
-# Verify OpenCode installation
-which opencode
-# Should output: /path/to/opencode
-
-# Check version
-opencode --version
-# Should output: opencode 1.0+
-
-# Test basic functionality
-echo 'Hello, OpenCode!' > test.txt
-cat test.txt
-rm test.txt
-```
-
-### 📚 Required Knowledge
+### � Required Knowledge
 
 - [ ] Basic terminal/command line familiarity (`cd`, `ls`, `mkdir` — if unfamiliar, see [Terminal Basics for Beginners](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Command_line))
 - [ ] Understanding of file system navigation (folders/directories, paths like `~/Documents`)
 - [ ] No previous opencode experience required
-
-### 🛠️ Required Tools
-
-- [ ] OpenCode 1.0+ installed (see below)
-- [ ] Terminal/Command Line access
-- [ ] A project directory to work in
-- [ ] Example files from `/examples/` folder
 
 ### 📦 Installation Methods
 
@@ -126,6 +102,18 @@ mise use -g opencode-ai
 ```
 
 **Desktop App (BETA):** OpenCode also offers a native desktop app for macOS, Windows, and Linux. Download from the [releases page](https://github.com/anomalyco/opencode/releases) or [opencode.ai/download](https://opencode.ai/download).
+
+### 🔍 Verify Your Setup
+
+```bash
+# Verify OpenCode is installed and in PATH
+which opencode
+# Should output: /path/to/opencode
+
+# Check version
+opencode --version
+# Should output: opencode 1.0+
+```
 
 ---
 
@@ -202,51 +190,11 @@ opencode
 
 ---
 
-### Slash Commands
-
-Common slash commands (type these in the TUI prompt):
-
-```
-# Show available commands and help
-/help
-
-# Undo/redo last change (uses Git internally)
-/undo
-/redo
-
-# Share conversation (creates shareable link)
-/share
-
-# Initialize project analysis (creates AGENTS.md)
-/init
-
-# Compact conversation context
-/compact
-
-# Start new session
-/new
-
-# List/switch sessions
-/sessions
-
-# Exit OpenCode
-/exit
-```
-
-### File References
-
-Reference files in your conversation using `@`:
-
-```
-Look at the authentication code in @src/auth.js
-Explain how this function works in @utils/helpers.ts
-```
-
 ## 📚 Core Concepts
 
 ### 🧠 Concept 1: The TUI Interface
 
-The TUI layout was covered in [Quick Start](#️-tui-interface-overview). Here's what you need to know about working in it day-to-day:
+The [TUI Interface Overview](#️-tui-interface-overview) above describes what you see when OpenCode starts. Here's what matters for day-to-day work:
 
 **Key Features:**
 
@@ -263,7 +211,7 @@ The TUI layout was covered in [Quick Start](#️-tui-interface-overview). Here's
 
 ### 🧠 Concept 2: Slash Commands
 
-Slash commands were listed in [Quick Start](#slash-commands). Here’s the complete reference with keybinds:
+Type these commands in the TUI prompt (starting with `/`). Most also have keyboard shortcuts via the `ctrl+x` leader key.
 
 **Complete Slash Command Reference:**
 
@@ -312,7 +260,13 @@ The `@` symbol triggers a **fuzzy file search** within your project. When you ty
 - Directories work too: `@src/` includes a listing of files in that directory
 - File content costs tokens — large files use more of the context window
 
-See examples in [Quick Start → File References](#file-references).
+**Examples:**
+
+```
+Look at the authentication code in @src/auth.js
+Explain how this function works in @utils/helpers.ts
+Compare @src/index.js and @src/utils.js
+```
 
 ### 🧠 Concept 4: Plan Agent vs Build Agent
 

@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [🖥️ Desktop App](#️-desktop-app)
 - [🌐 Self-Hosted Setup](#-self-hosted-setup)
@@ -76,6 +77,18 @@ flowchart TD
 | **Cloud (Teams)**       | Shared workspaces, skill hubs, RBAC, team templates         |
 
 OpenWork is powered by [OpenCode](https://opencode.ai/) — everything you've learned in Modules 01–09 applies.
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 09: Advanced Features](../09-advanced-features/)
 
 ---
 

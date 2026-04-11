@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 Agent System](#-agent-system)
 - [🔧 Skills](#-skills)
@@ -89,6 +90,18 @@ flowchart TD
 | **Skills**          | SKILL.md files with specialized instructions         |
 | **Custom Agents**   | Define via Markdown or JSON with full option control |
 | **Custom Commands** | Reusable slash commands with templates and arguments |
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 06: Web Tools](../06-web-tools/)
 
 ---
 

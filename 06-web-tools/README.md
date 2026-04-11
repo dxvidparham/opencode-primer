@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Examples & Patterns](#-examples--patterns)
@@ -43,6 +44,18 @@
 | **`websearch`** | Search the web (via Exa AI) | `OPENCODE_ENABLE_EXA=1` env var |
 
 Both are **LLM-internal tools** — the AI agent uses them when you ask for web-based research. They are NOT CLI commands.
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 05: Question & Todo Tools](../05-question-todo/)
 
 ---
 

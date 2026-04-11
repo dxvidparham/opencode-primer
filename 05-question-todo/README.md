@@ -21,6 +21,7 @@
 <summary>Click to expand/collapse</summary>
 
 - [🎯 Overview](#-overview)
+- [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
 - [📚 The Question Tool](#-the-question-tool)
 - [📋 The Todowrite Tool](#-the-todowrite-tool)
@@ -53,6 +54,18 @@ flowchart LR
   C --> F["You answer"] --> B
   D --> G["Works through tasks\nupdating status"]
 ```
+
+---
+
+## ✅ Prerequisites
+
+```bash
+opencode --version   # Verify installation
+cd ~/your-project    # Navigate to a project
+opencode             # Start the TUI
+```
+
+- [x] Completed [Module 04: Bash Integration](../04-bash-integration/)
 
 ---
 
