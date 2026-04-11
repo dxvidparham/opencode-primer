@@ -313,15 +313,15 @@ Quick keyboard shortcuts for common functions, starting with `/`.
 
 **Additional Keyboard Shortcuts (no slash command equivalent):**
 
-| Keybind        | Action                         |
-| -------------- | ------------------------------ |
-| `ctrl+x g`     | Show session timeline          |
-| `ctrl+x b`     | Toggle sidebar                 |
-| `ctrl+x a`     | List agents                    |
-| `f2`           | Cycle recently used models     |
-| `ctrl+t`       | Cycle model variants           |
-| `ctrl+r`       | Rename current session         |
-| `ctrl+x h`     | Toggle tips/hint visibility    |
+| Keybind    | Action                      |
+| ---------- | --------------------------- |
+| `ctrl+x g` | Show session timeline       |
+| `ctrl+x b` | Toggle sidebar              |
+| `ctrl+x a` | List agents                 |
+| `f2`       | Cycle recently used models  |
+| `ctrl+t`   | Cycle model variants        |
+| `ctrl+r`   | Rename current session      |
+| `ctrl+x h` | Toggle tips/hint visibility |
 
 **When to use them:**
 
@@ -381,12 +381,12 @@ Two built-in agents you cycle between with the **Tab** key. (The TUI shows `tab 
 
 **Agent Comparison:**
 
-| Aspect           | Build Agent (Default)      | Plan Agent                       |
-| ---------------- | -------------------------- | -------------------------------- |
-| **Purpose**      | Execution & implementation | Strategy & planning              |
-| **File Changes** | Can read/write/edit files  | Edit tools denied (read-only + plans)  |
-| **Tool Usage**   | Full tool access           | Edit/write/patch/multiedit all denied  |
-| **When to Use**  | Implementing, testing      | Brainstorming, planning          |
+| Aspect           | Build Agent (Default)      | Plan Agent                            |
+| ---------------- | -------------------------- | ------------------------------------- |
+| **Purpose**      | Execution & implementation | Strategy & planning                   |
+| **File Changes** | Can read/write/edit files  | Edit tools denied (read-only + plans) |
+| **Tool Usage**   | Full tool access           | Edit/write/patch/multiedit all denied |
+| **When to Use**  | Implementing, testing      | Brainstorming, planning               |
 
 **Recommended Workflow:**
 
@@ -698,55 +698,71 @@ ls -la src/file.js
 
 Test your understanding:
 
-1. **What key do you press to cycle between agents?**
-    - [ ] Ctrl+P
-    - [ ] Spacebar
-    - [x] Tab ✓
-    - [ ] Enter
+**1. What key do you press to cycle between agents?**
 
-2. **How do you reference a specific file in a prompt?**
-    - [ ] #filename
-    - [x] @filename ✓
-    - [ ] $filename
-    - [ ] %filename
+- A) Ctrl+P
+- B) Spacebar
+- C) Tab
+- D) Enter
 
-3. **Which agent allows OpenCode to make file changes freely?**
-    - [ ] Plan agent
-    - [x] Build agent ✓
-    - [ ] Both agents
-    - [ ] Neither agent
+<details>
+<summary>Show answer</summary>
 
-4. **What does `/undo` do?**
-    - [ ] Undoes your last typed command
-    - [x] Undoes OpenCode's last change ✓
-    - [ ] Clears the conversation
-    - [ ] Exits OpenCode
+**C) Tab** — Press Tab to cycle forward through primary agents, Shift+Tab to go backward.
+
+</details>
+
+**2. How do you reference a specific file in a prompt?**
+
+- A) #filename
+- B) @filename
+- C) $filename
+- D) %filename
+
+<details>
+<summary>Show answer</summary>
+
+**B) @filename** — The `@` symbol triggers a fuzzy file search within your project.
+
+</details>
+
+**3. Which agent allows OpenCode to make file changes freely?**
+
+- A) Plan agent
+- B) Build agent
+- C) Both agents
+- D) Neither agent
+
+<details>
+<summary>Show answer</summary>
+
+**B) Build agent** — Build has full tool access. Plan denies all edit tools.
+
+</details>
+
+**4. What does `/undo` do?**
+
+- A) Undoes your last typed command
+- B) Undoes OpenCode's last change
+- C) Clears the conversation
+- D) Exits OpenCode
+
+<details>
+<summary>Show answer</summary>
+
+**B) Undoes OpenCode's last change** — Reverts the most recent file modification using Git internally.
+
+</details>
 
 ### ✅ Skills Acquired
 
-| Skill                 | Proficiency                                 | Evidence                                 |
-| --------------------- | ------------------------------------------- | ---------------------------------------- |
-| **TUI Navigation**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can start, navigate, and exit TUI        |
-| **Slash Commands**    | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can use /help, /undo, /redo effectively  |
-| **File References**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can reference files with @ symbol        |
-| **Agent Switching**   | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can switch between Plan and Build agents |
-| **Conversation Flow** | ✅ Beginner<br>□ Intermediate<br>□ Advanced | Can maintain effective AI dialogue       |
+After completing this module you should be able to:
 
-### 🏆 Module Completion
-
-Mark your progress! Copy this when you complete the module:
-
-```bash
-echo "✅ Completed Module 01: Basic Commands & TUI on $(date)"
-echo "🎯 Skills gained: TUI navigation, slash commands, file references, agent switching"
-echo "📚 Next: Module 02 - File Operations"
-```
-
-Or use this badge in your README:
-
-```markdown
-
-```
+- ✅ Start, navigate, and exit the TUI
+- ✅ Use `/help`, `/undo`, `/redo`, and other slash commands
+- ✅ Reference files with `@` and understand how context is injected
+- ✅ Switch between Plan and Build agents with Tab
+- ✅ Maintain effective multi-turn conversations
 
 ---
 
@@ -755,31 +771,14 @@ Or use this badge in your README:
 ### 📚 Continue Learning
 
 - **Next Module:** [02 - File Operations](../02-file-operations/) - Learn how OpenCode reads, edits, and writes files
-- **Related Topic:** [TUI Advanced Features](https://opencode.ai/docs/tui) - Official documentation
-- **Advanced Reading:** [AI-Assisted Development Patterns](https://opencode.ai/blog) - Best practices blog
+- **Official TUI Docs:** [opencode.ai/docs/tui](https://opencode.ai/docs/tui) - Full TUI reference
+- **Keybinds Reference:** [opencode.ai/docs/keybinds](https://opencode.ai/docs/keybinds) - All keyboard shortcuts
 
 ### 🔧 Apply to Your Projects
 
-**Beginner Project:** Explore your current project with OpenCode. Document key files and architecture.  
-**Intermediate Project:** Plan a small feature using the Plan agent, then implement with the Build agent.  
+**Beginner Project:** Explore your current project with OpenCode. Document key files and architecture.
+**Intermediate Project:** Plan a small feature using the Plan agent, then implement with the Build agent.
 **Advanced Project:** Create a complete project exploration workflow combining all TUI features.
-
-### 🤝 Share Your Progress
-
-```markdown
-# My OpenCode Learning Journey
-
-- ✅ Module 01: Basic Commands & TUI
-- □ Module 02: File Operations
-- □ Module 03: Search Tools
-- □ Module 04: Bash Integration
-- □ Module 05: Question & Todo Tools
-- □ Module 06: Web Tools
-- □ Module 07: Skills & Agents
-- □ Module 08: MCP Servers
-- □ Module 09: Advanced Features
-- □ Module 10: OpenWork Integration
-```
 
 ---
 
