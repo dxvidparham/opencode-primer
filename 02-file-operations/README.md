@@ -40,14 +40,14 @@
 
 ### 📝 What This Module Covers
 
-| Topic                  | Description                          | Why It Matters                          |
-| ---------------------- | ------------------------------------ | --------------------------------------- |
-| **`read` tool**        | Reading files and directories        | Understand codebases quickly            |
-| **`edit` tool**        | Modifying existing files             | Make precise code changes               |
-| **`multiedit` tool**   | Editing multiple files at once       | Batch changes across a codebase         |
-| **`write` tool**       | Creating new files                   | Generate boilerplate and new components |
-| **`apply_patch` tool** | Applying unified diffs               | Multi-region edits in one operation     |
-| **File references**    | Using `@file` syntax in prompts      | Give the LLM direct file context        |
+| Topic                  | Description                     | Why It Matters                          |
+| ---------------------- | ------------------------------- | --------------------------------------- |
+| **`read` tool**        | Reading files and directories   | Understand codebases quickly            |
+| **`edit` tool**        | Modifying existing files        | Make precise code changes               |
+| **`multiedit` tool**   | Editing multiple files at once  | Batch changes across a codebase         |
+| **`write` tool**       | Creating new files              | Generate boilerplate and new components |
+| **`apply_patch` tool** | Applying unified diffs          | Multi-region edits in one operation     |
+| **File references**    | Using `@file` syntax in prompts | Give the LLM direct file context        |
 
 ### 🎓 Learning Objectives
 

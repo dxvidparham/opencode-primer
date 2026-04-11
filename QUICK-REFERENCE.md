@@ -61,27 +61,27 @@
 
 ## Additional Keyboard Shortcuts
 
-| Keybind         | Action                      |
-| --------------- | --------------------------- |
-| `Tab`           | Cycle agents (Build ↔ Plan) |
-| `Shift+Tab`     | Cycle agents (reverse)      |
-| `Ctrl+X G`      | Show session timeline       |
-| `Ctrl+X B`      | Toggle sidebar              |
-| `Ctrl+X A`      | List agents                 |
-| `F2`            | Cycle recently used models  |
-| `Ctrl+T`        | Cycle model variants        |
-| `Ctrl+R`        | Rename session              |
-| `Ctrl+X H`      | Toggle tips/hints           |
-| `Escape`        | Interrupt current request   |
-| `Ctrl+C`        | Clear input                 |
+| Keybind     | Action                      |
+| ----------- | --------------------------- |
+| `Tab`       | Cycle agents (Build ↔ Plan) |
+| `Shift+Tab` | Cycle agents (reverse)      |
+| `Ctrl+X G`  | Show session timeline       |
+| `Ctrl+X B`  | Toggle sidebar              |
+| `Ctrl+X A`  | List agents                 |
+| `F2`        | Cycle recently used models  |
+| `Ctrl+T`    | Cycle model variants        |
+| `Ctrl+R`    | Rename session              |
+| `Ctrl+X H`  | Toggle tips/hints           |
+| `Escape`    | Interrupt current request   |
+| `Ctrl+C`    | Clear input                 |
 
 ## Agents
 
-| Agent       | Type              | Description                                  |
-| ----------- | ----------------- | -------------------------------------------- |
-| **Build**   | Primary (default) | Full access to all tools                     |
-| **Plan**    | Primary           | Edit tools denied — read-only + plan files   |
-| **General** | Subagent          | Full tools (except todo), spawned by primary |
+| Agent       | Type              | Description                                               |
+| ----------- | ----------------- | --------------------------------------------------------- |
+| **Build**   | Primary (default) | Full access to all tools                                  |
+| **Plan**    | Primary           | Edit tools denied — read-only + plan files                |
+| **General** | Subagent          | Full tools (except todo), spawned by primary              |
 | **Explore** | Subagent          | Read-only (read, search, bash, web), spawned for research |
 
 - `Tab` — Cycle forward through primary agents (Build ↔ Plan)
@@ -91,27 +91,27 @@
 
 > These are NOT CLI commands. The LLM calls them automatically when you ask it to do things.
 
-| Tool          | Purpose                                    |
-| ------------- | ------------------------------------------ |
-| `bash`        | Run shell commands                         |
-| `read`        | Read file or directory contents            |
-| `edit`        | Find-and-replace in files                  |
-| `multiedit`   | Edit multiple files in one operation       |
-| `write`       | Create or overwrite files                  |
-| `apply_patch` | Apply a unified diff                       |
-| `glob`        | Find files by name pattern                 |
-| `grep`        | Search file contents                       |
-| `codesearch`  | Semantic code search across codebase       |
-| `list`        | List directory entries                     |
-| `webfetch`    | Fetch a URL's content                      |
-| `websearch`   | Search the web (requires Exa)              |
-| `question`    | Ask the user a question                    |
-| `todowrite`   | Manage a task list                         |
-| `task`        | Spawn subagent tasks for parallel work     |
-| `skill`       | Load a SKILL.md workflow                   |
-| `plan_enter`  | Switch to Plan agent (from Build)          |
-| `plan_exit`   | Switch to Build agent (from Plan)          |
-| `lsp`         | Language server queries (experimental)     |
+| Tool          | Purpose                                |
+| ------------- | -------------------------------------- |
+| `bash`        | Run shell commands                     |
+| `read`        | Read file or directory contents        |
+| `edit`        | Find-and-replace in files              |
+| `multiedit`   | Edit multiple files in one operation   |
+| `write`       | Create or overwrite files              |
+| `apply_patch` | Apply a unified diff                   |
+| `glob`        | Find files by name pattern             |
+| `grep`        | Search file contents                   |
+| `codesearch`  | Semantic code search across codebase   |
+| `list`        | List directory entries                 |
+| `webfetch`    | Fetch a URL's content                  |
+| `websearch`   | Search the web (requires Exa)          |
+| `question`    | Ask the user a question                |
+| `todowrite`   | Manage a task list                     |
+| `task`        | Spawn subagent tasks for parallel work |
+| `skill`       | Load a SKILL.md workflow               |
+| `plan_enter`  | Switch to Plan agent (from Build)      |
+| `plan_exit`   | Switch to Build agent (from Plan)      |
+| `lsp`         | Language server queries (experimental) |
 
 ## File References
 
@@ -126,18 +126,18 @@ Use `@` in prompts to reference files:
 
 ## Configuration
 
-| File                   | Purpose                                          |
-| ---------------------- | ------------------------------------------------ |
-| `.opencode/`           | Project config directory                         |
-| `opencode.json`        | Main configuration file (JSONC comments allowed) |
-| `AGENTS.md`            | Project-level instructions for the LLM           |
-| `.opencode/tui.json`   | TUI appearance settings                          |
-| `.opencode/commands/`  | Custom slash commands                            |
-| `.opencode/agents/`    | Custom agent definitions                         |
-| `.opencode/skills/`    | Project-specific skills                          |
-| `.opencode/plugins/`   | Project-specific plugins                         |
-| `.opencode/tools/`     | Custom tools (TypeScript/JS)                     |
-| `.opencode/plans/`     | Plan files written by the Plan agent             |
+| File                  | Purpose                                          |
+| --------------------- | ------------------------------------------------ |
+| `.opencode/`          | Project config directory                         |
+| `opencode.json`       | Main configuration file (JSONC comments allowed) |
+| `AGENTS.md`           | Project-level instructions for the LLM           |
+| `.opencode/tui.json`  | TUI appearance settings                          |
+| `.opencode/commands/` | Custom slash commands                            |
+| `.opencode/agents/`   | Custom agent definitions                         |
+| `.opencode/skills/`   | Project-specific skills                          |
+| `.opencode/plugins/`  | Project-specific plugins                         |
+| `.opencode/tools/`    | Custom tools (TypeScript/JS)                     |
+| `.opencode/plans/`    | Plan files written by the Plan agent             |
 
 ## Key Environment Variables
 

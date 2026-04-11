@@ -98,9 +98,9 @@ flowchart TD
 
 In the TUI, press **Tab** to cycle between primary agents:
 
-| Agent               | Default Behavior                    | When to Use                         |
-| ------------------- | ----------------------------------- | ----------------------------------- |
-| **Build** (default) | Full tool access, executes changes  | Normal development                  |
+| Agent               | Default Behavior                      | When to Use                         |
+| ------------------- | ------------------------------------- | ----------------------------------- |
+| **Build** (default) | Full tool access, executes changes    | Normal development                  |
 | **Plan**            | Edit tools denied (read-only + plans) | Planning, reviewing before changing |
 
 Press **Shift+Tab** to cycle in reverse.
@@ -109,9 +109,9 @@ Press **Shift+Tab** to cycle in reverse.
 
 The primary agent can launch **subagents** for specific tasks:
 
-| Subagent    | Access Level                       | Purpose                        |
-| ----------- | ---------------------------------- | ------------------------------ |
-| **General** | Full tools (except todowrite)      | Complex research and execution |
+| Subagent    | Access Level                                                              | Purpose                        |
+| ----------- | ------------------------------------------------------------------------- | ------------------------------ |
+| **General** | Full tools (except todowrite)                                             | Complex research and execution |
 | **Explore** | Read-only (read, glob, grep, list, bash, webfetch, websearch, codesearch) | Safe codebase exploration      |
 
 You can request a specific subagent or **@-mention** one:

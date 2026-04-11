@@ -246,21 +246,7 @@ Explain how this function works in @utils/helpers.ts
 
 ### 🧠 Concept 1: The TUI Interface
 
-**What it is:**
-OpenCode's Terminal User Interface (TUI) provides a conversational interface for working with an AI coding agent in your terminal.
-
-**How it works:**
-
-```bash
-# Start the TUI
-opencode
-
-# The TUI fills your terminal window with:
-# - Conversation/logo area (main): messages and AI responses
-# - Input box (center): where you type prompts
-# - Status line (below input): agent, model, provider
-# - Footer (bottom): working directory + version
-```
+The TUI layout was covered in [Quick Start](#️-tui-interface-overview). Here's what you need to know about working in it day-to-day:
 
 **Key Features:**
 
@@ -277,18 +263,7 @@ opencode
 
 ### 🧠 Concept 2: Slash Commands
 
-**What they are:**
-Quick keyboard shortcuts for common functions, starting with `/`.
-
-**How they work:**
-
-```bash
-# Type in the TUI prompt:
-/help    # Shows available commands
-/undo    # Reverts last change
-/redo    # Restores undone change
-/share   # Creates shareable conversation link
-```
+Slash commands were listed in [Quick Start](#slash-commands). Here’s the complete reference with keybinds:
 
 **Complete Slash Command Reference:**
 
@@ -331,55 +306,17 @@ Quick keyboard shortcuts for common functions, starting with `/`.
 
 ### 🧠 Concept 3: File References with `@`
 
-**What it is:**
-The `@` symbol allows you to reference specific files or code sections in your prompts.
+The `@` symbol triggers a **fuzzy file search** within your project. When you type `@src/main.js`, OpenCode reads that file and injects its contents into the conversation context — so the LLM can see the exact current code.
 
-**How it works:**
+- You can reference multiple files: `@a.ts @b.ts @c.ts`
+- Directories work too: `@src/` includes a listing of files in that directory
+- File content costs tokens — large files use more of the context window
 
-```bash
-# Single file reference (fuzzy search in project)
-@package.json
-
-# Multiple files
-@src/index.js @src/utils.js
-```
-
-**Examples in Practice:**
-
-```bash
-# In TUI prompt:
-"Explain the main function in @src/main.js"
-"Compare @config/dev.env and @config/prod.env"
-```
-
-> **Note:** The `@` symbol triggers a fuzzy file search within your project directory.
-> File content is automatically included in the conversation context.
-
-**When to use it:**
-
-- Providing context about specific code
-- Asking about particular files or sections
-- Directing OpenCode's attention precisely
+See examples in [Quick Start → File References](#file-references).
 
 ### 🧠 Concept 4: Plan Agent vs Build Agent
 
-**What it is:**
-Two built-in agents you cycle between with the **Tab** key. (The TUI shows `tab agents` at the bottom as a reminder.)
-
-**How it works:**
-
-```bash
-# Build agent is the DEFAULT — full tool access
-[Build] Agent: OpenCode can execute tools and modify files
-
-# Press Tab to switch to Plan agent
-[Plan] Agent: edit tools denied — can only read, search, and write plans to .opencode/plans/
-
-# Press Tab again to switch back (Shift+Tab cycles in reverse)
-[Build] Agent
-```
-
-**Agent Comparison:**
+Two built-in agents you cycle between with the **Tab** key. (The TUI shows `tab agents` at the bottom as a reminder.) Press **Shift+Tab** to cycle in reverse.
 
 | Aspect           | Build Agent (Default)      | Plan Agent                            |
 | ---------------- | -------------------------- | ------------------------------------- |
@@ -388,38 +325,11 @@ Two built-in agents you cycle between with the **Tab** key. (The TUI shows `tab 
 | **Tool Usage**   | Full tool access           | Edit/write/patch/multiedit all denied |
 | **When to Use**  | Implementing, testing      | Brainstorming, planning               |
 
-**Recommended Workflow:**
-
-1. **Switch to Plan agent** (press Tab) for complex requests
-2. **Review the plan** - OpenCode outlines approach
-3. **Switch to Build agent** (press Tab again)
-4. **Execute the plan** - OpenCode implements changes
-5. **Review results** - Verify implementation matches plan
-
-**When to use each:**
-
-- **Plan agent**: Brainstorming, architectural decisions, complex refactors
-- **Build agent**: Implementation, testing, file operations, automation
+**Recommended Workflow:** Start in Plan for complex requests → review the plan → switch to Build → execute → review results. See [Exercise 2](#-exercise-2-plan-vs-build-agents) to try it hands-on.
 
 ### 🧠 Concept 5: Conversation Management
 
-**What it is:**
-How OpenCode maintains and manages conversation context over time.
-
-**How it works:**
-
-```bash
-# Conversation continues naturally
-You: "Create a function to calculate factorial"
-OpenCode: "Here's the factorial function..."
-
-You: "Now add error handling for negative numbers"
-OpenCode: "Updated with error handling..."
-
-# Context persists across requests
-You: "What else could we improve?"
-OpenCode: "Based on the factorial function, we could..."
-```
+OpenCode maintains context across exchanges within a session, but the context window is finite.
 
 **Key Features:**
 
@@ -431,17 +341,9 @@ OpenCode: "Based on the factorial function, we could..."
 **Best Practices:**
 
 1. **Be specific early** - Provide context in initial request
-2. **Reference previous points** - "Based on what you said about X..."
-3. **Use @ references** - Keep context focused on relevant files
-4. **Compact when needed** - Use `/compact` if conversation gets slow
-5. **Start fresh if stuck** - Sometimes new session is better than long one
-
-**When to manage context:**
-
-- Long, complex conversations slowing down
-- Changing topics significantly
-- Wanting to focus on specific aspect
-- Sharing specific conversation segment
+2. **Use @ references** - Keep context focused on relevant files
+3. **Compact when needed** - Use `/compact` if conversation gets slow
+4. **Start fresh if stuck** - Sometimes `/new` is better than a marathon session
 
 ---
 
@@ -462,20 +364,6 @@ You: What dependencies are in @package.json?
 → OpenCode reads package.json and lists each dependency.
 ```
 
-### 📖 Example 2: Plan → Build Workflow
-
-```
-1. Start in Build agent (default)
-2. Press Tab to switch to Plan agent
-3. Type: "Create a utility function to calculate factorial"
-   → OpenCode outlines an approach WITHOUT creating any files
-4. Press Tab to switch back to Build agent
-5. Type: "Go ahead and implement it"
-   → OpenCode creates the file
-6. Type: "Show me what you created @src/factorial.js"
-   → OpenCode displays the code
-```
-
 ---
 
 ## 🏗️ Real-World Workflows
@@ -491,20 +379,6 @@ You: What dependencies are in @package.json?
 ```
 
 **When to use:** Starting on a new codebase, onboarding, code review.
-
-### 🔄 Workflow 2: Planning a Feature
-
-```
-1. Press Tab to switch to Plan agent
-2. "I want to add user authentication to this project"
-   → OpenCode outlines the approach without changing files
-3. "What about security considerations?"
-4. "Create an implementation checklist"
-5. Press Tab to switch to Build agent
-6. "Implement step 1 from the checklist"
-```
-
-**When to use:** Complex features, architectural decisions, refactoring.
 
 ---
 
