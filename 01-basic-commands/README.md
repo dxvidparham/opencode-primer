@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -30,23 +29,10 @@
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Launch OpenCode in both TUI (interactive) and CLI (one-shot) modes
-- Navigate the TUI interface and understand its key areas (input, chat, status bar)
-- Write effective prompts that guide the LLM to produce useful results
-- Use slash commands (`/clear`, `/compact`, `/model`) to control sessions
-- Reference files with `@file` syntax to give the LLM targeted context
-- Create and apply a basic `opencode.json` configuration to a project
 
 ---
 
@@ -69,19 +55,7 @@ By the end of this module, you will be able to:
 | **Plan/Build Agents** | Tab key to cycle agents             | Different thinking vs execution agents   |
 | **Conversation Flow** | Effective AI dialogue patterns      | Maximize coding assistance value         |
 
-### 🎓 Learning Objectives
-
-By the end of this module, you'll be able to:
-
-- ✅ **Start and navigate** the opencode TUI confidently
-- ✅ **Use essential slash commands** for productivity
-- ✅ **Reference files** with `@` symbol for context
-- ✅ **Switch between Plan and Build agents** effectively
-- ✅ **Manage conversation flow** for optimal AI assistance
-
 ## ✅ Prerequisites
-
-### � Required Knowledge
 
 - [ ] Basic terminal/command line familiarity (`cd`, `ls`, `mkdir` — if unfamiliar, see [Terminal Basics for Beginners](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Command_line))
 - [ ] Understanding of file system navigation (folders/directories, paths like `~/Documents`)
@@ -168,6 +142,8 @@ Or use CLI mode for one-off prompts:
 opencode run "Explain this project's structure"
 ```
 
+> 📂 **Hands-on companion:** [examples/quick-start.md](examples/quick-start.md) has guided exercises for installation, first conversations, file references, and one-shot mode. Work through it alongside this module, or save it for after you finish the concepts below.
+
 ### 🖥️ TUI Interface Overview
 
 Once opencode starts, you'll see a full-screen terminal interface (built with SolidJS and [opentui](https://github.com/sst/opentui)). The layout from top to bottom:
@@ -177,6 +153,14 @@ Once opencode starts, you'll see a full-screen terminal interface (built with So
 - **Status line** (below input) — Shows the current agent (`Build`/`Plan`), model name (e.g. `DeepSeek V3.2`), and provider (e.g. `OpenRouter`)
 - **Keyboard hints** (below status) — Shows `tab agents` and `ctrl+p commands`
 - **Footer** (bottom edge) — Working directory on the left, OpenCode version on the right
+
+<div align="center">
+
+![OpenCode TUI](../resources/opencode-tui.png)
+
+*The OpenCode TUI on a fresh start*
+
+</div>
 
 > **What you'll actually see:** The TUI fills your entire terminal window. It's not a simple text box — it's a full interactive interface with scrolling, syntax highlighting, and live tool execution output. The layout may differ slightly between versions.
 
@@ -258,6 +242,10 @@ Type these commands in the TUI prompt (starting with `/`). Most also have keyboa
 | `/help`     | Show help dialog                | `ctrl+x h` | When learning or forgetting commands  |
 | `/undo`     | Undo last change (uses Git)     | `ctrl+x u` | Made a mistake or want to revert      |
 | `/redo`     | Redo undone change              | `ctrl+x r` | Changed your mind about undo          |
+
+> ⚠️ **`/undo` requires Git.** OpenCode uses Git checkpoints under the hood. If your project isn't a Git repository, `/undo` and `/redo` won't work. Initialize with `git init` first.
+>
+> ⚠️ **Multi-line input:** The TUI input is single-line. For long or multi-line prompts, use `/editor` (or `ctrl+x e`) to open your `$EDITOR` — compose your full prompt there, save, and it's sent.
 | `/share`    | Create shareable link           | `ctrl+x s` | Sharing work with team or community   |
 | `/init`     | Create/update AGENTS.md         | `ctrl+x i` | Starting work on a new project        |
 | `/connect`  | Configure LLM provider          | —          | Setting up different AI providers     |
@@ -289,6 +277,8 @@ Type these commands in the TUI prompt (starting with `/`). Most also have keyboa
 - Quick actions without typing full prompts
 - Navigation and control within the TUI
 - Session management and sharing
+
+> 💡 **Direct shell commands:** You can also run shell commands inside the TUI by prefixing with `!` — for example, `!git status` or `!ls -la`. This bypasses the LLM entirely and runs the command immediately. Covered in depth in [Module 04: Bash Integration](../04-bash-integration/).
 
 ### 🧠 Concept 3: File References with `@`
 
@@ -329,6 +319,8 @@ OpenCode maintains context across exchanges within a session, but the context wi
 - **Auto-compaction** - Long conversations automatically summarized
 - **Manual Control** - Use `/compact` to reduce context size manually
 - **Session Persistence** - Conversations saved between sessions
+
+> ⚠️ **Context growth is the #1 performance issue.** Long sessions with many tool calls accumulate context quickly. If responses slow down or the LLM starts "forgetting" earlier parts of the conversation, use `/compact` proactively — don't wait until it's sluggish. Auto-compaction helps but doesn't always trigger soon enough.
 
 **Best Practices:**
 
@@ -546,7 +538,26 @@ ls -la src/file.js
 - **Check version** - `opencode --version`
 - **Use /help** - To see available commands
 
-### 🔧 General Debugging Tips
+### � Clipboard paste not working or garbled
+
+**Cause:** Some terminals don't support bracketed paste, or paste large text incorrectly into the TUI.
+**Solution:**
+
+- **Use `/editor`** — Paste into your `$EDITOR` instead of directly into the TUI prompt
+- **On Windows:** Use [Windows Terminal](https://aka.ms/terminal) — the legacy `cmd.exe` and older PowerShell consoles have known issues with TUI rendering and clipboard
+- **On macOS:** iTerm2 and Kitty handle paste better than the default Terminal.app
+- **On Linux:** Most modern terminals (Kitty, Alacritty, WezTerm) work well
+
+### 🚫 TUI rendering issues on Windows
+
+**Cause:** Legacy Windows consoles have limited TUI support.
+**Solution:**
+
+- **Use [Windows Terminal](https://aka.ms/terminal)** — it's the recommended terminal for OpenCode on Windows
+- Avoid `cmd.exe` and older PowerShell consoles
+- If rendering glitches persist, try resizing the terminal window or restarting
+
+### �🔧 General Debugging Tips
 
 1. **Start simple** - Test with `opencode run "Say hello"` first
 2. **Check logs** - Look for error messages in terminal
@@ -558,9 +569,7 @@ ls -la src/file.js
 
 ---
 
-## 📈 What You've Learned
-
-### 🎓 Knowledge Check
+## 🎓 Knowledge Check
 
 Test your understanding:
 

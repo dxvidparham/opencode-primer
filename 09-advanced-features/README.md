@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [🔌 Plugin System](#-plugin-system)
@@ -33,22 +32,11 @@
 - [🌐 Environment Variables](#-environment-variables)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
 - [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Write and register custom tool plugins in TypeScript or Python
-- Configure granular permissions for built-in and custom tools
-- Set up code formatters and LSP integration for automated quality checks
-- Use checkpoints and undo/redo to navigate session history
-- Customize OpenCode's behavior through advanced configuration and environment variables
 
 ---
 
@@ -865,6 +853,27 @@ Yes. OpenCode reads `CLAUDE.md` and `~/.claude/CLAUDE.md` as fallbacks if no `AG
 
 **Q: What's the difference between plugins and custom tools?**
 Plugins hook into events and modify OpenCode's behavior. Custom tools define new functions the LLM can call during conversations.
+
+---
+
+## 🐛 Troubleshooting
+
+### Disabled MCP tools still appear in tool list
+
+MCP servers that are set to `"enabled": false` in `opencode.json` still get loaded at startup — their tools show up during initialization even though they can't be called. This is cosmetic and doesn't affect functionality, but it can be confusing. To fully remove a server's tools from the list, delete its config entry rather than disabling it.
+
+### Plugin not loading
+
+- Verify the file is in `.opencode/plugins/` with a `.ts` extension
+- Check that [Bun](https://bun.sh/) is installed — OpenCode uses Bun to run plugins
+- npm plugins listed in `opencode.json` `"plugin"` array are auto-installed at startup; check your network if installation fails
+- Look at terminal output during startup for plugin loading errors
+
+### Formatter not running after edits
+
+- Verify the formatter command works standalone (e.g., `npx prettier --check .`)
+- The `"formatter"` config must match your file types — it only runs on files the LLM modifies
+- Check that the formatter is installed in your project's dependencies
 
 ---
 

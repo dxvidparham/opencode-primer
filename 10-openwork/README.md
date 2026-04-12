@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -41,18 +40,7 @@
 
 ---
 
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Install and connect the OpenWork desktop app with your LLM provider
-- Deploy a self-hosted OpenWork instance using `openwork-orchestrator`
-- Import and share skills, templates, and configurations via share links
-- Set up Slack and Telegram messaging bots via `opencode-router`
-- Configure browser automation through Chrome DevTools MCP
-- Understand OpenWork Cloud features (teams, RBAC, shared workspaces)
-
----
+## 🎯 Overview
 
 ## 🎯 Overview
 
@@ -80,17 +68,17 @@ flowchart TD
   style E fill:#6cf,stroke:#333
 ```
 
-| Feature                 | Description                                                         |
-| ----------------------- | ------------------------------------------------------------------- |
-| **Desktop App**         | GUI for OpenCode with multi-LLM support (Tauri 2.x + SolidJS)      |
-| **Bring Your Own Keys** | Use API keys from any provider (Anthropic, OpenAI, etc.)            |
-| **Skill Sharing**       | Share and import skills, MCPs, and configs via links                |
-| **Browser Automation**  | Chrome browser control via Chrome DevTools MCP                      |
-| **Messaging**           | Connect Slack and Telegram bots via `opencode-router`               |
-| **Task Automation**     | Schedule prompts to run on a schedule                               |
-| **Self-Hosted**         | Run on your own infrastructure with `openwork-orchestrator`         |
-| **Sandbox Mode**        | Run inside Docker or Apple container boundaries                     |
-| **Cloud (Teams)**       | Shared workspaces, skill hubs, RBAC, managed LLM providers         |
+| Feature                 | Description                                                   |
+| ----------------------- | ------------------------------------------------------------- |
+| **Desktop App**         | GUI for OpenCode with multi-LLM support (Tauri 2.x + SolidJS) |
+| **Bring Your Own Keys** | Use API keys from any provider (Anthropic, OpenAI, etc.)      |
+| **Skill Sharing**       | Share and import skills, MCPs, and configs via links          |
+| **Browser Automation**  | Chrome browser control via Chrome DevTools MCP                |
+| **Messaging**           | Connect Slack and Telegram bots via `opencode-router`         |
+| **Task Automation**     | Schedule prompts to run on a schedule                         |
+| **Self-Hosted**         | Run on your own infrastructure with `openwork-orchestrator`   |
+| **Sandbox Mode**        | Run inside Docker or Apple container boundaries               |
+| **Cloud (Teams)**       | Shared workspaces, skill hubs, RBAC, managed LLM providers    |
 
 OpenWork is powered by [OpenCode](https://opencode.ai/) — everything you've learned in Modules 01–09 applies.
 

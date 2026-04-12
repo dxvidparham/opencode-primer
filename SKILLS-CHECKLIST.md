@@ -94,11 +94,11 @@ Use this checklist to track your progress through the primer. Each item maps bac
 
 Count the boxes you've checked above to gauge your overall proficiency:
 
-| Checked | Level |
-| ------- | ----- |
-| 0–15    | **Beginner** — Focus on Modules 01–04 |
-| 16–35   | **Intermediate** — You're productive; explore Modules 05–08 |
-| 36–50   | **Advanced** — You know the tool well; tackle Modules 09–10 |
+| Checked | Level                                                                     |
+| ------- | ------------------------------------------------------------------------- |
+| 0–15    | **Beginner** — Focus on Modules 01–04                                     |
+| 16–35   | **Intermediate** — You're productive; explore Modules 05–08               |
+| 36–50   | **Advanced** — You know the tool well; tackle Modules 09–10               |
 | 51+     | **Expert** — Consider contributing to the primer or building custom tools |
 
 ---

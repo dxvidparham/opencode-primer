@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -41,18 +40,7 @@
 
 ---
 
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Explain what MCP (Model Context Protocol) is and why it matters
-- Configure local MCP servers (stdio) in `opencode.json`
-- Connect remote MCP servers using SSE transport with OAuth
-- Restrict which MCP servers are available to specific agents
-- Set tool-level permissions for MCP tools
-- Work with common MCP servers (GitHub, Sentry, databases)
-
----
+## 🎯 Overview
 
 ## 🎯 Overview
 
@@ -123,7 +111,7 @@ Use the grep MCP tool to search for "useState" in popular React repos
 
 **Expected:** The LLM calls the Grep MCP server and returns code search results from public repositories.
 
-If the connection fails, run `opencode mcp debug` to diagnose.
+If the connection fails, check that the server command runs manually and that required environment variables are set.
 
 ### Adding an MCP Server via CLI
 
@@ -275,16 +263,9 @@ opencode mcp add
 
 # List all configured servers
 opencode mcp list
-
-# Authenticate with an MCP server (OAuth)
-opencode mcp auth
-
-# Debug MCP server connection
-opencode mcp debug
-
-# Remove/disconnect from an MCP server
-opencode mcp logout
 ```
+
+OAuth and debugging are handled through the MCP server configuration in `opencode.json` — set environment variables for authentication tokens, and test server connectivity by verifying the server command runs manually.
 
 ### Connecting in the TUI
 
@@ -441,12 +422,21 @@ For servers requiring pre-registered credentials:
 
 ### Managing OAuth
 
-```bash
-# Authenticate with a specific server
-opencode mcp auth
+OAuth-based MCP servers authenticate automatically when configured with `"type": "remote"` and a URL. For token-based auth, set environment variables in the server's `"env"` config:
 
-# Remove stored credentials
-opencode mcp logout
+```json
+{
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "your-token-here"
+      }
+    }
+  }
+}
 ```
 
 ---
@@ -726,8 +716,17 @@ Restrict MCP tools so only the build agent can access GitHub:
 
 ### Exercise 4: Debug a Connection
 
+If an MCP server isn't connecting, test it manually:
+
 ```bash
-opencode mcp debug
+# Test that the server command works outside OpenCode
+npx -y @modelcontextprotocol/server-github --help
+
+# Check that required environment variables are set
+echo $GITHUB_TOKEN
+
+# Verify the server appears in your config
+opencode mcp list
 ```
 
 ---
@@ -756,31 +755,32 @@ Set `"enabled": false` in the server's config instead of removing it.
 ### Server Not Connecting
 
 ```bash
-# Debug the connection
-opencode mcp debug
-
-# Verify the server package is installed
+# Verify the server package is installed and runs
 npx -y @modelcontextprotocol/server-github --help
 
 # Check environment variables
 echo $GITHUB_TOKEN
+
+# List configured servers
+opencode mcp list
 ```
+
+If the server is configured but not responding, try running the server command manually in your terminal to see error output.
 
 ### Authentication Issues
 
-```bash
-# Re-authenticate (OAuth)
-opencode mcp auth
+Most MCP servers use environment variables for auth tokens. Set them in the server's `"env"` config in `opencode.json`, or export them before starting OpenCode:
 
-# Or set environment variables manually
+```bash
 export GITHUB_TOKEN='your_token'
+opencode
 ```
 
 ### Server Crashes
 
 - Check that the server package is up to date
 - Verify environment variables are correctly set
-- Check server logs via `opencode mcp debug`
+- Run the server command manually to see error output
 
 ---
 

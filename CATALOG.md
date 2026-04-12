@@ -384,9 +384,6 @@ opencode mcp add  # Interactive setup
 
 # List configured servers
 opencode mcp list
-
-# OAuth auth
-opencode mcp auth
 ```
 
 ### 09. Advanced Features
@@ -496,8 +493,8 @@ curl -fsSL https://opencode.ai/install | bash
 # List MCP servers
 opencode mcp list
 
-# Debug connection
-opencode mcp debug <server-name>
+# Test the server command manually to verify it works
+npx -y @modelcontextprotocol/server-github --help
 ```
 
 **Issue**: Web tools not working  

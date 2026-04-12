@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -29,22 +28,10 @@
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Understand how the `bash` tool lets the LLM execute shell commands
-- Configure `bash` permissions (`allow`, `ask`, `deny`) in `opencode.json`
-- Use command allowlists to restrict which commands the LLM can run
-- Combine bash execution with file and search tools in multi-step workflows
-- Run build, test, and deployment commands through the LLM
 
 ---
 
@@ -57,13 +44,6 @@ By the end of this module, you will be able to:
 | **`bash` tool**       | LLM executes shell commands in your project | Run builds, tests, installs, deployments |
 | **Permission config** | Control what commands the LLM can run       | Security and safety                      |
 | **Command workflows** | Combining bash with other tools             | End-to-end development automation        |
-
-### 🎓 Learning Objectives
-
-- ✅ **Understand** how the `bash` tool works as an LLM-internal tool
-- ✅ **Ask OpenCode** to run shell commands via natural language
-- ✅ **Configure permissions** for bash operations in `opencode.json`
-- ✅ **Combine** bash with file and search tools for complete workflows
 
 > **Important**: There is no `opencode bash "command"` CLI syntax. The `bash` tool is used **internally by the LLM** when you ask it to run commands. You can also prefix commands with `!` in the TUI for direct execution (bypasses the LLM — runs the command immediately without AI interpretation).
 
@@ -224,6 +204,8 @@ For fine-grained control, use an object with command patterns. The **last matchi
 ```
 
 This lets safe read-only commands run freely while blocking destructive commands and requiring approval for everything else.
+
+> ⚠️ **Permission rules match literal command strings.** The LLM could bypass a rule like `"rm *": "deny"` by using an equivalent command (e.g., `find . -delete` or `perl -e 'unlink...'`). Granular permissions reduce risk but aren't a sandbox — treat `"allow"` permissions as trusting the LLM's judgment, not as a security boundary.
 
 **How precedence works (last matching rule wins):**
 
@@ -506,7 +488,9 @@ Update `opencode.json`:
 
 ### Long-Running Commands
 
-The LLM handles long-running commands. For servers that run indefinitely, the LLM will typically run them in the background or suggest using `&`.
+The LLM handles long-running commands, but processes that produce no output for an extended period may be terminated by OpenCode's timeout.
+
+> ⚠️ **Background processes can hang the session.** If the LLM starts a server or watcher that doesn't exit, it may block the conversation. Use the `!` prefix for long-running processes so they bypass the LLM, or ask the LLM to run the command with `&` (background). If a session appears frozen, press `Ctrl+C` to interrupt.
 
 ### Environment Differences
 
@@ -519,15 +503,7 @@ opencode
 
 ---
 
-## 📈 What You've Learned
-
-- ✅ The `bash` tool is an **LLM-internal tool**, not a CLI command
-- ✅ Ask the LLM to run commands via **natural language**
-- ✅ Use the **`!` prefix** in the TUI for direct command execution
-- ✅ Configure **permissions** in `opencode.json` for safety
-- ✅ The LLM can **chain commands** and interpret results
-
-### 🎓 Knowledge Check
+## 🎓 Knowledge Check
 
 **1. What does the `"ask"` permission for the `bash` tool do?**
 

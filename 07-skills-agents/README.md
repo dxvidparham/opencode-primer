@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -30,22 +29,11 @@
 - [📝 Custom Commands](#-custom-commands)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
 - [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Describe OpenCode's three built-in agents (Plan, Build, Explore) and their roles
-- Create workspace-level skills using Markdown files with YAML frontmatter
-- Define custom agents with tool restrictions and custom system prompts
-- Create custom slash commands that invoke specific agent+prompt combinations
-- Organize skills and agents in the `.opencode/` directory structure
 
 ---
 
@@ -649,6 +637,9 @@ Yes — @-mention them (`@explore analyze this codebase`) or ask the LLM directl
 **Q: What's AGENTS.md?**
 A markdown file in your project root that gives the LLM project-specific instructions. It's the OpenCode equivalent of Claude Code's CLAUDE.md.
 
+**Q: Which AGENTS.md takes precedence — project or global?**
+OpenCode loads instructions from multiple sources in order: **project `AGENTS.md`** > **global `~/.config/opencode/AGENTS.md`** > **`CLAUDE.md` fallback**. All are merged, but project-level rules override global ones. If you have conflicting instructions between project and global, the project file wins.
+
 **Q: Are skills the same as agents?**
 No. Skills are specialized instruction files (SKILL.md) loaded via the skill tool. Agents are different roles the LLM can operate in.
 
@@ -657,6 +648,31 @@ Both work. Markdown files (`.opencode/agents/`) use YAML frontmatter for options
 
 **Q: Can custom commands override built-in ones?**
 Yes. If you create a command with the same name as a built-in slash command, yours takes precedence.
+
+**Q: The `skill` field in `opencode.json` doesn't seem to work — is it an array or object?**
+The `"skill"` field under `"permission"` is a **glob-pattern object** (like bash permissions), not an array. Use `{ "*": "allow" }` to allow all skills, or `{ "internal-*": "deny" }` to block specific ones.
+
+---
+
+## 🐛 Troubleshooting
+
+### Custom agent not appearing
+
+- Verify the file is in `.opencode/agents/` with a `.md` extension
+- Check that the YAML frontmatter is valid (no tabs, proper indentation)
+- The filename becomes the agent name — use lowercase with hyphens
+
+### Skill not loading
+
+- Skills must be named `SKILL.md` (case-sensitive on Linux)
+- Check the search paths: `.opencode/skills/`, `~/.config/opencode/skills/`, `.claude/skills/`, `.agents/skills/`
+- Verify the YAML frontmatter `name` field uses only lowercase letters, numbers, and hyphens
+
+### Custom command not found
+
+- Command files go in `.opencode/commands/` with a `.md` extension
+- The filename (without `.md`) becomes the slash command name
+- Restart OpenCode after adding new command files
 
 ---
 

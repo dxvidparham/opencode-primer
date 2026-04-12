@@ -1,5 +1,7 @@
 # File Exploration Examples
 
+> 📌 **This is a hands-on companion to [Module 02: File Operations](../README.md).** Start with the module README for concepts, or work through these exercises alongside it.
+
 Learn how OpenCode helps you navigate and understand codebases.
 
 > **Key concept**: `read`, `glob`, `grep`, and `list` are LLM-internal tools — you don't type them as CLI commands. Instead, you describe what you want in natural language and the LLM calls these tools automatically.
@@ -133,6 +135,6 @@ Inside the TUI, you can also run shell commands directly by prefixing with `!`:
 
 ## Next Steps
 
-- Read the [Module 02 README](../README.md) for detailed concepts
+- Return to the [Module 02 README](../README.md) for core concepts (read/edit/write tools, permissions, undo/redo)
 - Continue to [Module 03: Search Tools](../../03-search-tools/README.md)
 - See the [Quick Reference](../../QUICK-REFERENCE.md) for a command cheat sheet

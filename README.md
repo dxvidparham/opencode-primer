@@ -1,5 +1,11 @@
 <div align="center">
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/logos/opencode-wordmark-simple-light.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/logos/opencode-wordmark-simple-dark.svg">
+  <img alt="OpenCode" src="resources/logos/opencode-wordmark-simple-dark.svg" width="300">
+</picture>
+
 # ⚡ OpenCode Primer
 
 **Master the opencode AI coding agent with structured learning paths, real-world examples, and production-ready workflows.**
@@ -73,16 +79,16 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 
 ### 📊 Comparison: Official Docs vs This Guide
 
-|                    | **Official Documentation** | **This Primer**                    |
-| ------------------ | -------------------------- | ---------------------------------- |
-| **📚 Content Type** | Reference documentation    | Visual tutorials with examples     |
-| **🎯 Focus**        | Feature descriptions       | How it works under the hood        |
-| **💡 Examples**     | Basic snippets             | Production-ready workflows         |
-| **🗺️ Organization** | Feature-organized          | Progressive learning path          |
-| **🧭 Guidance**     | Self-directed              | Guided roadmap with time estimates |
+|                     | **Official Documentation** | **This Primer**                     |
+| ------------------- | -------------------------- | ----------------------------------- |
+| **📚 Content Type** | Reference documentation    | Visual tutorials with examples      |
+| **🎯 Focus**        | Feature descriptions       | How it works under the hood         |
+| **💡 Examples**     | Basic snippets             | Production-ready workflows          |
+| **🗺️ Organization** | Feature-organized          | Progressive learning path           |
+| **🧭 Guidance**     | Self-directed              | Guided roadmap with time estimates  |
 | **📝 Assessment**   | None                       | Knowledge checks & skills checklist |
-| **🖼️ Visuals**      | Minimal                    | Diagrams, flowcharts, screenshots  |
-| **🔧 Templates**    | None                       | Copy-paste workflows               |
+| **🖼️ Visuals**      | Minimal                    | Diagrams, flowcharts, screenshots   |
+| **🔧 Templates**    | None                       | Copy-paste workflows                |
 
 </div>
 
@@ -117,7 +123,7 @@ graph LR
     C --> D[🔄 Combine Features]
     D --> E[🧪 Test Understanding]
     E --> F[🏆 Master OpenCode]
-    
+
     style A fill:#e1f5fe
     style B fill:#f3e5f5
     style C fill:#e8f5e8
@@ -132,7 +138,7 @@ graph LR
 
 Take the [self-assessment quiz](LEARNING-ROADMAP.md#-find-your-level). Get a personalized roadmap based on what you already know.
 
-### 📚 2. Follow the Guided Path  
+### 📚 2. Follow the Guided Path
 
 Work through **10 modules in order** — each builds on the last. Apply templates directly to your projects as you learn.
 
@@ -164,9 +170,9 @@ Take the **self-assessment** or pick your level below:
 
 | Level            | Badge | You Can...                     | Start Here                               | Time     |
 | ---------------- | ----- | ------------------------------ | ---------------------------------------- | -------- |
-| **Beginner**     | 🟢     | Run basic opencode commands    | [01 - Basic Commands](01-basic-commands) | ~2 hours |
-| **Intermediate** | 🟡     | Use file operations and search | [03 - Search Tools](03-search-tools)     | ~3 hours |
-| **Advanced**     | 🔴     | Create automation workflows    | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
+| **Beginner**     | 🟢    | Run basic opencode commands    | [01 - Basic Commands](01-basic-commands) | ~2 hours |
+| **Intermediate** | 🟡    | Use file operations and search | [03 - Search Tools](03-search-tools)     | ~3 hours |
+| **Advanced**     | 🔴    | Create automation workflows    | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
 
 ## 📚 Learning Modules
 
@@ -174,8 +180,8 @@ Take the **self-assessment** or pick your level below:
 
 ### 🗺️ Complete Learning Path (10 Modules)
 
-| #   | Module                                      | Level         | ⏱️ Time    | Status  |
-| --- | ------------------------------------------- | ------------- | --------- | ------- |
+| #   | Module                                       | Level         | ⏱️ Time   | Status   |
+| --- | -------------------------------------------- | ------------- | --------- | -------- |
 | 1   | [🚀 Basic Commands & TUI](01-basic-commands) | Beginner      | 30 min    | ✅ Ready |
 | 2   | [📁 File Operations](02-file-operations)     | Beginner+     | 45 min    | ✅ Ready |
 | 3   | [🔍 Search Tools](03-search-tools)           | Beginner+     | 45 min    | ✅ Ready |
@@ -199,18 +205,18 @@ gantt
     title OpenCode Primer Learning Timeline
     dateFormat  HH:mm
     axisFormat %H:%M
-    
+
     section Beginner (2.5 hrs)
     Module 1 - Basic Commands :m1, 00:00, 30m
     Module 2 - File Operations :m2, after m1, 45m
     Module 3 - Search Tools    :m3, after m2, 45m
-    
+
     section Intermediate (4 hrs)
     Module 4 - Bash Integration :m4, after m3, 60m
     Module 5 - Q&A Tools        :m5, after m4, 45m
     Module 6 - Web Tools        :m6, after m5, 45m
     Module 7 - Skills & Agents  :m7, after m6, 60m
-    
+
     section Advanced (2.5 hrs)
     Module 8 - MCP Servers     :m8, after m7, 60m
     Module 9 - Advanced Features :m9, after m8, 90m
@@ -233,7 +239,7 @@ flowchart TD
     B --> C[🔧 Try Examples]
     C --> D[🚀 Apply to Your Project]
     D --> E[📈 Continue Learning]
-    
+
     style A fill:#e3f2fd
     style B fill:#f3e5f5
     style C fill:#e8f5e8
@@ -283,31 +289,31 @@ cd ~/opencode-practice && bash -c "echo 'Testing bash integration'"
 
 1. **Verify OpenCode Installation:**
 
-   ```bash
-   opencode --version
-   # Should output: opencode 1.0+ (or similar)
-   ```
+    ```bash
+    opencode --version
+    # Should output: opencode 1.0+ (or similar)
+    ```
 
 2. **Test Basic Command:**
 
-   ```bash
-   opencode
-   # Should open the TUI interface
-   ```
+    ```bash
+    opencode
+    # Should open the TUI interface
+    ```
 
 3. **Check File Operations:**
 
-   ```bash
-   ls -la 01-basic-commands/examples/
-   # Should show sample files
-   ```
+    ```bash
+    ls -la 01-basic-commands/examples/
+    # Should show sample files
+    ```
 
 4. **Validate Quick Reference:**
 
-   ```bash
-   head -20 QUICK-REFERENCE.md
-   # Should show quick reference table
-   ```
+    ```bash
+    head -20 QUICK-REFERENCE.md
+    # Should show quick reference table
+    ```
 
 </details>
 
@@ -332,8 +338,8 @@ By the end of 15 minutes, you should be able to:
 
 ### 🔧 Real-World Use Cases
 
-| Use Case                     | 🎯 Goal                              | ⚙️ Features Combined                   | Module |
-| ---------------------------- | ----------------------------------- | ------------------------------------- | ------ |
+| Use Case                     | 🎯 Goal                             | ⚙️ Features Combined                     | Module |
+| ---------------------------- | ----------------------------------- | ---------------------------------------- | ------ |
 | **Code Review Automation**   | Automate code quality checks        | 🔍 Search + 📁 File Ops + 💻 Bash        | 1-4    |
 | **Refactoring Workflows**    | Safe, batch code modifications      | ✏️ Edit + 🔍 Search + 🤖 Automation      | 2-3-7  |
 | **CI/CD Integration**        | Streamline deployment pipelines     | 💻 Bash + 🤖 Automation + 🔄 Workflows   | 4-7-9  |
@@ -342,7 +348,7 @@ By the end of 15 minutes, you should be able to:
 | **DevOps Pipelines**         | Infrastructure as code workflows    | 🤖 Automation + 💻 Bash + 🔄 Workflows   | 7-4-9  |
 | **Complex Refactoring**      | Large-scale code migrations         | 🔍 Search + ✏️ Edit + 🤖 Task Automation | 3-2-7  |
 | **API Client Generation**    | Auto-create API clients from docs   | 🌐 Web Tools + 📁 File Ops + 🤖 Agents   | 6-2-7  |
-| **Database Migrations**      | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation          | 8-7    |
+| **Database Migrations**      | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation           | 8-7    |
 | **Team Collaboration**       | Shared development workflows        | 🤝 OpenWork + 🔄 Workflows + 🤖 Agents   | 10-9-7 |
 
 </div>
@@ -358,7 +364,7 @@ sequenceDiagram
     participant O as OpenCode
     participant G as Git
     participant T as Test Runner
-    
+
     U->>O: Start code review
     O->>G: Get changed files
     G-->>O: File list
@@ -522,13 +528,13 @@ Regularly! We track OpenCode releases and update examples and best practices acc
 
 ## 🐛 Troubleshooting
 
-| Issue                    | Quick Fix                                                        |
-| ------------------------ | ---------------------------------------------------------------- |
-| `command not found`      | Verify install: `which opencode` — check your `$PATH`            |
-| TUI not starting         | Try `TERM=xterm opencode` — check terminal compatibility         |
-| `permission denied`      | `chmod +x` the file, or check `opencode.json` permissions config |
-| TUI unresponsive         | Press `Ctrl+C` to interrupt; worst case: `pkill -f opencode`     |
-| MCP server won't connect | Run `opencode mcp debug` — check `opencode.json` for typos       |
+| Issue                    | Quick Fix                                                                               |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `command not found`      | Verify install: `which opencode` — check your `$PATH`                                   |
+| TUI not starting         | Try `TERM=xterm opencode` — check terminal compatibility                                |
+| `permission denied`      | `chmod +x` the file, or check `opencode.json` permissions config                        |
+| TUI unresponsive         | Press `Ctrl+C` to interrupt; worst case: `pkill -f opencode`                            |
+| MCP server won't connect | Run `opencode mcp list` — check `opencode.json` for typos; test server command manually |
 
 **[📖 Full Troubleshooting Guide ->](TROUBLESHOOTING.md)** — covers file operations, search, debugging workflows, and emergency recovery.
 

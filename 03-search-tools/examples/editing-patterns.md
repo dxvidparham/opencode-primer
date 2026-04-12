@@ -1,5 +1,7 @@
 # Editing Patterns
 
+> 📌 **This is a hands-on companion to [Module 03: Search Tools](../README.md).** Start with the module README for concepts, or work through these exercises alongside it.
+
 Common patterns for editing and searching files with OpenCode.
 
 > **Key concept**: `edit`, `write`, `grep`, and `glob` are LLM-internal tools — you don't type them as CLI commands. You describe what you want in natural language and the LLM calls these tools automatically.
@@ -152,6 +154,6 @@ Inside the TUI, prefix shell commands with `!`:
 
 ## Next Steps
 
-- Read the [Module 03 README](../README.md) for detailed concepts
+- Return to the [Module 03 README](../README.md) for core concepts (glob, grep, list tools and how the LLM chains them)
 - Continue to [Module 04: Bash Integration](../../04-bash-integration/README.md)
 - See the [Quick Reference](../../QUICK-REFERENCE.md) for a command cheat sheet

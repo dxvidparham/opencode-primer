@@ -1,5 +1,7 @@
 # Quick Start Examples
 
+> 📌 **This is a hands-on companion to [Module 01: Basic Commands & TUI](../README.md).** Start with the module README for concepts, or work through these exercises alongside it.
+
 These examples demonstrate how to get started with OpenCode quickly.
 
 ## Installation
@@ -120,7 +122,7 @@ opencode run 'What Node.js version does this project require?'
 
 ## Next Steps
 
-- Read the [Module 01 README](../README.md) for detailed explanations
+- Return to the [Module 01 README](../README.md) for core concepts (agents, slash commands, file references, conversation management)
 - Continue to [Module 02: File Operations](../../02-file-operations/README.md)
 - See the [Quick Reference](../../QUICK-REFERENCE.md) for a command cheat sheet
 

@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -30,23 +29,10 @@
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Use the `read` tool to view files and directory listings
-- Apply the `edit` and `multiedit` tools to modify existing code
-- Create new files with the `write` tool
-- Apply unified diffs with `apply_patch` for complex multi-hunk edits
-- Use `@file` references to feed specific files into the LLM context
-- Combine file tools in multi-step refactoring workflows
 
 ---
 
@@ -62,15 +48,6 @@ By the end of this module, you will be able to:
 | **`write` tool**       | Creating new files              | Generate boilerplate and new components |
 | **`apply_patch` tool** | Applying unified diffs          | Multi-region edits in one operation     |
 | **File references**    | Using `@file` syntax in prompts | Give the LLM direct file context        |
-
-### 🎓 Learning Objectives
-
-By the end of this module, you'll be able to:
-
-- ✅ **Ask OpenCode to read files** and explain code
-- ✅ **Request file edits** through natural language prompts
-- ✅ **Create new files** by describing what you need
-- ✅ **Use `@` file references** to give the LLM context
 
 > **Important**: The `read`, `edit`, and `write` tools are used **internally by the LLM** (Large Language Model — the AI agent) — they are NOT CLI commands. You interact with them by typing natural language requests in the TUI or using `opencode run`.
 
@@ -140,6 +117,10 @@ cat config.json          # Check contents
 git diff                 # See what changed
 ls src/utils/            # Confirm new files exist
 ```
+
+> 💡 **Quick shell commands in the TUI:** Prefix any command with `!` to run it directly without the LLM interpreting it — e.g., `!cat config.json` or `!git diff`. Useful for quick verification after edits. Covered in depth in [Module 04: Bash Integration](../04-bash-integration/).
+
+> 📂 **Hands-on companion:** [examples/file-exploration.md](examples/file-exploration.md) walks through file exploration prompts, shell equivalents, and practice exercises using the [sample app](examples/sample-app/). Work through it alongside this module or use it as a reference.
 
 ---
 
@@ -517,15 +498,7 @@ Check your `opencode.json` permission settings:
 
 ---
 
-## 📈 What You've Learned
-
-- ✅ The `read`, `edit`, and `write` tools are **LLM-internal**, not CLI commands
-- ✅ Use **natural language prompts** to trigger file operations
-- ✅ Use **`@` file references** to give the LLM direct context
-- ✅ Use **`/undo`** to revert any change
-- ✅ Use **`opencode run`** for non-interactive file operations
-
-### 🎓 Knowledge Check
+## 🎓 Knowledge Check
 
 **1. Which tool should the LLM use to make a small, targeted change to an existing file?**
 

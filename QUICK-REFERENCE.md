@@ -9,14 +9,10 @@
 | `opencode run 'prompt'`      | Run a one-shot prompt without the TUI   |
 | `opencode agent list`        | List available agents                   |
 | `opencode agent create`      | Create a custom agent                   |
-| `opencode account login`     | Authenticate with a provider            |
-| `opencode account list`      | List authenticated providers            |
-| `opencode account logout`    | Log out of a provider                   |
+| `opencode auth login`        | Authenticate with a provider            |
+| `opencode auth list`         | List authenticated providers            |
 | `opencode mcp add <name>`    | Add an MCP server                       |
 | `opencode mcp list`          | List configured MCP servers             |
-| `opencode mcp auth`          | Authenticate an MCP server              |
-| `opencode mcp debug`         | Debug MCP server connection             |
-| `opencode mcp logout`        | Remove MCP server auth                  |
 | `opencode models [provider]` | List available models                   |
 | `opencode providers`         | List configured providers               |
 | `opencode session list`      | List previous sessions                  |

@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -33,17 +32,6 @@
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Understand how the `question` tool pauses the LLM to ask for clarification
-- Use the `todowrite` tool to create and track task lists within sessions
-- Recognize when the LLM uses these tools automatically
-- Integrate question and todo patterns into planning workflows
 
 ---
 

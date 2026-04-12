@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -29,23 +28,10 @@
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [📈 What You've Learned](#-what-youve-learned)
+- [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Find files by name or pattern using the `glob` tool
-- Search file contents with regex using the `grep` tool
-- Perform semantic code search across a codebase with `codesearch`
-- List directory contents with the `list` tool
-- Choose the right search tool for different scenarios
-- Chain search results into editing workflows
 
 ---
 
@@ -59,13 +45,6 @@ By the end of this module, you will be able to:
 | **`grep`**       | Search file contents using regex        | Find specific code, functions, patterns |
 | **`codesearch`** | Semantic code search across codebase    | Find code by meaning, not just text     |
 | **`list`**       | List directory contents                 | Understand project structure            |
-
-### 🎓 Learning Objectives
-
-- ✅ **Understand** how `glob`, `grep`, `codesearch`, and `list` work as LLM-internal tools
-- ✅ **Ask OpenCode** to find files and search content via natural language
-- ✅ **Use shell equivalents** when you need direct command-line searching
-- ✅ **Combine search operations** for complex code analysis
 
 > **Important**: `glob`, `grep`, `codesearch`, and `list` are internal tools the LLM uses — **not** CLI commands. There is no `opencode glob` or `opencode grep` command. You trigger these by asking the LLM in the TUI.
 
@@ -113,10 +92,10 @@ The LLM uses its `list` tool to show directory contents.
 
 ### Shell Equivalents
 
-You can always use standard shell commands directly:
+You can always use standard shell commands directly — and inside the TUI, prefix them with `!` to run without the LLM:
 
 ```bash
-# Find files by pattern
+# Find files by pattern (in terminal or with ! prefix in TUI)
 find . -name '*.js' -not -path './node_modules/*'
 
 # Search file contents
@@ -125,6 +104,8 @@ grep -rn 'TODO\|FIXME' --include='*.js' .
 # List directory contents
 ls -la src/
 ```
+
+> 📂 **Hands-on companion:** [examples/editing-patterns.md](examples/editing-patterns.md) covers common editing and search patterns with practice exercises. Work through it alongside this module or after finishing the concepts below.
 
 ---
 
@@ -514,14 +495,7 @@ OpenCode's grep tool may filter differently than shell grep (e.g., respecting .g
 
 ---
 
-## 📈 What You've Learned
-
-- ✅ `glob`, `grep`, and `list` are **LLM-internal tools**, not CLI commands
-- ✅ Trigger them via **natural language prompts** in the TUI
-- ✅ Use **shell equivalents** (`find`, `grep`, `ls`) for direct command-line searches
-- ✅ Combine search operations for powerful code analysis
-
-### 🎓 Knowledge Check
+## 🎓 Knowledge Check
 
 **1. Which tool should you use to find all TypeScript files in a project?**
 

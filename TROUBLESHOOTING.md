@@ -47,11 +47,9 @@ opencode auth list
 
 # Log in to a provider
 opencode auth login
-
-# If issues persist, log out and back in
-opencode auth logout
-opencode auth login
 ```
+
+If issues persist, reconfigure your provider with `opencode auth login` — this will overwrite the previous credentials.
 
 ### 3. LLM Tool Errors
 
@@ -132,28 +130,26 @@ Type `/` at the beginning of your message. Available commands:
 # List configured servers
 opencode mcp list
 
-# Debug the connection
-opencode mcp debug
+# Test the server command manually
+npx -y @modelcontextprotocol/server-github --help
 
 # Re-add the server
-opencode mcp add <server-name>
+opencode mcp add
 ```
 
 #### Issue: MCP server authentication
 
-```bash
-# Authenticate a server
-opencode mcp auth
+Most MCP servers use environment variables for auth. Set them in the server's `"env"` config in `opencode.json`, or export them before starting OpenCode:
 
-# If auth is stale, logout and re-auth
-opencode mcp logout
-opencode mcp auth
+```bash
+export GITHUB_TOKEN='your-token'
+opencode
 ```
 
 #### Issue: MCP server not showing tools
 
 - Use `/connect` in the TUI to connect to a configured server
-- Verify the server is listed in `opencode.json` under `mcpServers`
+- Verify the server is listed in `opencode.json` under `"mcp"`
 - Check that the server process can actually start (test the command manually)
 
 ### 6. Configuration Issues
@@ -177,7 +173,7 @@ Permissions for tools are set in `opencode.json`:
 
 ```json
 {
-  "permissions": {
+  "permission": {
     "bash": "allow",
     "edit": "deny",
     "write": "ask"
@@ -275,6 +271,21 @@ opencode models
 /exit
 opencode
 ```
+
+### Known Limitations
+
+These are well-known issues documented in the OpenCode issue tracker:
+
+| Issue | Description | Workaround |
+| --- | --- | --- |
+| **Context growth** | Long sessions with many tool calls accumulate context quickly, slowing responses | Use `/compact` proactively; start new sessions for unrelated tasks |
+| **Background processes** | The LLM starting a server or watcher that doesn't exit can block the session | Use `!` prefix for long-running commands; press `Ctrl+C` to interrupt |
+| **Windows Terminal** | Legacy `cmd.exe` and older PowerShell have rendering and clipboard issues with the TUI | Use [Windows Terminal](https://aka.ms/terminal) |
+| **Clipboard paste** | Some terminals garble pasted multi-line text in the TUI | Use `/editor` to compose long prompts in your `$EDITOR` |
+| **`/undo` requires Git** | `/undo` and `/redo` use Git checkpoints under the hood | Initialize your project with `git init` first |
+| **Permission bypass** | Granular bash permissions match literal command strings; the LLM could use equivalent commands to bypass a rule | Treat permissions as guidance, not a security sandbox |
+| **Disabled MCP tools** | MCP servers set to `"enabled": false` still appear during startup initialization | Remove the config entry entirely to hide tools |
+| **Exa required for websearch** | `websearch` silently fails without `OPENCODE_ENABLE_EXA=1` and `EXA_API_KEY` | Set both env vars before starting OpenCode |
 
 ### Getting Help
 

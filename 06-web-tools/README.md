@@ -20,7 +20,6 @@
 <details>
 <summary>Click to expand/collapse</summary>
 
-- [📖 Learning Objectives](#-learning-objectives)
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
@@ -31,22 +30,11 @@
 - [💻 IDE Integration](#-ide-integration)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
+- [🐛 Troubleshooting](#-troubleshooting)
 - [🎓 Knowledge Check](#-knowledge-check)
 - [🚶 Next Steps](#-next-steps)
 
 </details>
-
----
-
-## 📖 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Fetch web content using the `webfetch` tool and its permission settings
-- Search the web via Exa AI using the `websearch` tool
-- Share OpenCode sessions via the web interface
-- Understand IDE integration options (VS Code, Cursor, Windsurf)
-- Configure the `webfetch` permission in `opencode.json`
 
 ---
 
@@ -493,6 +481,35 @@ No — anyone with the URL can view them. Don't share sessions containing secret
 
 **Q: Can I use the web UI remotely?**
 Yes. Run `opencode web --hostname 0.0.0.0` and set `OPENCODE_SERVER_PASSWORD` for auth. Access from any browser on the network.
+
+---
+
+## 🐛 Troubleshooting
+
+### websearch returns "tool not available" or no results
+
+The `websearch` tool requires Exa AI to be enabled. This is the most common web tools issue:
+
+```bash
+# Both variables must be set before starting OpenCode
+export OPENCODE_ENABLE_EXA=1
+export EXA_API_KEY=your-exa-api-key-here
+opencode
+```
+
+Get an API key from [exa.ai](https://exa.ai/). Without both variables set, `websearch` silently fails or isn't available.
+
+### webfetch returns empty or garbled content
+
+- Some sites block automated access — try a different URL or format
+- JavaScript-heavy pages (SPAs) may return empty HTML — the LLM fetches raw HTTP, not rendered pages
+- If you need browser-rendered content, consider using a browser MCP server instead (see [Module 08](../08-mcp-servers/))
+
+### Shared session link not working
+
+- Session sharing requires internet connectivity
+- The link is public — anyone with the URL can view it
+- Links may expire; check if the session still exists with `/sessions`
 
 ---
 
