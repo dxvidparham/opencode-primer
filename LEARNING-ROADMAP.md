@@ -692,12 +692,12 @@ Once you've completed all milestones:
 ### Official Documentation
 
 - [OpenCode Documentation](https://opencode.ai/docs)
-- [OpenWork Platform Documentation](https://openwork.ai/docs)
+- [OpenWork Documentation](https://openworklabs.com/docs)
 
 ### Community
 
 - [OpenCode GitHub](https://github.com/anomalyco/opencode)
-- [OpenWork Community](https://community.openwork.ai)
+- [OpenCode Discord](https://opencode.ai/discord)
 
 ---
 

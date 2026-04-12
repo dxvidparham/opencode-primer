@@ -119,7 +119,7 @@ ls src/utils/            # Confirm new files exist
 ```
 
 > 💡 **Quick shell commands in the TUI:** Prefix any command with `!` to run it directly without the LLM interpreting it — e.g., `!cat config.json` or `!git diff`. Useful for quick verification after edits. Covered in depth in [Module 04: Bash Integration](../04-bash-integration/).
-
+>
 > 📂 **Hands-on companion:** [examples/file-exploration.md](examples/file-exploration.md) walks through file exploration prompts, shell equivalents, and practice exercises using the [sample app](examples/sample-app/). Work through it alongside this module or use it as a reference.
 
 ---

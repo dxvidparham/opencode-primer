@@ -43,8 +43,6 @@
 
 ## 🎯 Overview
 
-## 🎯 Overview
-
 [OpenWork](https://openworklabs.com/) is the **open-source alternative to Claude Cowork**, built on top of OpenCode. It provides a desktop app for using 50+ LLMs with your own keys, plus team collaboration features.
 
 ```mermaid

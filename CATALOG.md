@@ -529,21 +529,18 @@ OPENCODE_ENABLE_EXA=1 opencode
 
 ### Learning Resources
 
-- [OpenCode Tutorials](https://opencode.ai/learn)
 - [GitHub Repository](https://github.com/anomalyco/opencode)
-- [Example Projects](https://github.com/anomalyco/opencode-examples)
+- [OpenCode Documentation](https://opencode.ai/docs)
 
 ### Community & Support
 
 - [Discord Community](https://opencode.ai/discord)
-- [GitHub Discussions](https://github.com/anomalyco/opencode/discussions)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/opencode)
+- [GitHub Issues](https://github.com/anomalyco/opencode/issues)
 
 ### Related Projects
 
-- [OpenCode Examples](https://github.com/anomalyco/opencode-examples)
 - [MCP Servers Registry](https://github.com/modelcontextprotocol/servers)
-- [OpenWork Orchestrator](https://github.com/different-ai/openwork-orchestrator)
+- [OpenWork Desktop](https://openworklabs.com)
 
 ---
 

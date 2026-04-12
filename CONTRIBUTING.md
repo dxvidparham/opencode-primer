@@ -4,16 +4,16 @@ Thank you for your interest in contributing to the OpenCode How-To Guide! This d
 
 ## 📋 Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Types of Contributions](#types-of-contributions)
-- [Development Workflow](#development-workflow)
-- [Style Guide](#style-guide)
-- [Project Structure](#project-structure)
-- [Testing](#testing)
-- [Reporting Issues](#reporting-issues)
-- [Pull Request Process](#pull-request-process)
-- [Community](#community)
+- [Code of Conduct](#-code-of-conduct)
+- [Getting Started](#-getting-started)
+- [Types of Contributions](#-types-of-contributions)
+- [Development Workflow](#️-development-workflow)
+- [Style Guide](#-style-guide)
+- [Project Structure](#-project-structure)
+- [Testing](#-testing)
+- [Reporting Issues](#-reporting-issues)
+- [Pull Request Process](#-pull-request-process)
+- [Community](#-community)
 
 ## 📜 Code of Conduct
 
@@ -32,15 +32,20 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). We are committ
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/opencode-howto-guide.git
    cd opencode-howto-guide
    ```
+
 3. **Add upstream remote**:
+
    ```bash
    git remote add upstream https://github.com/original-owner/opencode-howto-guide.git
    ```
+
 4. **Create a branch** for your contribution:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -50,30 +55,35 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). We are committ
 We welcome various types of contributions:
 
 ### 1. Documentation Improvements
+
 - Fix typos and grammatical errors
 - Improve clarity and readability
 - Add missing explanations
 - Update outdated information
 
 ### 2. New Examples
+
 - Add practical examples for existing features
 - Create new workflow demonstrations
 - Provide real-world use cases
 - Add troubleshooting scenarios
 
 ### 3. New Modules
+
 - Create tutorials for advanced features
 - Add integration guides
 - Create cheat sheets or reference materials
 - Add best practices guides
 
 ### 4. Bug Fixes
+
 - Fix broken examples
 - Correct inaccurate information
 - Update deprecated commands
 - Fix formatting issues
 
 ### 5. Translations
+
 - Translate content to other languages
 - Add language-specific examples
 - Create localized documentation
@@ -83,6 +93,7 @@ We welcome various types of contributions:
 ### 1. Planning Your Contribution
 
 Before starting work:
+
 - Check existing issues to avoid duplicates
 - Discuss major changes in an issue first
 - Ensure your contribution aligns with project goals
@@ -99,12 +110,14 @@ Before starting work:
 ### 3. Commit Guidelines
 
 - Use conventional commit messages:
+
   ```
   feat: add new example for search patterns
   fix: correct typo in basic commands README
   docs: update installation instructions
   style: improve formatting in workflows module
   ```
+
 - Write clear, concise commit messages
 - Reference issue numbers when applicable
 - Keep commits logically grouped
@@ -119,6 +132,7 @@ Before starting work:
 - **Include code examples** in every section
 - **Use backticks** for inline code: `` `command` ``
 - **Use fenced code blocks** with language specification:
+
   ````bash
   ```bash
   # Ask the LLM to read a file in the TUI
@@ -248,10 +262,12 @@ Use the issue templates if available, or follow this format:
 ### Before Submitting
 
 1. **Ensure your branch is up to date**:
+
    ```bash
    git fetch upstream
    git rebase upstream/main
    ```
+
 2. **Run tests** on your changes
 3. **Check formatting** and style guidelines
 4. **Update documentation** if needed
@@ -307,6 +323,7 @@ Closes #123, Fixes #456
 ### Recognition
 
 Contributors will be:
+
 - Listed in the contributor's section
 - Acknowledged in release notes
 - Given credit for their work
@@ -314,6 +331,7 @@ Contributors will be:
 ### Becoming a Maintainer
 
 Consistent contributors may be invited to become maintainers. This involves:
+
 - Regular contributions over time
 - Quality contributions
 - Helping other contributors
@@ -323,7 +341,7 @@ Consistent contributors may be invited to become maintainers. This involves:
 
 By contributing, you agree that your contributions will be licensed under the project's [MIT License](LICENSE).
 
-## 🙏 Thank You!
+## 🙏 Thank You
 
 Your contributions help make OpenCode more accessible to everyone. Thank you for your time and effort!
 

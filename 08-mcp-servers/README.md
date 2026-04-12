@@ -43,8 +43,6 @@
 
 ## 🎯 Overview
 
-## 🎯 Overview
-
 MCP (Model Context Protocol) is an open protocol that lets OpenCode connect to external data sources and tools. MCP servers extend OpenCode's capabilities with:
 
 - **External data access** (databases, APIs, filesystems)

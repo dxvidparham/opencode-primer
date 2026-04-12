@@ -31,7 +31,8 @@
 
 The single biggest issue: **OpenCode's tools (read, write, edit, bash, grep, glob, list, skill, todowrite, question, webfetch, websearch) are NOT CLI subcommands.** They are internal tools used by the LLM inside the TUI or via `opencode run`.
 
-### What the primer claims (WRONG):
+### What the primer claims (WRONG)
+
 ```bash
 opencode read test.txt           # ❌ DOES NOT EXIST
 opencode bash "pwd"              # ❌ DOES NOT EXIST
@@ -47,7 +48,8 @@ opencode --update                # ❌ DOES NOT EXIST
 opencode --timeout=60            # ❌ DOES NOT EXIST
 ```
 
-### What the actual OpenCode CLI supports (per docs):
+### What the actual OpenCode CLI supports (per docs)
+
 ```bash
 opencode                         # Start TUI
 opencode run "prompt here"       # Non-interactive mode
@@ -71,20 +73,24 @@ opencode --version               # Print version
 opencode --help                  # Show help
 ```
 
-### How tools actually work in OpenCode:
+### How tools actually work in OpenCode
+
 The tools (read, write, edit, bash, grep, glob, list, etc.) are used by the **LLM inside the TUI**. You interact with them by:
+
 1. Starting OpenCode: `opencode`
 2. Typing a prompt in the TUI: "Read the file src/main.ts" or "Run npm test"
 3. The LLM decides which tools to invoke automatically
 4. Or via non-interactive mode: `opencode run "Search for TODO comments in the codebase"`
 
 To run bash commands from TUI, prefix with `!`:
+
 ```
 !ls -la        # Run shell command from TUI prompt  
 !npm test      # Run npm test from TUI prompt
 ```
 
-### Files affected:
+### Files affected
+
 - README.md (main) — ~10 instances
 - LEARNING-ROADMAP.md — ~20 instances
 - CATALOG.md — ~15 instances
@@ -105,11 +111,14 @@ To run bash commands from TUI, prefix with `!`:
 
 ## 3. CRITICAL: Bash Quoting Error
 
-### In 01-basic-commands/README.md line 120:
+### In 01-basic-commands/README.md line 120
+
 ```bash
 echo "Hello, OpenCode!" > test.txt    # ❌ WRONG — ! triggers history expansion in bash
 ```
+
 **Fix:**
+
 ```bash
 echo 'Hello, OpenCode!' > test.txt    # ✅ Single quotes prevent history expansion
 ```
@@ -119,13 +128,16 @@ echo 'Hello, OpenCode!' > test.txt    # ✅ Single quotes prevent history expans
 ## 4. CRITICAL: Wrong opencode invocations
 
 ### `opencode "prompt"` should be `opencode run "prompt"`
+
 Per the CLI docs, bare `opencode` starts the TUI. To pass a prompt non-interactively:
+
 ```bash
 opencode run "Explain this project's structure"   # ✅ Correct
 opencode run "Say hello"                          # ✅ Correct
 ```
 
 ### `opencode --update` should be `opencode upgrade`
+
 ```bash
 opencode upgrade         # ✅ Correct
 ```
@@ -141,6 +153,7 @@ opencode upgrade         # ✅ Correct
 However, the original module content was still inaccurate — it fabricated CLI commands like `openwork login`, `openwork org create`, `openwork team create`, `openwork workspace create`, `openwork review create`, etc. that don't exist.
 
 **Fixed:** Module 10 has been rewritten with accurate information sourced from [openworklabs.com/docs](https://openworklabs.com/docs), covering:
+
 - Desktop app setup and LLM provider connection
 - Self-hosted setup with `npm install -g openwork-orchestrator` and `openwork start`
 - OpenWork Cloud for teams (skill hubs, shared workspaces, RBAC)
@@ -153,6 +166,7 @@ However, the original module content was still inaccurate — it fabricated CLI 
 ~~The original Module 09 fabricated a plugin system that didn't match the actual API. After initial audit, we incorrectly rewrote it to claim "OpenCode has no plugin/hooks system."~~
 
 **Correction (June 2025):** OpenCode **does** have an extensive plugin ecosystem:
+
 - Local plugins in `.opencode/plugins/` and `~/.config/opencode/plugins/`
 - npm plugins via `opencode.json` `"plugin"` array (auto-installed via Bun)
 - 30+ event hooks (`tool.execute.before/after`, `session.created`, `session.idle`, `file.edited`, `permission.asked`, etc.)
@@ -167,13 +181,15 @@ However, the original module content was still inaccurate — it fabricated CLI 
 ## 7. MAJOR: Module 08 (MCP) contains fabricated CLI patterns
 
 The `08-mcp-servers/` module shows commands like:
+
 ```bash
 List MCP servers              # ❌ not a real command
 Connect to MCP server: "filesystem"  # ❌ not how it works
 Execute SQL: "SELECT * FROM users"   # ❌ not an opencode command
 ```
 
-### How MCP actually works in OpenCode:
+### How MCP actually works in OpenCode
+
 ```bash
 # CLI
 opencode mcp add              # Interactive add
@@ -198,6 +214,7 @@ opencode mcp auth [name]      # OAuth auth
 ## 8. MAJOR: Duplicate Table of Contents in multiple modules
 
 The following modules have 3x duplicate ToC blocks:
+
 - 01-basic-commands/README.md
 - 03-search-tools/README.md
 - 04-bash-integration/README.md (plus duplicate module content blocks)
@@ -206,7 +223,8 @@ The following modules have 3x duplicate ToC blocks:
 
 ## 9. MAJOR: Incorrect slash command documentation
 
-### Slash commands that exist in OpenCode TUI:
+### Slash commands that exist in OpenCode TUI
+
 | Command     | Correct | Notes                                                     |
 | ----------- | ------- | --------------------------------------------------------- |
 | `/help`     | ✅       |                                                           |
@@ -227,7 +245,8 @@ The following modules have 3x duplicate ToC blocks:
 | `/export`   | ✅       | Not mentioned                                             |
 | `/details`  | ✅       | Not mentioned                                             |
 
-### What the primer claims that doesn't exist in OpenCode:
+### What the primer claims that doesn't exist in OpenCode
+
 - No `/review` command  
 - No `/self-assessment` command
 - No `/lesson-quiz` command
@@ -244,6 +263,7 @@ OpenCode docs only document basic `@filename` fuzzy search syntax. The line-rang
 ## 11. MINOR: Broken code block in 01-basic-commands/README.md
 
 Around line 199, there's an orphaned code block:
+
 ```
 # Share conversation (creates shareable link)  
 /share
@@ -251,6 +271,7 @@ Around line 199, there's an orphaned code block:
 # Initialize project analysis
 /init
 ```
+
 This appears mid-section without proper context, likely leftover from editing.
 
 ---
@@ -264,6 +285,7 @@ The module contains only template structure with placeholder content ("Content n
 ## 13. Backup files need cleanup
 
 Many `.backup.*` and `.tmp*` files exist across modules:
+
 - `README.md.backup.1775852530`
 - `README.md.backup.1775852590`
 - `README.md.backup.cleanup`
@@ -292,6 +314,7 @@ Many `.backup.*` and `.tmp*` files exist across modules:
 | 13. Backup file cleanup                     | **FIXED** — All 27 files deleted                                                 |
 
 ### Files Fixed
+
 - `README.md` (main) — 15 fabricated commands replaced
 - `LEARNING-ROADMAP.md` — 3 exercise sections rewritten
 - `CATALOG.md` — Module descriptions, examples, and use-case matrix corrected
@@ -364,6 +387,7 @@ After the initial fix pass, a comprehensive crawl of all 34+ pages at [opencode.
 | Missing granular permissions example                             | QUICK-REFERENCE | Added                                                         |
 
 ### Files Updated in Second Pass
+
 - `09-advanced-features/README.md` — Complete rewrite
 - `08-mcp-servers/README.md` — Complete rewrite
 - `07-skills-agents/README.md` — Complete rewrite
@@ -397,6 +421,7 @@ Crawled all 19 pages at [openworklabs.com/docs](https://openworklabs.com/docs). 
 | Unverified "Windows with Enterprise plan" claim                                             | **REMOVED**  |
 
 Files updated:
+
 - `10-openwork/README.md` — Complete rewrite with all 19 doc pages covered
 - `CATALOG.md` — Updated Module 10 description
 - `QUICK-REFERENCE.md` — Updated OpenWork section with all features

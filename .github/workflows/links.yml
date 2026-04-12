@@ -23,5 +23,6 @@ jobs:
           args: >-
             --no-progress
             --exclude-path resources/logos
+            --exclude-path README-TEMPLATE.md
             '**/*.md'
           fail: true

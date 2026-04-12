@@ -145,12 +145,14 @@ echo "Checking results..."
 Brief explanation of the concept.
 
 **How it works:**
+
 ```bash
 # Example showing the concept
 opencode concept-example
 ```
 
 **When to use it:**
+
 - Situation 1
 - Situation 2
 - Situation 3
@@ -161,12 +163,14 @@ opencode concept-example
 Brief explanation of the concept.
 
 **How it works:**
+
 ```bash
 # Example showing the concept
 opencode concept-example
 ```
 
 **When to use it:**
+
 - Situation 1
 - Situation 2
 - Situation 3
@@ -210,6 +214,7 @@ echo "✅ Example complete!"
 ```
 
 **Key Takeaways:**
+
 - Takeaway 1
 - Takeaway 2
 - Takeaway 3
@@ -233,6 +238,7 @@ echo "✅ Example complete!"
 ```
 
 **Key Takeaways:**
+
 - Takeaway 1
 - Takeaway 2
 - Takeaway 3
@@ -263,6 +269,7 @@ sequenceDiagram
 ```
 
 **Implementation:**
+
 ```bash
 #!/bin/bash
 # Real-World Workflow Implementation
@@ -271,6 +278,7 @@ sequenceDiagram
 ```
 
 **When to use this workflow:**
+
 - Scenario 1
 - Scenario 2
 - Scenario 3
@@ -286,11 +294,13 @@ sequenceDiagram
 **Challenge:** [Brief description of challenge]
 
 **Requirements:**
+
 - Requirement 1
 - Requirement 2
 - Requirement 3
 
 **Starter Code:**
+
 ```bash
 #!/bin/bash
 # Your solution here
@@ -319,12 +329,15 @@ Explanation of solution.
 <summary><strong>FAQ for this module</strong></summary>
 
 ### 🤔 Question 1?
+
 **Answer:** Detailed answer.
 
 ### 🤔 Question 2?
+
 **Answer:** Detailed answer.
 
 ### 🤔 Question 3?
+
 **Answer:** Detailed answer.
 
 </details>
@@ -337,16 +350,19 @@ Explanation of solution.
 <summary><strong>Common issues and solutions</strong></summary>
 
 ### 🚫 Error: [Error message]
+
 **Cause:** What causes this error
 **Solution:** How to fix it
 **Prevention:** How to avoid it
 
-### 🚫 Error: [Error message]
+### 🚫 Error: [Another error message]
+
 **Cause:** What causes this error
 **Solution:** How to fix it
 **Prevention:** How to avoid it
 
 ### 🔧 Debugging Tips
+
 - Tip 1
 - Tip 2
 - Tip 3
@@ -382,6 +398,7 @@ Test your understanding:
 ### 🏆 Module Completion
 
 Copy this when you complete the module:
+
 ```bash
 echo "Completed [Module Name] on $(date)"
 # Add to your learning log
@@ -413,7 +430,7 @@ echo "Completed [Module Name] on $(date)"
 
 <div align="center">
 
-## 🎉 Congratulations!
+## 🎉 Congratulations
 
 You've completed this module. Ready for the next challenge?
 
