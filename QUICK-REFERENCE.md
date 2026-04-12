@@ -83,6 +83,16 @@
 - `Tab` — Cycle forward through primary agents (Build ↔ Plan)
 - `Shift+Tab` — Cycle backward
 
+### Subagent Invocation
+
+```
+@explore map out the project architecture
+@general research and implement the auth flow
+```
+
+- **Explore thoroughness**: `"quick"`, `"medium"`, or `"very thorough"` — controls investigation depth
+- **Session navigation**: `Leader+Down` (enter child) → `Right/Left` (cycle siblings) → `Up` (return to parent)
+
 ## LLM-Internal Tools
 
 > These are NOT CLI commands. The LLM calls them automatically when you ask it to do things.
@@ -175,7 +185,9 @@ Use `@` in prompts to reference files:
 {
   "permission": {
     "bash": { "*": "ask", "git *": "allow", "rm *": "deny" },
-    "edit": { "*": "allow", "*.env": "deny" }
+    "edit": { "*": "allow", "*.env": "deny" },
+    "doom_loop": "ask",
+    "external_directory": "ask"
   }
 }
 ```
@@ -230,6 +242,17 @@ opencode mcp list
 | Settings > Cloud                       | Team features         |
 | `/skill-creator`                       | Create skills in chat |
 | share.openworklabs.com                 | Share/import skills   |
+
+### GitHub Actions & Headless Execution
+
+| Command | Purpose |
+| --- | --- |
+| `opencode github install` | Install GitHub App + workflow in your repo |
+| `opencode github run` | Process GitHub events in CI |
+| `opencode serve` | Start headless API server (set `OPENCODE_SERVER_PASSWORD` for auth) |
+| `opencode run 'prompt'` | One-shot non-interactive execution |
+| `opencode run --attach URL 'prompt'` | Attach to a running server |
+| `cat file \| opencode run 'prompt'` | Pipe stdin to a prompt |
 
 See [openworklabs.com/docs](https://openworklabs.com/docs/get-started) for full documentation.
 

@@ -190,6 +190,46 @@ Plugins can listen to 30+ events:
 | **LSP**        | `lsp.client.diagnostics`, `lsp.updated`                                                                       |
 | **Other**      | `command.executed`, `todo.updated`, `server.connected`                                                        |
 
+### Event Payloads
+
+The most commonly used hooks and what they receive:
+
+**`tool.execute.before`** — runs before every tool call. Return `{ deny: true, reason: "..." }` to block, or nothing to allow.
+
+```typescript
+"tool.execute.before": async (input) => {
+  // input.tool  — tool name (e.g., "bash", "edit", "mcp_github_create_issue")
+  // input.args  — tool arguments (e.g., { command: "rm -rf /" })
+}
+```
+
+**`tool.execute.after`** — runs after a tool call completes.
+
+```typescript
+"tool.execute.after": async (input, output) => {
+  // input.tool, input.args — same as before
+  // output.result — the tool's return value
+}
+```
+
+**`file.edited`** — fires when a file is changed by any edit tool.
+
+```typescript
+"file.edited": async ({ event }) => {
+  // event.filePath — the file that was edited
+}
+```
+
+**`todo.updated`** — fires when the todo list changes.
+
+```typescript
+"todo.updated": async ({ event }) => {
+  // event.todos — the current todo list
+}
+```
+
+**`experimental.session.compacting`** — fires before compaction (see [When and How to Compact](#when-and-how-to-compact)).
+
 ### Plugin Context
 
 Plugins receive a context object:
@@ -370,7 +410,9 @@ For fine-grained control, use an object with glob patterns. The **last matching 
 | `webfetch`           | URL                                                            |
 | `websearch`          | Query                                                          |
 | `external_directory` | Path outside project (default: `"ask"`)                        |
-| `doom_loop`          | Same tool called 3x identically (default: `"ask"`)             |
+| `doom_loop`          | Same tool called 3× identically (default: `"ask"`)             |
+
+> 🔄 **Doom loop in practice:** If the LLM retries `bash("npm test")` three times with identical input and it keeps failing, OpenCode pauses and asks you what to do. Say: "Stop retrying. The test is failing because X — fix X first." Configure via `"doom_loop": "deny"` to block retries immediately, or `"allow"` to let the LLM keep trying.
 
 ### External Directory Access
 
@@ -571,6 +613,8 @@ sequenceDiagram
 
 Each `/undo` reverts **one tool call** — if the LLM edited 3 files in one step, `/undo` reverts all 3.
 
+> 💡 For a systematic approach to handling failures (doom loops, context overflow, corrupted edits), see the **Error Recovery Playbook** in [TROUBLESHOOTING.md](../TROUBLESHOOTING.md#error-recovery-playbook).
+
 ### What Gets Snapshotted
 
 - File creates (`write` tool)
@@ -630,6 +674,41 @@ flowchart LR
 | `reserved` | Token budget reserved for compaction summary (default: `10000`)          |
 
 **Manual compaction:** Type `/compact` in the TUI to force compaction at any time.
+
+### When and How to Compact
+
+**Symptoms that you need compaction:**
+
+- Responses getting noticeably slower
+- The LLM repeating itself or forgetting earlier decisions
+- Tool calls the LLM already tried being retried
+- The LLM losing track of which files it already edited
+
+**Proactive compaction strategies:**
+
+| Strategy | When to use |
+| --- | --- |
+| `/compact` after each major milestone | Long sessions with multiple features |
+| Delegate exploration to `@explore` | Keeps parent context lean — only the summary returns |
+| Start a `/new` session and reference old work | When context is beyond salvage |
+| Set `compaction.reserved` higher (e.g., `20000`) | If the default summary feels too thin |
+
+**Plugin hook for advanced users:** The `experimental.session.compacting` hook fires before the compaction agent generates its summary. You can inject critical context that must survive compaction:
+
+```typescript
+// .opencode/plugins/compact-context.ts
+import type { Plugin } from "@opencode-ai/plugin"
+
+export default function(ctx: Plugin.Context): Plugin.Handler {
+  return {
+    "experimental.session.compacting": async (_input, output) => {
+      output.context.push("Always remember: this project uses pnpm, not npm.")
+    },
+  }
+}
+```
+
+Set `output.prompt = "..."` to fully replace the default compaction prompt (advanced).
 
 **What compaction preserves:**
 

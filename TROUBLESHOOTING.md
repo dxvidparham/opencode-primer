@@ -118,9 +118,58 @@ Type `/` at the beginning of your message. Available commands:
 
 #### Issue: Context too long / running out of context
 
-- Use `/compact` to summarize and compress the conversation
-- Start a new session with `/new`
-- Be more specific in your prompts to reduce back-and-forth
+**Symptoms:** Responses getting slower, the LLM repeating itself, forgetting earlier decisions, retrying tool calls it already completed.
+
+**Immediate fixes:**
+
+- `/compact` — summarize and compress the conversation
+- `/new` — start fresh (reference previous work: "Continue the auth work from my last session")
+
+**Proactive strategies:**
+
+- Compact after each major milestone (`/compact`), don’t wait for auto-compaction
+- Delegate exploratory work to `@explore` or `@general` — only the summary returns to the parent, keeping your context lean
+- Be specific in prompts to reduce unnecessary tool calls
+- If you adjust `compaction.reserved` upward (e.g., `20000`), compaction summaries carry more detail
+
+**Config reference:**
+
+```json
+{
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  }
+}
+```
+
+Set `OPENCODE_DISABLE_AUTOCOMPACT=true` to disable auto-compaction (not recommended for long sessions).
+
+#### Issue: Doom loop (LLM retrying the same failing action)
+
+**Symptoms:** The LLM calls the same tool with identical input 3+ times, getting the same error each time.
+
+**What happens:** OpenCode triggers the `doom_loop` permission check (default: `"ask"`) after 3 identical calls.
+
+**What to do:**
+
+1. **Reject** the repeated attempt when prompted
+2. **Interrupt and redirect:** “Stop trying that. The test fails because X — fix X first.”
+3. If the LLM is confused, `/compact` to clear noise, then re-explain the goal
+4. As a last resort, `/new` to start fresh
+
+**Config:**
+
+```json
+{
+  "permission": {
+    "doom_loop": "ask"
+  }
+}
+```
+
+Set to `"deny"` to block retries immediately, or `"allow"` to let the LLM keep trying.
 
 ### 5. MCP Server Issues
 
@@ -272,13 +321,47 @@ opencode models
 opencode
 ```
 
+### Error Recovery Playbook
+
+When something goes wrong, follow this escalation ladder — start at step 1 and only move to the next step if the previous one doesn't resolve it:
+
+```mermaid
+flowchart TD
+  A["Something went wrong"] --> B{"What kind of problem?"}
+  B -->|"Bad edit / wrong file change"| C["/undo → re-explain what you wanted"]
+  B -->|"LLM stuck / repeating itself"| D["Interrupt → rephrase the request"]
+  B -->|"Context feels polluted"| E["/compact → continue working"]
+  B -->|"Session beyond saving"| F["/new → reference old session context"]
+
+  C --> G{"Fixed?"}
+  D --> G
+  E --> G
+  G -->|"No"| H["Try the next step up"]
+  G -->|"Yes"| I["Continue working ✓"]
+```
+
+| Step | Action | Command | When to use |
+| --- | --- | --- | --- |
+| 1 | **Undo the bad change** | `/undo` | An edit broke something or changed the wrong file |
+| 2 | **Interrupt and rephrase** | Type a new message | The LLM is going in circles or misunderstood you |
+| 3 | **Compact context** | `/compact` | Responses are slow, LLM is confused by old noise |
+| 4 | **Start fresh** | `/new` | Context is unsalvageable; start over with a clean slate |
+| 5 | **Switch agent** | `Tab` → Plan | Let Plan agent analyze the situation read-only, then switch back to Build |
+
+**Pro tips:**
+
+- After `/undo`, say "Read the file again and retry the edit" — the LLM will re-read the current state before attempting another change
+- After `/compact`, briefly restate what you're working on — the summary may lose nuance
+- After `/new`, you can say "Continue the work from my previous session" if using `--continue`
+
 ### Known Limitations
 
 These are well-known issues documented in the OpenCode issue tracker:
 
 | Issue | Description | Workaround |
 | --- | --- | --- |
-| **Context growth** | Long sessions with many tool calls accumulate context quickly, slowing responses | Use `/compact` proactively; start new sessions for unrelated tasks |
+| **Context growth** | Long sessions with many tool calls accumulate context quickly, slowing responses | Use `/compact` proactively; delegate exploration to subagents; start new sessions for unrelated tasks |
+| **Doom loop** | LLM retries the same failing tool call identically | `doom_loop` permission (default `"ask"`) triggers after 3 identical calls; interrupt and rephrase |
 | **Background processes** | The LLM starting a server or watcher that doesn't exit can block the session | Use `!` prefix for long-running commands; press `Ctrl+C` to interrupt |
 | **Windows Terminal** | Legacy `cmd.exe` and older PowerShell have rendering and clipboard issues with the TUI | Use [Windows Terminal](https://aka.ms/terminal) |
 | **Clipboard paste** | Some terminals garble pasted multi-line text in the TUI | Use `/editor` to compose long prompts in your `$EDITOR` |

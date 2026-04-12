@@ -30,6 +30,7 @@
 - [🎛️ Per-Agent MCP Management](#️-per-agent-mcp-management)
 - [🛠️ Common MCP Servers](#️-common-mcp-servers)
 - [🔒 MCP Tool Permissions](#-mcp-tool-permissions)
+- [⚠️ Security Considerations](#️-security-considerations)
 - [🧪 Practice Exercises](#-practice-exercises)
 - [❓ Common Questions](#-common-questions)
 - [🐛 Troubleshooting](#-troubleshooting)
@@ -183,6 +184,8 @@ flowchart TD
 2. When OpenCode starts, it connects to all configured servers
 3. The LLM gains access to each server's tools and resources
 4. You ask the LLM to do something, and it picks the right tool — whether built-in or MCP
+
+> 💡 **Unified tool namespace:** From the LLM’s perspective, built-in tools and MCP tools appear in one flat list. The LLM doesn’t “know” it’s calling an MCP tool vs. a built-in tool — it just picks the best tool for the job. MCP tools are distinguished only by their `mcp_<server>_<tool>` naming prefix.
 
 ### Transport Types
 
@@ -662,6 +665,36 @@ Control access to MCP-provided tools using glob patterns in permissions:
 ```
 
 MCP tool names follow the pattern `mcp_<servername>_<toolname>`.
+
+---
+
+## ⚠️ Security Considerations
+
+MCP servers extend the LLM’s capabilities, but they also expand the attack surface. Understand the risks:
+
+| Risk | Details |
+| --- | --- |
+| **Local servers execute arbitrary code** | A `stdio` MCP server runs as a child process on your machine with the same permissions as OpenCode. A malicious server can read any file, exfiltrate code, or modify your system. |
+| **Remote servers receive your data** | When the LLM calls a remote MCP tool, it sends your code/prompts over the network to that server. |
+| **Supply chain risk** | MCP servers installed via `npx` or `pip` can be compromised upstream. |
+| **Secret exposure** | Env vars like API keys configured in `"environment"` are passed to the server process. |
+
+**Mitigation checklist:**
+
+- ✅ Only install MCP servers from **trusted sources** (official packages, verified publishers)
+- ✅ **Audit npm/pip packages** before installing — check download counts, maintainers, last update
+- ✅ Use **read-only permissions** for servers you’re evaluating: `"mcp_<server>_*": "ask"`
+- ✅ Store secrets in **environment variables**, not directly in `opencode.json`
+- ✅ Apply **permission glob patterns** to limit what MCP tools can do:
+
+```json
+{
+  "permission": {
+    "mcp_untrusted_*": "ask",
+    "mcp_trusted_*": "allow"
+  }
+}
+```
 
 ---
 

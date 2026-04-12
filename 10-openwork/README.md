@@ -28,6 +28,7 @@
 - [📦 Importing & Sharing Skills](#-importing--sharing-skills)
 - [🌍 Browser Automation (Computer Use)](#-browser-automation-computer-use)
 - [💬 Messaging Integration (Slack & Telegram)](#-messaging-integration-slack--telegram)
+- [🤖 GitHub Actions Integration](#-github-actions-integration)
 - [⏰ Task Automation](#-task-automation)
 - [🔌 MCP Servers in OpenWork](#-mcp-servers-in-openwork)
 - [☁️ OpenWork Cloud](#️-openwork-cloud)
@@ -505,6 +506,76 @@ opencode-router bindings set --channel telegram --identity default --peer <chatI
 
 # List all bindings
 opencode-router bindings list
+```
+
+---
+
+## 🤖 GitHub Actions Integration
+
+OpenCode can run as a GitHub agent — responding to issues, reviewing PRs, and executing scheduled tasks directly in CI. This is separate from OpenWork and uses only the `opencode` CLI.
+
+### Installation
+
+```bash
+# Automatic: installs a GitHub App + workflow in your repo
+opencode github install
+
+# Or manually: see opencode.ai/docs/github for the workflow YAML
+```
+
+The installer creates a `.github/workflows/opencode.yml` workflow and stores your API keys as GitHub Actions secrets.
+
+### Supported Events
+
+| Event | Trigger | Behavior |
+| --- | --- | --- |
+| `issue_comment` | Comment mentioning `/opencode` or `/oc` | Creates branches, opens PRs, or replies |
+| `pull_request_review_comment` | Comment on code lines in a PR | Receives file path, line numbers, diff context |
+| `issues` | Issue opened or edited | Requires `prompt` input |
+| `pull_request` | PR opened, updated, or ready for review | Automatic review and suggestions |
+| `schedule` | Cron expression | Requires `prompt` input |
+| `workflow_dispatch` | Manual trigger from GitHub UI | Requires `prompt` input |
+
+### Scheduled Workflows
+
+Run OpenCode on a cron schedule (e.g., weekly dependency audit):
+
+```yaml
+on:
+  schedule:
+    - cron: "0 9 * * 1"  # Every Monday at 9am UTC
+
+jobs:
+  opencode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run OpenCode
+        uses: anomalyco/opencode-github-action@v1
+        with:
+          model: anthropic/claude-sonnet-4-20250514
+          prompt: "Review open issues and create PRs for any quick fixes"
+```
+
+### Headless Execution (`opencode serve` & `opencode run`)
+
+For autonomous workflows outside GitHub Actions:
+
+```bash
+# Start a headless API server (no TUI)
+opencode serve --port 4096
+
+# Secure with HTTP basic auth
+OPENCODE_SERVER_PASSWORD=secret opencode serve
+
+# One-shot non-interactive execution
+opencode run 'Find and fix all TypeScript errors'
+
+# Pipe input
+cat error.log | opencode run 'Explain this error and suggest a fix'
+
+# Attach to a running server
+opencode run --attach http://localhost:4096 'Explain async/await'
 ```
 
 ---

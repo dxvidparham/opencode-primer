@@ -281,6 +281,29 @@ The task list appears in the TUI sidebar and updates in real-time as the LLM wor
 
 The question and todowrite tools become powerful when combined with other tools. Here's how they fit into larger workflows:
 
+### Pattern 0: Session Planning (Front-Load Intent)
+
+The most effective way to use the todowrite tool is to **tell the LLM what you want up front** and ask it to plan before coding:
+
+```
+You: "I need to add user authentication to this Express app.
+     Requirements: JWT tokens, refresh flow, password hashing.
+     Create a plan before making any changes."
+```
+
+The LLM will use `todowrite` to create a structured task list, then work through it sequentially. This prevents context drift and gives you a checkpoint to review before work begins.
+
+**Re-prompting templates for keeping the agent on track:**
+
+| When the LLM drifts | Say this |
+| --- | --- |
+| Forgot remaining work | "Check your todo list — what's still pending?" |
+| Went off on a tangent | "Pause. Review the plan and get back on track." |
+| Finished early without checking | "Are all tasks marked completed? Show me the list." |
+| You want to reprioritize | "Skip the docs task. Do the migration first." |
+
+> 💡 **Compaction preserves the active todo list.** Even when older messages are summarized away, the task list survives — this is what keeps the LLM anchored during long sessions.
+
 ### Pattern 1: Question → Todo → Execute Pipeline
 
 ```mermaid

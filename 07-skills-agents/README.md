@@ -174,6 +174,45 @@ A fast, read-only subagent. Can use `read`, `glob`, `grep`, `list`, `bash`, `web
 
 Explore accepts a **thoroughness** parameter: `"quick"`, `"medium"`, or `"very thorough"` — controlling how deeply it investigates.
 
+### How Subagent Context Works
+
+Subagents are **disposable scratch pads** — they operate in their own context window, completely separate from the parent. This is the single most important thing to understand about subagents:
+
+```mermaid
+flowchart LR
+  subgraph "Parent Context"
+    A["Your conversation\n+ all tool results"] --> B["Spawn subagent\nwith a task description"]
+  end
+
+  subgraph "Subagent Context (isolated)"
+    C["Fresh context window"] --> D["Works independently:\nreads, searches, edits"]
+    D --> E["Produces a result summary"]
+  end
+
+  B --> C
+  E --> F["Only the summary\nreturns to parent"]
+  F --> A
+
+  style C fill:#e8f5e9
+  style A fill:#e3f2fd
+```
+
+**Key implications:**
+
+- The parent’s context stays clean — only the subagent’s summary comes back, not every file it read or command it ran
+- If a subagent fills its context or fails, the parent is unaffected
+- Subagents have their own step budget (configured via `agent.<name>.steps`)
+- The parent can restrict which tools a subagent gets (via `permission.task`)
+
+### When to Use Which Agent
+
+| Situation | Use | Why |
+| --- | --- | --- |
+| Quick question about the codebase | `@explore` | Read-only, fast, no risk of edits |
+| Research + implement a feature | `@general` | Full tool access, isolated context |
+| Complex multi-step work you want to watch | Stay in parent | You keep full control and visibility |
+| Risky exploration that might fill context | `@explore` or `@general` | If it fails, parent is unaffected |
+
 ### Session Navigation
 
 When subagents are spawned, you can navigate between sessions:
@@ -193,6 +232,8 @@ When subagents are spawned, you can navigate between sessions:
 The `skill` tool loads **SKILL.md** files that provide specialized instructions for the LLM. Skills give the agent domain-specific knowledge and workflows.
 
 ### How Skills Are Loaded
+
+Skills use **two-layer loading** to stay token-efficient. Layer 1: OpenCode advertises all skill names and descriptions in the system prompt (~100 tokens each). Layer 2: the `skill` tool loads the full body on demand only when the LLM decides it’s relevant (~2,000 tokens each). Without this pattern, 20 skills would consume ~40,000 tokens upfront — before any real work begins.
 
 ```mermaid
 flowchart TD

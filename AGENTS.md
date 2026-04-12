@@ -142,12 +142,12 @@ wrkflw run --runtime emulation .github/workflows/lint.yml
 
 ## Dependencies & Tools
 
-| Tool | Purpose | Install |
-|---|---|---|
-| **markdownlint-cli2** | Markdown linting | `npm install -g markdownlint-cli2` |
-| **zizmor** | GitHub Actions security audit | `pipx install zizmor` |
-| **wrkflw** | Local GH Actions validation/execution | `cargo install wrkflw` |
-| **mergiraf** | Structured merge driver (YAML/JSON/JS/TS) | `cargo install mergiraf` |
+| Tool                  | Purpose                                   | Install                            |
+| --------------------- | ----------------------------------------- | ---------------------------------- |
+| **markdownlint-cli2** | Markdown linting                          | `npm install -g markdownlint-cli2` |
+| **zizmor**            | GitHub Actions security audit             | `pipx install zizmor`              |
+| **wrkflw**            | Local GH Actions validation/execution     | `cargo install wrkflw`             |
+| **mergiraf**          | Structured merge driver (YAML/JSON/JS/TS) | `cargo install mergiraf`           |
 
 ## Key References
 

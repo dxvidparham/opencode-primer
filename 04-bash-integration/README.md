@@ -269,6 +269,43 @@ This is especially important for:
 - Commands that modify system state (`sudo`, `docker system prune`)
 - Commands with side effects (`git push`, `npm publish`)
 
+### Doom Loop Detection
+
+If the LLM calls the **same bash command with identical input three times in a row**, OpenCode triggers the `doom_loop` permission check (default: `"ask"`). This prevents the agent from endlessly retrying a failing command.
+
+When a doom loop is detected, you should:
+
+1. **Reject** the repeated attempt
+2. **Rephrase** your request — e.g., "Stop trying that approach. Instead, try X."
+3. If the loop persists, use `/compact` to clear noisy context, then re-explain the goal
+
+Configure doom loop handling in `opencode.json`:
+
+```json
+{
+  "permission": {
+    "doom_loop": "ask"
+  }
+}
+```
+
+Values: `"allow"` (let it retry), `"ask"` (prompt you — default), `"deny"` (block immediately).
+
+### Output Truncation & Timeouts
+
+Large command outputs are **automatically truncated** before being sent to the LLM. This prevents a single verbose command from filling the context window. Keep this in mind:
+
+- Verbose flags (`-v`, `--verbose`, `--debug`) can be counterproductive — the extra output is often cut before the LLM sees it
+- Prefer targeted output: `grep`, `head`, `tail`, `| wc -l` instead of dumping entire logs
+
+Commands that produce no output for an extended period are terminated by a configurable timeout:
+
+```bash
+# Set a custom timeout (milliseconds) — default varies by provider
+export OPENCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS=30000
+opencode
+```
+
 ---
 
 ## 🔧 Examples & Patterns
@@ -488,7 +525,7 @@ Update `opencode.json`:
 
 ### Long-Running Commands
 
-The LLM handles long-running commands, but processes that produce no output for an extended period may be terminated by OpenCode's timeout.
+The LLM handles long-running commands, but processes that produce no output for an extended period are terminated. Configure the timeout with `OPENCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` (see [Output Truncation & Timeouts](#output-truncation--timeouts) above).
 
 > ⚠️ **Background processes can hang the session.** If the LLM starts a server or watcher that doesn't exit, it may block the conversation. Use the `!` prefix for long-running processes so they bypass the LLM, or ask the LLM to run the command with `&` (background). If a session appears frozen, press `Ctrl+C` to interrupt.
 
