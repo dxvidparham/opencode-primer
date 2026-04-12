@@ -1,0 +1,27 @@
+# Mergiraf structured merge driver for config and code files
+*.json merge=mergiraf
+*.yml merge=mergiraf
+*.yaml merge=mergiraf
+*.js merge=mergiraf
+*.jsx merge=mergiraf
+*.mjs merge=mergiraf
+*.ts merge=mergiraf
+*.tsx merge=mergiraf
+*.html merge=mergiraf
+*.htm merge=mergiraf
+
+# Enforce LF line endings for text files
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+
+# Binary files
+*.png binary
+*.svg binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.ico binary

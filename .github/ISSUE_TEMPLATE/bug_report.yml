@@ -1,0 +1,42 @@
+name: Bug Report
+description: Report incorrect, outdated, or misleading content
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      description: Which module contains the issue?
+      options:
+        - 01 — Basic Commands
+        - 02 — File Operations
+        - 03 — Search Tools
+        - 04 — Bash Integration
+        - 05 — Question & Todo
+        - 06 — Web Tools
+        - 07 — Skills & Agents
+        - 08 — MCP Servers
+        - 09 — Advanced Features
+        - 10 — OpenWork
+        - Top-level file (README, TROUBLESHOOTING, etc.)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What's wrong?
+      description: Describe the incorrect or outdated content.
+      placeholder: "e.g., Module 04 shows `opencode bash 'pwd'` but that command doesn't exist"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should it say?
+      description: If you know the correct information, share it here.
+  - type: input
+    id: opencode-version
+    attributes:
+      label: OpenCode version
+      description: Which version of OpenCode did you test against?
+      placeholder: "e.g., 1.2.0"
