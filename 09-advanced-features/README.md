@@ -22,6 +22,7 @@
 
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [🔌 Plugin System](#-plugin-system)
 - [🛠️ Custom Tools](#️-custom-tools)
 - [🔒 Permission Configuration](#-permission-configuration)
@@ -80,11 +81,20 @@ flowchart TD
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Continue in your practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 08: MCP Servers](../08-mcp-servers/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/advanced-config-lab.md](examples/advanced-config-lab.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 
@@ -686,12 +696,12 @@ flowchart LR
 
 **Proactive compaction strategies:**
 
-| Strategy | When to use |
-| --- | --- |
-| `/compact` after each major milestone | Long sessions with multiple features |
-| Delegate exploration to `@explore` | Keeps parent context lean — only the summary returns |
-| Start a `/new` session and reference old work | When context is beyond salvage |
-| Set `compaction.reserved` higher (e.g., `20000`) | If the default summary feels too thin |
+| Strategy                                         | When to use                                          |
+| ------------------------------------------------ | ---------------------------------------------------- |
+| `/compact` after each major milestone            | Long sessions with multiple features                 |
+| Delegate exploration to `@explore`               | Keeps parent context lean — only the summary returns |
+| Start a `/new` session and reference old work    | When context is beyond salvage                       |
+| Set `compaction.reserved` higher (e.g., `20000`) | If the default summary feels too thin                |
 
 **Plugin hook for advanced users:** The `experimental.session.compacting` hook fires before the compaction agent generates its summary. You can inject critical context that must survive compaction:
 

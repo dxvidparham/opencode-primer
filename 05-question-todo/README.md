@@ -23,6 +23,7 @@
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [📚 The Question Tool](#-the-question-tool)
 - [📋 The Todowrite Tool](#-the-todowrite-tool)
 - [🔧 Integration Patterns](#-integration-patterns)
@@ -62,11 +63,20 @@ flowchart LR
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Use the guided practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 04: Bash Integration](../04-bash-integration/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/question-todo-workflows.md](examples/question-todo-workflows.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 
@@ -295,12 +305,12 @@ The LLM will use `todowrite` to create a structured task list, then work through
 
 **Re-prompting templates for keeping the agent on track:**
 
-| When the LLM drifts | Say this |
-| --- | --- |
-| Forgot remaining work | "Check your todo list — what's still pending?" |
-| Went off on a tangent | "Pause. Review the plan and get back on track." |
+| When the LLM drifts             | Say this                                            |
+| ------------------------------- | --------------------------------------------------- |
+| Forgot remaining work           | "Check your todo list — what's still pending?"      |
+| Went off on a tangent           | "Pause. Review the plan and get back on track."     |
 | Finished early without checking | "Are all tasks marked completed? Show me the list." |
-| You want to reprioritize | "Skip the docs task. Do the migration first." |
+| You want to reprioritize        | "Skip the docs task. Do the migration first."       |
 
 > 💡 **Compaction preserves the active todo list.** Even when older messages are summarized away, the task list survives — this is what keeps the LLM anchored during long sessions.
 

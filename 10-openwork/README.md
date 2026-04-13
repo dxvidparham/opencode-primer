@@ -23,6 +23,7 @@
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [🖥️ Desktop App](#️-desktop-app)
 - [🌐 Self-Hosted Setup](#-self-hosted-setup)
 - [📦 Importing & Sharing Skills](#-importing--sharing-skills)
@@ -87,11 +88,20 @@ OpenWork is powered by [OpenCode](https://opencode.ai/) — everything you've le
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Continue in your practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 09: Advanced Features](../09-advanced-features/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/openwork-playbook.md](examples/openwork-playbook.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 

@@ -23,6 +23,7 @@
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Examples & Patterns](#-examples--patterns)
 - [🔗 Session Sharing](#-session-sharing)
@@ -53,11 +54,20 @@ Both are **LLM-internal tools** — the AI agent uses them when you ask for web-
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Use the guided practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 05: Question & Todo Tools](../05-question-todo/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/web-tool-workflows.md](examples/web-tool-workflows.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 

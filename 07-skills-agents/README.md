@@ -23,6 +23,7 @@
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [📚 Agent System](#-agent-system)
 - [🔧 Skills](#-skills)
 - [🛠️ Custom Agents](#️-custom-agents)
@@ -99,11 +100,20 @@ flowchart TD
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Continue in your practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 06: Web Tools](../06-web-tools/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/skills-agents-lab.md](examples/skills-agents-lab.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 
@@ -206,12 +216,12 @@ flowchart LR
 
 ### When to Use Which Agent
 
-| Situation | Use | Why |
-| --- | --- | --- |
-| Quick question about the codebase | `@explore` | Read-only, fast, no risk of edits |
-| Research + implement a feature | `@general` | Full tool access, isolated context |
-| Complex multi-step work you want to watch | Stay in parent | You keep full control and visibility |
-| Risky exploration that might fill context | `@explore` or `@general` | If it fails, parent is unaffected |
+| Situation                                 | Use                      | Why                                  |
+| ----------------------------------------- | ------------------------ | ------------------------------------ |
+| Quick question about the codebase         | `@explore`               | Read-only, fast, no risk of edits    |
+| Research + implement a feature            | `@general`               | Full tool access, isolated context   |
+| Complex multi-step work you want to watch | Stay in parent           | You keep full control and visibility |
+| Risky exploration that might fill context | `@explore` or `@general` | If it fails, parent is unaffected    |
 
 ### Session Navigation
 

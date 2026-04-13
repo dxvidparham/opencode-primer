@@ -23,6 +23,7 @@
 - [🎯 Overview](#-overview)
 - [✅ Prerequisites](#-prerequisites)
 - [⚡ Quick Start](#-quick-start)
+- [📘 Hands-On Companion](#-hands-on-companion)
 - [📚 Core Concepts](#-core-concepts)
 - [🔧 Local MCP Servers](#-local-mcp-servers)
 - [🌐 Remote MCP Servers](#-remote-mcp-servers)
@@ -56,11 +57,20 @@ MCP (Model Context Protocol) is an open protocol that lets OpenCode connect to e
 
 ```bash
 opencode --version   # Verify installation
-cd ~/your-project    # Navigate to a project
+cd ~/opencode-practice    # Continue in your practice project
 opencode             # Start the TUI
 ```
 
 - [x] Completed [Module 07: Skills & Agents](../07-skills-agents/)
+
+---
+
+## 📘 Hands-On Companion
+
+Work through the dedicated exercises in [examples/mcp-lab.md](examples/mcp-lab.md).
+
+- **Canonical path:** `~/opencode-practice`
+- **Transfer path:** Apply the same patterns to your own project after each exercise
 
 ---
 
