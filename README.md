@@ -79,8 +79,8 @@ This isn't another feature reference. It's a **structured, visual, example-drive
 
 ### 📊 Comparison: Official Docs vs This Guide
 
-|                     | **Official Documentation** | **This Primer**                     |
-| ------------------- | -------------------------- | ----------------------------------- |
+|                    | **Official Documentation** | **This Primer**                     |
+| ------------------ | -------------------------- | ----------------------------------- |
 | **📚 Content Type** | Reference documentation    | Visual tutorials with examples      |
 | **🎯 Focus**        | Feature descriptions       | How it works under the hood         |
 | **💡 Examples**     | Basic snippets             | Production-ready workflows          |
@@ -170,9 +170,9 @@ Take the **self-assessment** or pick your level below:
 
 | Level            | Badge | You Can...                     | Start Here                               | Time     |
 | ---------------- | ----- | ------------------------------ | ---------------------------------------- | -------- |
-| **Beginner**     | 🟢    | Run basic opencode commands    | [01 - Basic Commands](01-basic-commands) | ~2 hours |
-| **Intermediate** | 🟡    | Use file operations and search | [03 - Search Tools](03-search-tools)     | ~3 hours |
-| **Advanced**     | 🔴    | Create automation workflows    | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
+| **Beginner**     | 🟢     | Run basic opencode commands    | [01 - Basic Commands](01-basic-commands) | ~2 hours |
+| **Intermediate** | 🟡     | Use file operations and search | [03 - Search Tools](03-search-tools)     | ~3 hours |
+| **Advanced**     | 🔴     | Create automation workflows    | [07 - Skills & Agents](07-skills-agents) | ~4 hours |
 
 ## 📚 Learning Modules
 
@@ -180,8 +180,8 @@ Take the **self-assessment** or pick your level below:
 
 ### 🗺️ Complete Learning Path (10 Modules)
 
-| #   | Module                                       | Level         | ⏱️ Time   | Status   |
-| --- | -------------------------------------------- | ------------- | --------- | -------- |
+| #   | Module                                      | Level         | ⏱️ Time    | Status  |
+| --- | ------------------------------------------- | ------------- | --------- | ------- |
 | 1   | [🚀 Basic Commands & TUI](01-basic-commands) | Beginner      | 30 min    | ✅ Ready |
 | 2   | [📁 File Operations](02-file-operations)     | Beginner+     | 45 min    | ✅ Ready |
 | 3   | [🔍 Search Tools](03-search-tools)           | Beginner+     | 45 min    | ✅ Ready |
@@ -261,10 +261,7 @@ cd opencode-primer
 # 2. Verify your opencode installation
 opencode --version
 
-# 3. Try your first command from Module 1
-cat 01-basic-commands/examples/sample-project/hello.js
-
-# 4. Open the quick reference
+# 3. Open the quick reference
 cat QUICK-REFERENCE.md | head -50
 ```
 
@@ -273,7 +270,7 @@ cat QUICK-REFERENCE.md | head -50
 cp -r 01-basic-commands/examples/ ~/opencode-practice/
 
 # File operations (15 min)
-cp 02-file-operations/examples/sample-app/src/main.ts ~/opencode-practice/
+cat 02-file-operations/examples/file-exploration.md | head -50
 
 # Search patterns (15 min)
 grep -r "function" 03-search-tools/ --include="*.md"
@@ -338,8 +335,8 @@ By the end of 15 minutes, you should be able to:
 
 ### 🔧 Real-World Use Cases
 
-| Use Case                     | 🎯 Goal                             | ⚙️ Features Combined                     | Module |
-| ---------------------------- | ----------------------------------- | ---------------------------------------- | ------ |
+| Use Case                     | 🎯 Goal                              | ⚙️ Features Combined                   | Module |
+| ---------------------------- | ----------------------------------- | ------------------------------------- | ------ |
 | **Code Review Automation**   | Automate code quality checks        | 🔍 Search + 📁 File Ops + 💻 Bash        | 1-4    |
 | **Refactoring Workflows**    | Safe, batch code modifications      | ✏️ Edit + 🔍 Search + 🤖 Automation      | 2-3-7  |
 | **CI/CD Integration**        | Streamline deployment pipelines     | 💻 Bash + 🤖 Automation + 🔄 Workflows   | 4-7-9  |
@@ -348,7 +345,7 @@ By the end of 15 minutes, you should be able to:
 | **DevOps Pipelines**         | Infrastructure as code workflows    | 🤖 Automation + 💻 Bash + 🔄 Workflows   | 7-4-9  |
 | **Complex Refactoring**      | Large-scale code migrations         | 🔍 Search + ✏️ Edit + 🤖 Task Automation | 3-2-7  |
 | **API Client Generation**    | Auto-create API clients from docs   | 🌐 Web Tools + 📁 File Ops + 🤖 Agents   | 6-2-7  |
-| **Database Migrations**      | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation           | 8-7    |
+| **Database Migrations**      | Schema updates with data transforms | 🔌 MCP Servers + 🤖 Automation          | 8-7    |
 | **Team Collaboration**       | Shared development workflows        | 🤝 OpenWork + 🔄 Workflows + 🤖 Agents   | 10-9-7 |
 
 </div>
