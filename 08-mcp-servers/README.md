@@ -670,12 +670,12 @@ MCP tool names follow the pattern `mcp_<servername>_<toolname>`.
 
 MCP servers extend the LLM’s capabilities, but they also expand the attack surface. Understand the risks:
 
-| Risk | Details |
-| --- | --- |
+| Risk                                     | Details                                                                                                                                                                           |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Local servers execute arbitrary code** | A `stdio` MCP server runs as a child process on your machine with the same permissions as OpenCode. A malicious server can read any file, exfiltrate code, or modify your system. |
-| **Remote servers receive your data** | When the LLM calls a remote MCP tool, it sends your code/prompts over the network to that server. |
-| **Supply chain risk** | MCP servers installed via `npx` or `pip` can be compromised upstream. |
-| **Secret exposure** | Env vars like API keys configured in `"environment"` are passed to the server process. |
+| **Remote servers receive your data**     | When the LLM calls a remote MCP tool, it sends your code/prompts over the network to that server.                                                                                 |
+| **Supply chain risk**                    | MCP servers installed via `npx` or `pip` can be compromised upstream.                                                                                                             |
+| **Secret exposure**                      | Env vars like API keys configured in `"environment"` are passed to the server process.                                                                                            |
 
 **Mitigation checklist:**
 

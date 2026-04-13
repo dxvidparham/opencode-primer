@@ -105,7 +105,7 @@ grep -rn 'TODO\|FIXME' --include='*.js' .
 ls -la src/
 ```
 
-> 📂 **Hands-on companion:** [examples/editing-patterns.md](examples/editing-patterns.md) covers common editing and search patterns with practice exercises. Work through it alongside this module or after finishing the concepts below.
+> 📂 **Hands-on companion:** [examples/editing-patterns.md](examples/editing-patterns.md) covers common editing and search patterns with practice exercises. Work through it alongside this module or use it as a reference.
 
 ---
 

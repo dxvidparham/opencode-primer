@@ -525,14 +525,14 @@ The installer creates a `.github/workflows/opencode.yml` workflow and stores you
 
 ### Supported Events
 
-| Event | Trigger | Behavior |
-| --- | --- | --- |
-| `issue_comment` | Comment mentioning `/opencode` or `/oc` | Creates branches, opens PRs, or replies |
-| `pull_request_review_comment` | Comment on code lines in a PR | Receives file path, line numbers, diff context |
-| `issues` | Issue opened or edited | Requires `prompt` input |
-| `pull_request` | PR opened, updated, or ready for review | Automatic review and suggestions |
-| `schedule` | Cron expression | Requires `prompt` input |
-| `workflow_dispatch` | Manual trigger from GitHub UI | Requires `prompt` input |
+| Event                         | Trigger                                 | Behavior                                       |
+| ----------------------------- | --------------------------------------- | ---------------------------------------------- |
+| `issue_comment`               | Comment mentioning `/opencode` or `/oc` | Creates branches, opens PRs, or replies        |
+| `pull_request_review_comment` | Comment on code lines in a PR           | Receives file path, line numbers, diff context |
+| `issues`                      | Issue opened or edited                  | Requires `prompt` input                        |
+| `pull_request`                | PR opened, updated, or ready for review | Automatic review and suggestions               |
+| `schedule`                    | Cron expression                         | Requires `prompt` input                        |
+| `workflow_dispatch`           | Manual trigger from GitHub UI           | Requires `prompt` input                        |
 
 ### Scheduled Workflows
 

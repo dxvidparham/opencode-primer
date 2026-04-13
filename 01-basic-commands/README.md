@@ -142,7 +142,7 @@ Or use CLI mode for one-off prompts:
 opencode run "Explain this project's structure"
 ```
 
-> 📂 **Hands-on companion:** [examples/quick-start.md](examples/quick-start.md) has guided exercises for installation, first conversations, file references, and one-shot mode. Work through it alongside this module, or save it for after you finish the concepts below.
+> 📂 **Hands-on companion:** [examples/quick-start.md](examples/quick-start.md) has guided exercises for installation, first conversations, file references, and one-shot mode. Work through it alongside this module or use it as a reference.
 
 ### 🖥️ TUI Interface Overview
 
@@ -242,10 +242,6 @@ Type these commands in the TUI prompt (starting with `/`). Most also have keyboa
 | `/help`     | Show help dialog                | `ctrl+x h` | When learning or forgetting commands  |
 | `/undo`     | Undo last change (uses Git)     | `ctrl+x u` | Made a mistake or want to revert      |
 | `/redo`     | Redo undone change              | `ctrl+x r` | Changed your mind about undo          |
-
-> ⚠️ **`/undo` requires Git.** OpenCode uses Git checkpoints under the hood. If your project isn't a Git repository, `/undo` and `/redo` won't work. Initialize with `git init` first.
->
-> ⚠️ **Multi-line input:** The TUI input is single-line. For long or multi-line prompts, use `/editor` (or `ctrl+x e`) to open your `$EDITOR` — compose your full prompt there, save, and it's sent.
 | `/share`    | Create shareable link           | `ctrl+x s` | Sharing work with team or community   |
 | `/init`     | Create/update AGENTS.md         | `ctrl+x i` | Starting work on a new project        |
 | `/connect`  | Configure LLM provider          | —          | Setting up different AI providers     |
@@ -259,6 +255,12 @@ Type these commands in the TUI prompt (starting with `/`). Most also have keyboa
 | `/export`   | Export conversation to Markdown | `ctrl+x x` | Saving conversation to file           |
 | `/details`  | Toggle tool execution details   | `ctrl+x d` | Debugging tool calls                  |
 | `/thinking` | Toggle reasoning visibility     | —          | Seeing model's thought process        |
+
+> ⚠️ **`/undo` requires Git.** OpenCode uses Git checkpoints under the hood. If your project isn't a Git repository, `/undo` and `/redo` won't work. Initialize with `git init` first.
+
+<!-- markdownlint-disable-next-line MD028 -->
+
+> 💡 **Multi-line input:** The TUI input is single-line. For long or multi-line prompts, use `/editor` (or `ctrl+x e`) to open your `$EDITOR` — compose your full prompt there, save, and it's sent.
 
 **Additional Keyboard Shortcuts (no slash command equivalent):**
 
