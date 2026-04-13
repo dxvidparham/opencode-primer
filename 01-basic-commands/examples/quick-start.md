@@ -47,17 +47,28 @@ What does the main function do in src/main.ts?
 
 ## Slash Commands
 
-Inside the TUI, type `/` followed by a command:
+Type these commands in the TUI prompt (starting with `/`). Most also have keyboard shortcuts via the `ctrl+x` leader key.
 
-| Command     | Shortcut | What it does                  |
-| ----------- | -------- | ----------------------------- |
-| `/help`     | Ctrl+X H | Show available commands       |
-| `/new`      | Ctrl+X N | Start a new session           |
-| `/compact`  | Ctrl+X C | Summarize and compact context |
-| `/models`   | Ctrl+X M | Switch LLM model              |
-| `/sessions` | Ctrl+X L | List previous sessions        |
-| `/themes`   | Ctrl+X T | Change color theme            |
-| `/exit`     | Ctrl+X Q | Quit OpenCode                 |
+**Complete Slash Command Reference:**
+
+| Command     | Purpose                         | Keybind    | When to Use                           |
+| ----------- | ------------------------------- | ---------- | ------------------------------------- |
+| `/help`     | Show help dialog                | `ctrl+x h` | When learning or forgetting commands  |
+| `/undo`     | Undo last change (uses Git)     | `ctrl+x u` | Made a mistake or want to revert      |
+| `/redo`     | Redo undone change              | `ctrl+x r` | Changed your mind about undo          |
+| `/share`    | Create shareable link           | `ctrl+x s` | Sharing work with team or community   |
+| `/init`     | Create/update AGENTS.md         | `ctrl+x i` | Starting work on a new project        |
+| `/connect`  | Configure LLM provider          | —          | Setting up different AI providers     |
+| `/compact`  | Reduce context                  | `ctrl+x c` | Long conversations getting slow       |
+| `/new`      | Start new session               | `ctrl+x n` | Starting a fresh conversation         |
+| `/sessions` | List/switch sessions            | `ctrl+x l` | Resuming previous work                |
+| `/exit`     | Exit OpenCode                   | `ctrl+x q` | Done working (aliases: `/quit`, `/q`) |
+| `/themes`   | Change color theme              | `ctrl+x t` | Customizing appearance                |
+| `/models`   | List available models           | `ctrl+x m` | Switching AI models                   |
+| `/editor`   | Open external editor            | `ctrl+x e` | Composing long prompts                |
+| `/export`   | Export conversation to Markdown | `ctrl+x x` | Saving conversation to file           |
+| `/details`  | Toggle tool execution details   | `ctrl+x d` | Debugging tool calls                  |
+| `/thinking` | Toggle reasoning visibility     | —          | Seeing model's thought process        |
 
 ## File References
 

@@ -91,6 +91,8 @@ mise use -g opencode-ai
 
 **Desktop App (BETA):** OpenCode also offers a native desktop app for macOS, Windows, and Linux. Download from the [releases page](https://github.com/anomalyco/opencode/releases) or [opencode.ai/download](https://opencode.ai/download).
 
+> ⚠️ **Note:** This primer focuses exclusively on the **TUI (terminal)** workflow. The desktop app's GUI is still in beta and not yet covered here. A dedicated chapter will be added once the GUI reaches a stable official release and has been thoroughly tested.
+
 ### 🔍 Verify Your Setup
 
 ```bash
